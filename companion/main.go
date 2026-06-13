@@ -102,7 +102,8 @@ func main() {
 	if !*noMotors {
 		// Start the daemon backend + wake the robot before we touch the WS,
 		// so the binary works after a reboot or `goto_sleep`. Idempotent.
-		if err := EnsureReady(*robot, 20*time.Second); err != nil {
+		log.Printf("🌅 waking robot — daemon start + waiting for backend (up to ~25s)")
+		if err := EnsureReady(*robot); err != nil {
 			log.Fatalf("robot daemon not ready: %v (use -no-motors to run audio-only)", err)
 		}
 		daemon, err = DialDaemon(*robot)

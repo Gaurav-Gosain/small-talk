@@ -4,9 +4,10 @@ package main
 // JSON commands (the same protocol the Python SDK's WSClient speaks).
 
 import (
-	"context"
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"time"
@@ -15,12 +16,13 @@ import (
 )
 
 // EnsureReady starts the daemon's hardware backend (motors + audio) and
-// wakes the robot, then waits until backend_status.ready flips to true.
-// Idempotent: safe to call when the daemon is already up and the robot is
-// already awake — same shape as reachy_vision's deploy.sh `wake` command.
-// Calling it before DialDaemon is what makes the binary "just work" after a
-// reboot or after `goto_sleep`.
-func EnsureReady(robotAddr string, timeout time.Duration) error {
+// wakes the robot, then waits for the backend to come up. Same sequence
+// reachy_vision's main.odin runs at startup: POST /api/daemon/start, poll
+// /api/daemon/status until backend_status is non-null (takes ~10–15 s
+// after a cold wake), then a 2 s grace period so the publishers actually
+// start producing frames/audio before we touch them. Idempotent: a no-op
+// when the daemon is already up and the robot is awake.
+func EnsureReady(robotAddr string) error {
 	base := "http://" + robotAddr
 	client := &http.Client{Timeout: 5 * time.Second}
 
@@ -31,39 +33,28 @@ func EnsureReady(robotAddr string, timeout time.Duration) error {
 	}
 	resp.Body.Close()
 
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
-	defer cancel()
-	tick := time.NewTicker(300 * time.Millisecond)
+	// Poll for backend_status going non-null. Same heuristic as reachy_vision's
+	// robot_backend_up — a substring check on the JSON body — because we
+	// only care whether the field is JSON null, not what's inside it.
+	deadline := time.Now().Add(25 * time.Second)
+	tick := time.NewTicker(time.Second)
 	defer tick.Stop()
-
-	var lastState, lastErr string
 	for {
 		r, err := client.Get(base + "/api/daemon/status")
 		if err == nil {
-			var s struct {
-				State         string `json:"state"`
-				BackendStatus struct {
-					Ready bool    `json:"ready"`
-					Error *string `json:"error"`
-				} `json:"backend_status"`
-			}
-			if json.NewDecoder(r.Body).Decode(&s) == nil {
-				lastState = s.State
-				if s.BackendStatus.Error != nil {
-					lastErr = *s.BackendStatus.Error
-				}
-				if s.State == "running" && s.BackendStatus.Ready {
-					r.Body.Close()
-					return nil
-				}
-			}
+			body, _ := io.ReadAll(r.Body)
 			r.Body.Close()
+			if !bytes.Contains(body, []byte(`"backend_status":null`)) {
+				// Grace period — backend reports up, but the camera/audio
+				// publishers need another moment to actually start pushing.
+				time.Sleep(2 * time.Second)
+				return nil
+			}
 		}
-		select {
-		case <-ctx.Done():
-			return fmt.Errorf("daemon backend not ready within %s (state=%q err=%q)", timeout, lastState, lastErr)
-		case <-tick.C:
+		if time.Now().After(deadline) {
+			return fmt.Errorf("daemon backend did not come up within 25s")
 		}
+		<-tick.C
 	}
 }
 
