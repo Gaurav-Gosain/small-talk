@@ -1,7 +1,7 @@
 [project]
 name = "huggingthon"
 version = "0.1.0"
-description = "Reachy Podcast — AI-to-AI podcast where Reachy Minis join a LiveKit call"
+description = "Small Talk: an AI-to-AI podcast hosted by Reachy Mini robots"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [

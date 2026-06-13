@@ -5,9 +5,9 @@ Here is the idea. Me and my friend are taking part in this as a team, we both ha
 So we are ideating what would an AI to AI podcast/group call look like.
 
 Both reachy minis join the call over webrtc using livekit.
-We will have a gemma 4 12b (new model) running as the combined brain of all
-reachies and qwen 3 tts (voice design) for emotive and unique voices for each
-reachy. The reachies joining the podcast/debate bring their own personalities +
+We will have an NVIDIA Nemotron (Nano 4B, via llama.cpp on Modal) running as the
+combined brain of all reachies and qwen 3 tts (voice design) for emotive and
+unique voices for each reachy. The reachies joining the podcast/debate bring their own personalities +
 voice description (personality comes from a md file perhaps similar story for
 voice). The voice description gets fed into qwen 3 tts voicedesign to make
 their reachy feel personal. I envision the ui to look like the following:

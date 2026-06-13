@@ -573,34 +573,14 @@ async def remove_reachy(room_id: str, req: IdentityRequest):
 
 
 # --------------------------------------------------------------------- stylist
-# The "bring your own Reachy" wardrobe: an LLM picks 3D accessories (from the
-# curated prop set the frontend bundles) to match a character description.
-LLM_SPACE = "build-small-hackathon/small-talk-llm"
+# The "bring your own Reachy" wardrobe: the Nemotron brain picks 3D accessories
+# (from the curated prop set the frontend bundles) to match a character.
 CURATED_PROPS = {
     "hat": ["wizard", "cowboy", "tophat", "crown", "party", "pirate", "viking",
             "propeller", "santa", "halo", "baseball"],
     "face": ["sunglasses", "monocle", "skigoggles"],
     "neck": ["bowtie", "necktie"],
 }
-STYLE_SYS = (
-    "You are a wardrobe stylist for a Reachy Mini robot. Given a character, pick "
-    "accessories ONLY from the allowed lists (or null for a slot). Reply with "
-    'ONLY a compact JSON object: {"hat": <slug|null>, "face": <slug|null>, '
-    '"neck": <slug|null>, "color": "#rrggbb", "reason": "<=10 words"}. '
-    "No prose, no markdown."
-)
-
-_llm_client = None
-
-
-def _get_llm():
-    global _llm_client
-    if _llm_client is None:
-        from gradio_client import Client
-        # authenticate so the ZeroGPU call uses our (team-org) quota, not the
-        # exhausted anonymous pool
-        _llm_client = Client(LLM_SPACE, token=os.environ.get("HF_TOKEN") or None)
-    return _llm_client
 
 
 class StyleRequest(BaseModel):
@@ -608,40 +588,16 @@ class StyleRequest(BaseModel):
 
 
 async def style_reachy(req: StyleRequest):
-    """Ask the Gemma brain to dress the Reachy from its description."""
+    """Dress the Reachy from its description (same Nemotron brain as the shows)."""
     desc = (req.description or "").strip()[:600]
     if not desc:
         raise HTTPException(400, "describe your Reachy first")
-    msg = (f"Allowed hat: {CURATED_PROPS['hat']}. "
-           f"Allowed face: {CURATED_PROPS['face']}. "
-           f"Allowed neck: {CURATED_PROPS['neck']}.\n\n"
-           f"Character: {desc}\n\nPick the single most fitting item per slot "
-           f"(or null for a slot) and an accent colour hex.")
-
-    def _call():
-        return _get_llm().predict(msg, STYLE_SYS, 0.6, 120, api_name="/chat")
-
+    if not config.MODAL_LLM_URL:
+        raise HTTPException(503, "stylist brain not configured")
     try:
-        raw = await asyncio.to_thread(_call)
+        return await showgen.style_outfit(desc, CURATED_PROPS)
     except Exception as e:
         raise HTTPException(502, f"stylist unavailable: {e}")
-
-    import json
-    m = re.search(r"\{.*\}", raw, re.S)
-    data = {}
-    if m:
-        try:
-            data = json.loads(m.group(0))
-        except Exception:
-            data = {}
-    out = {slot: (data.get(slot) if data.get(slot) in opts else None)
-           for slot, opts in CURATED_PROPS.items()}
-    color = data.get("color")
-    if not (isinstance(color, str) and re.fullmatch(r"#[0-9a-fA-F]{6}", color or "")):
-        color = None
-    out["color"] = color
-    out["reason"] = str(data.get("reason", ""))[:80]
-    return out
 
 
 # --------------------------------------------------------------------- debug log

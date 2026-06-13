@@ -43,8 +43,7 @@ for key in ("LIVEKIT_URL", "LIVEKIT_API_KEY", "LIVEKIT_API_SECRET", "REACHY_ROOM
         api.add_space_secret(REPO_ID, key, val)
         print(f"  secret set: {key}")
 
-# HF token so the /api/style-reachy endpoint can call the LLM ZeroGPU space with
-# our (team-org) quota instead of the exhausted anonymous pool.
+# HF token for authenticated Hub access from the running Space (e.g. gated assets).
 if token:
     api.add_space_secret(REPO_ID, "HF_TOKEN", token)
     print("  secret set: HF_TOKEN")

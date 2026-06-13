@@ -296,6 +296,49 @@ async def write_script(title: str, topic: str, n_speakers: int = 3, n_lines: int
     return {"speakers": list(by_id.values()), "lines": clean_lines}
 
 
+STYLE_SYS = (
+    "/no_think\n"
+    "You are a wardrobe stylist for a Reachy Mini robot. Given a character, pick "
+    "accessories ONLY from the allowed lists (or null for a slot), plus an accent "
+    "colour. Respond ONLY with valid JSON, no prose: "
+    '{"hat": <slug|null>, "face": <slug|null>, "neck": <slug|null>, '
+    '"color": "#rrggbb", "reason": "<=10 words"}'
+)
+
+
+async def style_outfit(description: str, slots: dict[str, list[str]]) -> dict:
+    """Dress a Reachy from a character description using the Nemotron brain.
+
+    `slots` maps each wear slot (hat/face/neck) to its allowed prop slugs.
+    Returns {hat, face, neck, color, reason} with invalid picks coerced to None.
+    """
+    allowed = "\n".join(f"Allowed {slot}: {opts}" for slot, opts in slots.items())
+    prompt = (f"{allowed}\n\nCharacter: {description}\n\nPick the single most "
+              "fitting item per slot (or null) and an accent colour hex.")
+    async with httpx.AsyncClient(timeout=90) as cx:
+        r = await cx.post(
+            f"{config.MODAL_LLM_URL}/v1/chat/completions",
+            headers={"Authorization": f"Bearer {config.MODAL_LLM_KEY}"},
+            json={
+                "messages": [
+                    {"role": "system", "content": STYLE_SYS},
+                    {"role": "user", "content": prompt},
+                ],
+                "max_tokens": 160,
+                "temperature": 0.6,
+                "response_format": {"type": "json_object"},
+            },
+        )
+        r.raise_for_status()
+    data = _parse_json(r.json()["choices"][0]["message"]["content"])
+    out = {slot: (data.get(slot) if data.get(slot) in opts else None)
+           for slot, opts in slots.items()}
+    color = data.get("color")
+    out["color"] = color if isinstance(color, str) and re.fullmatch(r"#[0-9a-fA-F]{6}", color) else None
+    out["reason"] = str(data.get("reason", ""))[:80]
+    return out
+
+
 async def tts_wav(text: str, instruct: str) -> str:
     """Voice one line via Qwen3-TTS VoiceDesign; returns a temp wav path.
 
