@@ -89,9 +89,13 @@ func main() {
 		lksdk.SetLogger(logger.LogRLogger(logr.Discard()))
 	}
 
-	playerCmd, err := findPlayer(*playerArg)
+	audio, audioDesc, castOnly, err := findAudio(*playerArg, *robot)
 	if err != nil {
 		log.Fatal(err)
+	}
+	log.Printf("🔈 audio out: %s", audioDesc)
+	if castOnly {
+		log.Printf("🔈 (this path handles one host at a time — pre-cast room listening will be silent on the robot, only the cast Reachy speaks here)")
 	}
 
 	// --- robot ---
@@ -129,7 +133,7 @@ func main() {
 	log.Printf("🎟  joined as %s", tok.Identity)
 
 	var mu sync.Mutex
-	players := map[string]*Player{}
+	players := map[string]audioSink{}
 	lastPkt := map[string]time.Time{}
 	cast := false // true once the show casts THIS robot — then we speak only our lines
 	done := make(chan struct{})  // closed on a terminal disconnect
@@ -172,9 +176,17 @@ func main() {
 			return
 		}
 		mu.Unlock()
-		p, err := NewPlayer(playerCmd, fmt.Sprintf("%s (%s)", rp.Name(), id))
+		if castOnly && !mine {
+			// Daemon path can only handle one concurrent peer — wait for the
+			// cast track before opening anything (see daemon_audio.go / the
+			// gst name-collision bug in the daemon when ≥2 consumers connect
+			// in parallel).
+			log.Printf("🤐 %s — staying quiet pre-cast (daemon audio path handles one host at a time)", rp.Name())
+			return
+		}
+		p, err := audio(fmt.Sprintf("%s (%s)", rp.Name(), id))
 		if err != nil {
-			log.Printf("player for %s: %v", id, err)
+			log.Printf("audio sink for %s: %v", id, err)
 			return
 		}
 		mu.Lock()
