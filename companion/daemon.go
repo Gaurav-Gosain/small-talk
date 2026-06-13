@@ -4,13 +4,68 @@ package main
 // JSON commands (the same protocol the Python SDK's WSClient speaks).
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"time"
 
 	"github.com/gorilla/websocket"
 )
+
+// EnsureReady starts the daemon's hardware backend (motors + audio) and
+// wakes the robot, then waits until backend_status.ready flips to true.
+// Idempotent: safe to call when the daemon is already up and the robot is
+// already awake — same shape as reachy_vision's deploy.sh `wake` command.
+// Calling it before DialDaemon is what makes the binary "just work" after a
+// reboot or after `goto_sleep`.
+func EnsureReady(robotAddr string, timeout time.Duration) error {
+	base := "http://" + robotAddr
+	client := &http.Client{Timeout: 5 * time.Second}
+
+	req, _ := http.NewRequest(http.MethodPost, base+"/api/daemon/start?wake_up=true", nil)
+	resp, err := client.Do(req)
+	if err != nil {
+		return fmt.Errorf("daemon start: %w", err)
+	}
+	resp.Body.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+	tick := time.NewTicker(300 * time.Millisecond)
+	defer tick.Stop()
+
+	var lastState, lastErr string
+	for {
+		r, err := client.Get(base + "/api/daemon/status")
+		if err == nil {
+			var s struct {
+				State         string `json:"state"`
+				BackendStatus struct {
+					Ready bool    `json:"ready"`
+					Error *string `json:"error"`
+				} `json:"backend_status"`
+			}
+			if json.NewDecoder(r.Body).Decode(&s) == nil {
+				lastState = s.State
+				if s.BackendStatus.Error != nil {
+					lastErr = *s.BackendStatus.Error
+				}
+				if s.State == "running" && s.BackendStatus.Ready {
+					r.Body.Close()
+					return nil
+				}
+			}
+			r.Body.Close()
+		}
+		select {
+		case <-ctx.Done():
+			return fmt.Errorf("daemon backend not ready within %s (state=%q err=%q)", timeout, lastState, lastErr)
+		case <-tick.C:
+		}
+	}
+}
 
 type Daemon struct {
 	ws  *websocket.Conn

@@ -87,8 +87,11 @@ while true; do ./smalltalk-reachy -room my-show-1a2b -name "Gaurav's Reachy"; sl
 | `-only` | all | manually embody just the participants whose identity contains this |
 | `-robot` | `localhost:8000` | reachy_mini daemon address |
 | `-no-motors` | off | audio + subtitles only (for testing off-robot) |
-| `-wake` | off | send `wake_up` to the daemon on start |
 | `-player` | auto | override the audio player command (gets Ogg/Opus on stdin) |
+
+The binary always calls `POST /api/daemon/start?wake_up=true` before
+touching the WS, so it starts the backend and wakes the robot — no manual
+`wake_up` step needed after a reboot or `goto_sleep`.
 
 ## How it works
 

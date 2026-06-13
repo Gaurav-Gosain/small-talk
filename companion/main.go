@@ -78,7 +78,6 @@ func main() {
 	only := flag.String("only", "", "only play/move for participants whose identity contains this")
 	playerArg := flag.String("player", "", "override audio player command (reads ogg/opus on stdin)")
 	noMotors := flag.Bool("no-motors", false, "don't connect to the robot daemon (audio + logs only)")
-	wake := flag.Bool("wake", false, "send wake_up to the daemon on start")
 	verbose := flag.Bool("v", false, "verbose webrtc logs")
 	flag.Parse()
 	if *room == "" {
@@ -101,13 +100,14 @@ func main() {
 	// --- robot ---
 	var daemon *Daemon
 	if !*noMotors {
+		// Start the daemon backend + wake the robot before we touch the WS,
+		// so the binary works after a reboot or `goto_sleep`. Idempotent.
+		if err := EnsureReady(*robot, 20*time.Second); err != nil {
+			log.Fatalf("robot daemon not ready: %v (use -no-motors to run audio-only)", err)
+		}
 		daemon, err = DialDaemon(*robot)
 		if err != nil {
 			log.Fatalf("robot daemon: %v (use -no-motors to run audio-only)", err)
-		}
-		if *wake {
-			daemon.Command("wake_up")
-			time.Sleep(3 * time.Second)
 		}
 		log.Printf("🤖 motors connected (%s)", *robot)
 	}
