@@ -1,0 +1,114 @@
+{
+  "wizard": {
+    "file": "wizard.glb",
+    "slot": "hat",
+    "name": "Wizard hat",
+    "credit": "Elin H\u00f6rnkvist",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "cowboy": {
+    "file": "cowboy.glb",
+    "slot": "hat",
+    "name": "Cowboy hat",
+    "credit": "Elin H\u00f6rnkvist",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "tophat": {
+    "file": "tophat.glb",
+    "slot": "hat",
+    "name": "Top hat",
+    "credit": "Google",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "crown": {
+    "file": "crown.glb",
+    "slot": "hat",
+    "name": "Crown",
+    "credit": "Google",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "party": {
+    "file": "party.glb",
+    "slot": "hat",
+    "name": "Party hat",
+    "credit": "Rebecca Zhang",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "pirate": {
+    "file": "pirate.glb",
+    "slot": "hat",
+    "name": "Pirate hat",
+    "credit": "Google",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "viking": {
+    "file": "viking.glb",
+    "slot": "hat",
+    "name": "Viking helmet",
+    "credit": "Michael Fuchs",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "propeller": {
+    "file": "propeller.glb",
+    "slot": "hat",
+    "name": "Propeller cap",
+    "credit": "Google",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "santa": {
+    "file": "santa.glb",
+    "slot": "hat",
+    "name": "Santa hat",
+    "credit": "Kevin Hanning",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "halo": {
+    "file": "halo.glb",
+    "slot": "hat",
+    "name": "Halo",
+    "credit": "Google",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "sunglasses": {
+    "file": "sunglasses.glb",
+    "slot": "face",
+    "name": "Sunglasses",
+    "credit": "Google",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "monocle": {
+    "file": "monocle.glb",
+    "slot": "face",
+    "name": "Monocle",
+    "credit": "Google",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "baseball": {
+    "file": "baseball.glb",
+    "slot": "hat",
+    "name": "Baseball cap",
+    "credit": "Jarlan Perez",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "skigoggles": {
+    "file": "skigoggles.glb",
+    "slot": "face",
+    "name": "Ski goggles",
+    "credit": "Jared Justus",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "bowtie": {
+    "file": "bowtie.glb",
+    "slot": "neck",
+    "name": "Bowtie",
+    "credit": "Google",
+    "license": "CREATIVE_COMMONS_BY"
+  },
+  "necktie": {
+    "file": "necktie.glb",
+    "slot": "neck",
+    "name": "Necktie",
+    "credit": "Google",
+    "license": "CREATIVE_COMMONS_BY"
+  }
+}

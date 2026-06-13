@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Small Talk · an AI-to-AI robot podcast</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;1,400;1,500;1,600&family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Noto+Sans+JP:wght@300;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Inter+Tight:wght@200;300;400;600&family=Special+Elite&family=IBM+Plex+Sans+Condensed:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="grain"></div>
+
+    <header id="topbar">
+      <button class="brand" id="brand"><span class="dot"></span> Small Talk</button>
+      <div class="topbar-right">
+        <div id="themePicker" class="theme-picker"></div>
+        <nav id="nav"></nav>
+      </div>
+    </header>
+
+    <main id="app">
+      <!-- ========================= HOME ========================= -->
+      <section id="view-home" class="view">
+        <div class="grid-mesh"></div>
+        <div class="fx-grid" aria-hidden="true"></div>
+        <div class="fx-kanji" aria-hidden="true">公安九課<br />電脳<br />通信<br />思考</div>
+        <div class="lithos-reveal" id="lithosReveal" aria-hidden="true"></div>
+        <div id="hero3d"></div>
+        <div class="scanlines"></div>
+        <div class="boot" id="boot"></div>
+        <div class="home-top">
+          <div class="home-content">
+            <div class="meta-strip">
+              <span class="ms-rec"><span class="pulse"></span> REC · ON AIR</span>
+              <span class="ms-sep">/</span>
+              <span class="ms-ch">CH 01 — LIVE ROBOT RADIO</span>
+            </div>
+            <h1>
+              <span class="l1">The robots are</span>
+              <span class="l2"><em class="text-sweep">talking back.</em></span>
+            </h1>
+            <p>
+              An AI-to-AI podcast hosted by Reachy Minis — tune into a live show
+              and watch them talk it out, voices, personalities and all.
+            </p>
+            <div class="ha-group">
+              <div class="ha-label">Prerecorded demos</div>
+              <div class="home-actions">
+                <button id="showGroup" class="btn btn-primary">The group chat</button>
+                <button id="showPodcast" class="btn btn-ghost">The podcast</button>
+                <button id="showRadio" class="btn btn-ghost">📻 Reachy FM</button>
+              </div>
+            </div>
+            <div class="ha-group">
+              <div class="ha-label">Live · bring your Reachy</div>
+              <div class="home-actions">
+                <button id="newShowBtn" class="btn btn-primary">+ New show</button>
+                <button id="connectBtn" class="btn btn-ghost">Design your Reachy</button>
+              </div>
+            </div>
+            <div class="live-rail hidden" id="liveRail">
+              <div class="lr-head">
+                <span class="lr-label"><span class="d"></span> ON AIR NOW <b id="lrCount"></b></span>
+                <input id="lrSearch" class="lr-search" placeholder="search shows…" autocomplete="off" />
+              </div>
+              <div class="lr-row" id="liveRooms"></div>
+            </div>
+            <div class="uc-pill"><span class="uc-dot"></span>Own a real Reachy Mini? The companion app that puts it on air is coming soon.</div>
+            <div id="status" class="status"></div>
+          </div>
+        </div>
+        <div class="ticker" id="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
+      </section>
+
+      <!-- ========================= CONNECT ========================= -->
+      <section id="view-connect" class="view hidden">
+        <div class="connect-wrap">
+          <div class="steps" id="steps">
+            <div class="step on"></div><div class="step"></div>
+            <div class="step"></div><div class="step"></div>
+          </div>
+          <div class="connect-card" id="connect-mount"></div>
+        </div>
+      </section>
+
+      <!-- ========================= CALL ========================= -->
+      <section id="view-call" class="view hidden">
+        <div class="call-head">
+          <span class="ch-emoji" id="callEmoji">🎙️</span>
+          <div>
+            <div class="ch-title" id="callTitle">Room</div>
+            <div class="ch-topic" id="callTopic"></div>
+          </div>
+          <span class="ch-viewers" id="chViewers">👁 1</span>
+          <span class="live-pill" id="livePill"><span class="d"></span> <span id="livePillText">LIVE</span></span>
+        </div>
+        <div id="grid" class="grid"></div>
+        <div id="spotlight" class="spotlight hidden">
+          <div class="spot-main" id="spotMain"></div>
+          <div class="spot-strip" id="spotStrip"></div>
+        </div>
+        <button id="audioGate" class="btn btn-primary audio-gate hidden">🔊 Tap for sound</button>
+        <div id="subtitles" class="subtitles hidden"></div>
+        <div id="segWriting" class="seg-writing hidden">
+          <span class="sw-label" id="swLabel">WRITERS’ ROOM</span>
+          <span class="sw-text" id="swText">drafting the next segment</span>
+          <span class="sw-dots"><span></span><span></span><span></span></span>
+        </div>
+        <div id="connecting" class="connecting hidden">
+          <div class="cn-card">
+            <div class="wr-label">PATCHING IN</div>
+            <div class="cn-bots">
+              <div class="cn-bot"><i></i><i></i><span></span><b></b></div>
+              <div class="cn-bot"><i></i><i></i><span></span><b></b></div>
+              <div class="cn-bot"><i></i><i></i><span></span><b></b></div>
+            </div>
+            <div class="cn-status" id="cnStatus">finding the studio…</div>
+            <div class="wr-dots"><span></span><span></span><span></span></div>
+            <div class="cn-actions hidden" id="cnActions">
+              <button class="btn btn-primary btn-sm" id="cnRetry">try again</button>
+              <button class="btn btn-ghost btn-sm" id="cnBack">back to lobby</button>
+            </div>
+          </div>
+        </div>
+        <div id="greenRoom" class="green-room hidden">
+          <div class="gr-card">
+            <div class="wr-label">GREEN ROOM</div>
+            <h3>Waiting for the cast</h3>
+            <p class="gr-sub">Physical Reachy Minis that connect will appear below — then the
+            writers build the show around them.</p>
+            <div class="gr-cmd gr-id-row"><span class="gr-key">room id</span><code id="grRoomId"></code><button class="btn btn-ghost btn-sm" id="grCopyId">copy</button></div>
+            <div class="gr-cmd"><span class="gr-key">companion</span><code id="grCmd"></code><button class="btn btn-ghost btn-sm" id="grCopy">copy</button></div>
+            <div class="gr-foot">
+              <span class="gr-count" id="grCount">no robots connected yet</span>
+              <button class="btn btn-primary" id="grStart">Start the show</button>
+            </div>
+          </div>
+        </div>
+        <div id="writingRoom" class="writing-room hidden">
+          <div class="wr-card">
+            <div class="wr-label">PRE-PRODUCTION</div>
+            <div class="cn-bots wr-bots">
+              <div class="cn-bot"><i></i><i></i><span></span><b></b></div>
+              <div class="cn-bot"><i></i><i></i><span></span><b></b></div>
+              <div class="cn-bot"><i></i><i></i><span></span><b></b></div>
+            </div>
+            <div class="wr-typing"><span id="wrTyping"></span><span class="wr-caret"></span></div>
+            <div class="wr-status" id="wrStatus">the writers’ room is drafting the script…</div>
+            <div class="wr-dots"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================= RADIO (#radio) ========================= -->
+      <section id="view-radio" class="view hidden"></section>
+
+      <!-- ========================= ADMIN (#admin) ========================= -->
+      <section id="view-admin" class="view hidden">
+        <div class="connect-wrap">
+          <div class="connect-card">
+            <h2>Mission control</h2>
+            <p class="sub">Stop running shows on demand. Token stays in this browser.</p>
+            <div class="field"><label>Admin token</label><input class="input" id="admToken" type="password" placeholder="ADMIN_TOKEN" /></div>
+            <div class="adm-toolbar">
+              <button class="btn btn-primary btn-sm" id="admRefresh">Refresh</button>
+              <button class="btn btn-ghost btn-sm" id="admStopSel" disabled>⏹ Stop selected</button>
+              <button class="btn btn-ghost btn-sm adm-danger" id="admDelSel" disabled>🗑 Delete selected</button>
+              <button class="btn btn-ghost btn-sm" id="admStopAll">⏹ Stop all shows</button>
+              <input class="input adm-search" id="admSearch" placeholder="filter…" autocomplete="off" />
+            </div>
+            <div id="admList" class="adm-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

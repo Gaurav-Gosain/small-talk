@@ -1,0 +1,26 @@
+# LiveKit config for local (localhost-only) development.
+#
+# Why not just `--dev`: LiveKit's ICE/UDP layer enumerates the physical network
+# interfaces and never the loopback, then advertises node_ip as the candidate.
+# On a localhost-only box that mismatch (advertise 127.0.0.1, but the UDP socket
+# is on the LAN IP) makes browsers time out on DTLS — "could not establish pc
+# connection". Chrome's Private Network Access also blocks a localhost page from
+# reaching a 192.168.x candidate.
+#
+# Fix: force ICE onto the loopback interface and collect loopback candidates, so
+# every candidate (UDP + TCP) is on 127.0.0.1 and reachable from the browser.
+port: 7880
+bind_addresses:
+  - 127.0.0.1
+rtc:
+  tcp_port: 7881
+  port_range_start: 50000
+  port_range_end: 50200
+  use_external_ip: false
+  node_ip: 127.0.0.1
+  enable_loopback_candidate: true
+  interfaces:
+    includes:
+      - lo
+keys:
+  devkey: secret

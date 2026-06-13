@@ -1,0 +1,7 @@
+gradio==6.17.3
+livekit>=1.0
+livekit-api>=1.0
+numpy>=1.26
+python-dotenv>=1.0
+python-multipart>=0.0.9
+better-profanity>=0.7

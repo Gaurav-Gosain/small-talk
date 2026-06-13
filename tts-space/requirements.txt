@@ -1,0 +1,5 @@
+# torch is preinstalled on ZeroGPU — do NOT pin it (pinning breaks ZeroGPU).
+# qwen-tts pulls transformers, accelerate, torchaudio, soundfile, librosa,
+# onnxruntime, sox, einops.
+spaces
+qwen-tts==0.1.1

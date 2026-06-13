@@ -1,0 +1,26 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Env / secrets
+.env
+
+# Generated audio clips
+samples/
+
+# 3D assets pulled from the desktop app (re-fetch via scripts/fetch-assets.sh)
+frontend/public/robot-3d/
+
+# CC-BY 3D prop library (~170MB, re-fetch via scripts/fetch-props.py; manifest has attribution)
+frontend/props-lib/

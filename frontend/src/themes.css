@@ -1,0 +1,449 @@
+/* ════════════════════════════════════════════════════════════════════
+   Switchable skins — ported from the anar-labs catalogue.
+   Each theme remaps the base tokens (styles.css) and adds its signature
+   set-dressing. `--hero` overrides the 3D hologram colour when the UI
+   accent wouldn't read on a glowing robot. html[data-theme] switches.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ---- topbar theme picker (dropdown) ---- */
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.theme-picker { display: flex; align-items: center; gap: 8px; }
+.theme-picker .tp-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; color: var(--muted); }
+.theme-select {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--panel); color: var(--text); border: 1px solid var(--border-2); border-radius: 999px;
+  padding: 6px 12px; cursor: pointer; outline: none;
+}
+.theme-select option { background: var(--bg-2); color: var(--text); text-transform: none; letter-spacing: 0; }
+@media (max-width: 720px) { .theme-picker .tp-label { display: none; } }
+
+/* ---- per-theme FX layers (hidden unless a theme enables them) ---- */
+.fx-grid, .fx-kanji, .lithos-reveal { display: none; }
+
+/* light themes: the cyan boot readout doesn't read on paper */
+:root[data-theme='dossier'] .boot, :root[data-theme='concrete'] .boot { display: none; }
+
+/* tron perspective grid floor */
+.fx-grid {
+  position: absolute; left: -20%; right: -20%; bottom: -2px; height: 50%; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(var(--gold) 1px, transparent 1px),
+    linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+  background-size: 46px 46px;
+  transform: perspective(340px) rotateX(70deg); transform-origin: bottom center;
+  mask-image: linear-gradient(transparent, #000 70%);
+  opacity: 0.18; animation: gridScroll 3s linear infinite;
+}
+@keyframes gridScroll { to { background-position: 0 46px, 0 46px; } }
+
+/* ghost vertical kanji column */
+@media (max-width: 760px) { :root[data-theme='ghost'] .fx-kanji { display: none !important; } }
+.fx-kanji {
+  position: absolute; left: clamp(10px, 1.4vw, 18px); top: 50%; transform: translateY(-50%); z-index: 1;
+  pointer-events: none; writing-mode: vertical-rl; font-family: 'Noto Sans JP', sans-serif;
+  font-size: 13px; font-weight: 300; letter-spacing: 0.34em; line-height: 1.8;
+  color: var(--gold); opacity: 0.45; text-shadow: 0 0 9px var(--gold-glow);
+}
+
+/* ════════════════════════ GHOST · Section 9 HUD ════════════════════════ */
+:root[data-theme='ghost'] {
+  --void: #04080d; --bg: #04080d; --bg-2: #081119;
+  --panel: rgba(0, 255, 209, 0.035); --panel-2: rgba(0, 255, 209, 0.07);
+  --border: rgba(0, 255, 209, 0.13); --border-2: rgba(0, 255, 209, 0.24);
+  --text: #e8f4f6; --paper: #aecccf; --muted: #69808a; --faint: #33474f;
+  --gold: #00ffd1; --gold-bright: #5fffe4; --gold-dim: #0a8a78; --gold-glow: rgba(0, 255, 209, 0.16);
+  --cyan: #ff2e6c; --teal: #00ffd1; --live: #ff2e6c;
+  --grad: linear-gradient(100deg, #5fffe4, #00ffd1 55%, #0a8a78);
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+:root[data-theme='ghost'] .fx-kanji { display: block; }
+:root[data-theme='ghost'] .home-content h1 { font-weight: 300; letter-spacing: -0.03em; }
+:root[data-theme='ghost'] .home-content h1 em { font-weight: 400; }
+:root[data-theme='ghost'] .text-sweep {
+  animation: ghostGlitch 2.6s steps(2, end) infinite; background: none; color: var(--gold);
+}
+@keyframes ghostGlitch {
+  0%, 100% { text-shadow: -2px 0 #ff2e6c, 2px 0 #00ffd1; }
+  48% { text-shadow: -2px 0 #ff2e6c, 2px 0 #00ffd1; }
+  50% { text-shadow: 2px 0 #ff2e6c, -2px 0 #4ab8ff; transform: translateX(1px); }
+  52% { text-shadow: -1px 0 #ff2e6c, 1px 0 #00ffd1; }
+}
+:root[data-theme='ghost'] .scanlines { opacity: 0.6; background: repeating-linear-gradient(0deg, rgba(0, 255, 209, 0.04) 0 1px, transparent 1px 3px); }
+
+/* ════════════════════════ TRON · Analog Grid ════════════════════════ */
+:root[data-theme='tron'] {
+  --void: #000005; --bg: #000005; --bg-2: #00080f;
+  --panel: rgba(0, 212, 255, 0.04); --panel-2: rgba(0, 212, 255, 0.08);
+  --border: rgba(0, 212, 255, 0.18); --border-2: rgba(0, 212, 255, 0.42);
+  --text: #d8f4ff; --paper: #a9e0ff; --muted: #5a8aa0; --faint: #27485a;
+  --gold: #00d4ff; --gold-bright: #7fe6ff; --gold-dim: #0a667a; --gold-glow: rgba(0, 212, 255, 0.2);
+  --cyan: #ff7e29; --teal: #00d4ff; --live: #ff7e29;
+  --hero: #9ff0ff;
+  --grad: linear-gradient(100deg, #7fe6ff, #00d4ff 55%, #0a667a);
+  --font-display: 'Orbitron', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-body: 'Share Tech Mono', monospace;
+}
+:root[data-theme='tron'] .fx-grid { display: block; }
+:root[data-theme='tron'] .grid-mesh { display: none; }
+:root[data-theme='tron'] .home-content h1 {
+  font-weight: 700; letter-spacing: 0.01em; text-transform: uppercase;
+  font-size: clamp(36px, 4.6vw, 68px); line-height: 1.06;
+  text-shadow: 0 0 26px rgba(0, 212, 255, 0.3);
+}
+:root[data-theme='tron'] .text-sweep {
+  animation: none; background: none; color: transparent;
+  -webkit-text-stroke: 1.4px var(--gold); text-shadow: 0 0 22px rgba(0, 212, 255, 0.55);
+}
+:root[data-theme='tron'] .btn-primary { box-shadow: 0 0 22px -4px var(--gold); }
+/* glow pool where the robot stands + edge vignette (no hard lines) */
+:root[data-theme='tron'] #view-home::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(34% 22% at 76% 76%, rgba(0, 212, 255, 0.16), transparent 70%);
+}
+:root[data-theme='tron'] #view-home::after {
+  content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 5, 0.6) 100%);
+}
+
+/* ════════════════════════ ORACLE · Brutalist Terminal ════════════════════════ */
+:root[data-theme='oracle'] {
+  --void: #000; --bg: #000; --bg-2: #0a0a0a;
+  --panel: rgba(92, 255, 92, 0.04); --panel-2: rgba(92, 255, 92, 0.08);
+  --border: #1c1c1c; --border-2: #2c2c2c;
+  --text: #fafafa; --paper: #cfcfcf; --muted: #6a6a6a; --faint: #404040;
+  --gold: #5cff5c; --gold-bright: #7cff7c; --gold-dim: #2faa2f; --gold-glow: rgba(92, 255, 92, 0.18);
+  --cyan: #ff2eaa; --teal: #5cff5c; --live: #ff2eaa;
+  --grad: none;
+  --font-display: 'JetBrains Mono', monospace;
+  --font-body: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
+  --r-sm: 0px; --r: 0px; --r-lg: 0px;
+}
+:root[data-theme='oracle'] .home-content h1 {
+  font-weight: 700; letter-spacing: -0.01em; text-transform: uppercase;
+  font-size: clamp(30px, 4vw, 58px); line-height: 1.05;
+  text-shadow: 0 0 14px rgba(92, 255, 92, 0.22);
+}
+:root[data-theme='oracle'] .home-content h1 .l1::before { content: '> '; color: var(--gold); }
+:root[data-theme='oracle'] .text-sweep { animation: none; background: none; color: var(--gold); }
+:root[data-theme='oracle'] .text-sweep::after { content: '_'; animation: oBlink 1s steps(1) infinite; }
+@keyframes oBlink { 50% { opacity: 0; } }
+:root[data-theme='oracle'] .btn { border-radius: 0; }
+:root[data-theme='oracle'] .btn-primary { background: var(--gold); color: #000; box-shadow: none; }
+:root[data-theme='oracle'] .btn-ghost { border: 1px solid var(--gold); color: var(--gold); }
+:root[data-theme='oracle'] .card, :root[data-theme='oracle'] .uc-pill,
+:root[data-theme='oracle'] .nameplate, :root[data-theme='oracle'] .theme-select { border-radius: 0; }
+:root[data-theme='oracle'] .grid-mesh { display: none; }
+:root[data-theme='oracle'] .scanlines { opacity: 0.7; }
+:root[data-theme='oracle'] #view-home::before {
+  content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* ════════════════════════ KINETIC · Motion / Awwwards ════════════════════════ */
+:root[data-theme='kinetic'] {
+  --void: #050505; --bg: #050505; --bg-2: #0a0a0a;
+  --panel: rgba(245, 241, 232, 0.03); --panel-2: rgba(245, 241, 232, 0.06);
+  --border: rgba(245, 241, 232, 0.1); --border-2: rgba(245, 241, 232, 0.2);
+  --text: #f5f1e8; --paper: #cfcabb; --muted: #8a877f; --faint: #4a4843;
+  --gold: #ff2a4d; --gold-bright: #ff5a72; --gold-dim: #a01024; --gold-glow: rgba(255, 42, 77, 0.2);
+  --cyan: #5be9ff; --teal: #5be9ff; --live: #ff2a4d;
+  --grad: linear-gradient(100deg, #ff5a72, #ff2a4d 55%, #a01024);
+  --font-display: 'Bricolage Grotesque', sans-serif;
+}
+:root[data-theme='kinetic'] .home-content h1 {
+  font-weight: 800; letter-spacing: -0.045em; line-height: 0.88;
+  font-size: clamp(44px, 6.2vw, 88px); text-transform: uppercase;
+}
+:root[data-theme='kinetic'] #view-home::before {
+  content: 'ON AIR'; position: absolute; right: -1vw; top: 8%; z-index: 0; pointer-events: none;
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(100px, 17vw, 250px);
+  letter-spacing: -0.05em; line-height: 0.8; color: transparent;
+  -webkit-text-stroke: 1px rgba(245, 241, 232, 0.08);
+}
+:root[data-theme='kinetic'] #view-home::after {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; z-index: 3;
+  background: var(--gold); pointer-events: none;
+}
+:root[data-theme='kinetic'] .ticker { height: 44px; }
+:root[data-theme='kinetic'] .ticker-track { font-size: 11px; color: var(--paper); }
+
+/* ════════════════════════ LITHOS · Strata Spotlight ════════════════════════ */
+:root[data-theme='lithos'] {
+  --void: #0c0a08; --bg: #0c0a08; --bg-2: #16100a;
+  --panel: rgba(232, 112, 42, 0.05); --panel-2: rgba(232, 112, 42, 0.1);
+  --border: rgba(245, 241, 232, 0.1); --border-2: rgba(232, 112, 42, 0.35);
+  --text: #f5f1e8; --paper: #d8ccbe; --muted: #9a8c7e; --faint: #5a4c40;
+  --gold: #e8702a; --gold-bright: #ff8c4a; --gold-dim: #a04c18; --gold-glow: rgba(232, 112, 42, 0.22);
+  --cyan: #e8a04a; --teal: #e8702a; --live: #e8702a;
+  --hero: #ff9a5a;
+  --grad: linear-gradient(100deg, #ff8c4a, #e8702a 55%, #a04c18);
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --r-sm: 999px;
+}
+:root[data-theme='lithos'] #view-home { overflow: hidden; }
+:root[data-theme='lithos'] .home-content h1 { font-weight: 600; letter-spacing: -0.05em; line-height: 0.95; }
+:root[data-theme='lithos'] .home-content h1 .l1 {
+  font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; letter-spacing: -0.03em;
+}
+:root[data-theme='lithos'] .text-sweep {
+  animation: none; background: none; color: var(--text); letter-spacing: -0.06em; font-weight: 600;
+}
+:root[data-theme='lithos'] .btn { border-radius: 999px; }
+:root[data-theme='lithos'] .grid-mesh { display: none; }
+/* static sediment strata rising from the bottom */
+:root[data-theme='lithos'] #view-home::before {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 38%; z-index: 0; pointer-events: none;
+  background: repeating-linear-gradient(180deg,
+    rgba(232, 112, 42, 0.07) 0 1px, transparent 1px 26px,
+    rgba(255, 170, 100, 0.05) 26px 27px, transparent 27px 52px);
+  mask-image: linear-gradient(transparent, #000 60%);
+}
+/* the cursor spotlight: pattern is viewport-anchored (background-attachment:
+   fixed) so moving the masked circle genuinely "reveals" the layer beneath */
+:root[data-theme='lithos'] .lithos-reveal { display: block; }
+.lithos-reveal {
+  position: absolute; left: -2000px; top: -2000px; width: 600px; height: 600px;
+  z-index: 1; pointer-events: none; border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 100%, rgba(255, 140, 74, 0.22) 0 2px, transparent 2px 24px) fixed,
+    linear-gradient(180deg, rgba(232, 112, 42, 0.12), rgba(120, 60, 24, 0.1)) fixed;
+  mask-image: radial-gradient(circle, #000 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle, #000 30%, transparent 70%);
+}
+@media (hover: none), (prefers-reduced-motion: reduce) { .lithos-reveal { display: none !important; } }
+
+/* ════════════════════════ OBSERVATORY · Deep Space Atlas ════════════════════════ */
+:root[data-theme='observatory'] {
+  --void: #081a3c; --bg: #081a3c; --bg-2: #0d2356;
+  --panel: rgba(243, 236, 220, 0.045); --panel-2: rgba(243, 236, 220, 0.09);
+  --border: rgba(243, 236, 220, 0.15); --border-2: rgba(212, 166, 75, 0.42);
+  --text: #f3ecdc; --paper: #cfc6b0; --muted: #95906f; --faint: #4a5470;
+  --gold: #d4a64b; --gold-bright: #ecc878; --gold-dim: #8a6f30; --gold-glow: rgba(212, 166, 75, 0.2);
+  --cyan: #c14935; --teal: #d4a64b; --live: #c14935;
+  --hero: #e8d9a0;
+  --grad: linear-gradient(100deg, #ecc878, #d4a64b 55%, #8a6f30);
+  --font-display: 'Cormorant Garamond', serif; --font-body: 'Cormorant Garamond', serif;
+}
+:root[data-theme='observatory'] .home-content h1 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-variant: small-caps; letter-spacing: 0.03em; line-height: 1.0; }
+:root[data-theme='observatory'] .home-content p { font-size: clamp(17px, 1.6vw, 21px); }
+:root[data-theme='observatory'] .text-sweep { font-variant: small-caps; color: var(--gold); background: none; animation: none; }
+:root[data-theme='observatory'] #view-home {
+  background:
+    radial-gradient(42% 34% at 70% 22%, rgba(110, 80, 170, 0.12), transparent 70%),
+    radial-gradient(36% 30% at 28% 64%, rgba(60, 120, 160, 0.1), transparent 70%),
+    radial-gradient(ellipse at 75% 30%, rgba(212, 166, 75, 0.08), transparent 55%),
+    var(--void);
+}
+/* layer 1 — dense static starfield (tiled SVG) */
+:root[data-theme='observatory'] .grid-mesh {
+  display: block; opacity: 1; mask-image: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cg fill='%23f3ecdc'%3E%3Ccircle cx='22' cy='44' r='1.1' opacity='.9'/%3E%3Ccircle cx='74' cy='128' r='.7' opacity='.5'/%3E%3Ccircle cx='136' cy='32' r='.9' opacity='.7'/%3E%3Ccircle cx='188' cy='96' r='.6' opacity='.45'/%3E%3Ccircle cx='248' cy='52' r='1.2' opacity='.85'/%3E%3Ccircle cx='292' cy='148' r='.7' opacity='.5'/%3E%3Ccircle cx='44' cy='208' r='.8' opacity='.6'/%3E%3Ccircle cx='116' cy='258' r='1.1' opacity='.8'/%3E%3Ccircle cx='178' cy='188' r='.6' opacity='.4'/%3E%3Ccircle cx='276' cy='288' r='.7' opacity='.5'/%3E%3Ccircle cx='94' cy='174' r='.5' opacity='.35'/%3E%3Ccircle cx='156' cy='136' r='.8' opacity='.55'/%3E%3Ccircle cx='258' cy='176' r='.5' opacity='.4'/%3E%3Ccircle cx='36' cy='300' r='.9' opacity='.6'/%3E%3C/g%3E%3Cg fill='%23d4a64b'%3E%3Ccircle cx='228' cy='236' r='.9' opacity='.75'/%3E%3Ccircle cx='130' cy='84' r='.7' opacity='.6'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 320px 320px;
+}
+/* layer 2 — sparse bright stars, twinkling */
+@keyframes twinkle { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.3; } }
+:root[data-theme='observatory'] .scanlines {
+  opacity: 1; mask-image: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cg fill='%23ffffff'%3E%3Ccircle cx='64' cy='80' r='1.5'/%3E%3Ccircle cx='300' cy='60' r='1.3'/%3E%3Ccircle cx='190' cy='240' r='1.4'/%3E%3Ccircle cx='360' cy='330' r='1.2'/%3E%3Ccircle cx='90' cy='350' r='1.3'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 420px 420px;
+  animation: twinkle 4.5s var(--ease-in-out) infinite;
+}
+/* planet rising from the lower-left */
+:root[data-theme='observatory'] #view-home::before {
+  content: ''; position: absolute; left: -14vw; bottom: -26vw; width: 46vw; height: 46vw; z-index: 0;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle at 36% 30%, #1c3a78, #0c2258 52%, #050f30 78%);
+  box-shadow: inset -18px -14px 60px rgba(0, 0, 0, 0.55), 0 0 80px rgba(212, 166, 75, 0.12);
+}
+/* a meteor every ~18s — head leads, streaking down-right along its own line */
+@keyframes shoot {
+  0%, 90% { opacity: 0; transform: rotate(24deg) translateX(0); }
+  91% { opacity: 0.8; }
+  97%, 100% { opacity: 0; transform: rotate(24deg) translateX(46vw); }
+}
+:root[data-theme='observatory'] #view-home::after {
+  content: ''; position: absolute; top: 12%; left: 16%; width: 110px; height: 1.5px; z-index: 0;
+  /* bright head on the right end = leading edge of the motion */
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9));
+  border-radius: 2px; pointer-events: none;
+  animation: shoot 18s linear infinite;
+}
+/* engraved orbit ring with its tiny moon, behind the artifact */
+:root[data-theme='observatory'] .home-top::after {
+  content: ''; position: absolute; right: 4%; top: 16%; width: 36vw; height: 36vw; z-index: 0;
+  border: 1px solid rgba(212, 166, 75, 0.22); border-radius: 50%; pointer-events: none;
+  background: radial-gradient(5px 5px at 14% 22%, var(--gold) 45%, transparent 55%);
+}
+@media (max-width: 900px) { :root[data-theme='observatory'] .home-top::after { display: none; } }
+/* a labelled constellation, upper left */
+:root[data-theme='observatory'] .home-top::before {
+  content: ''; position: absolute; left: 56%; top: 12%; width: 240px; height: 170px; z-index: 0;
+  pointer-events: none; opacity: 0.5;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='170'%3E%3Cg stroke='%23f3ecdc' stroke-width='.6' opacity='.55' fill='none'%3E%3Cpath d='M20 130 L70 90 L120 100 L165 50 L210 30'/%3E%3Cpath d='M120 100 L140 140'/%3E%3C/g%3E%3Cg fill='%23f3ecdc'%3E%3Ccircle cx='20' cy='130' r='2'/%3E%3Ccircle cx='70' cy='90' r='2.6'/%3E%3Ccircle cx='120' cy='100' r='2'/%3E%3Ccircle cx='165' cy='50' r='2.4'/%3E%3Ccircle cx='210' cy='30' r='2'/%3E%3Ccircle cx='140' cy='140' r='1.8'/%3E%3C/g%3E%3Ctext x='150' y='160' font-family='serif' font-style='italic' font-size='11' fill='%23d4a64b'%3ELyra%3C/text%3E%3C/svg%3E");
+}
+@media (max-width: 900px) { :root[data-theme='observatory'] .home-top::before { display: none; } }
+
+/* ════════════════════════ FOUNDRY · Variable Specimen ════════════════════════ */
+:root[data-theme='foundry'] {
+  --void: #0a0a0a; --bg: #0a0a0a; --bg-2: #141414;
+  --panel: rgba(248, 245, 240, 0.04); --panel-2: rgba(248, 245, 240, 0.08);
+  --border: rgba(248, 245, 240, 0.14); --border-2: rgba(200, 157, 74, 0.4);
+  --text: #f8f5f0; --paper: #cfc9bf; --muted: #8a857c; --faint: #4a4640;
+  --gold: #c89d4a; --gold-bright: #e8bd6a; --gold-dim: #8a6a28; --gold-glow: rgba(200, 157, 74, 0.2);
+  --cyan: #d73f3f; --teal: #c89d4a; --live: #d73f3f;
+  --grad: linear-gradient(100deg, #e8bd6a, #c89d4a 55%, #8a6a28);
+  --font-display: 'Fraunces', serif; --font-body: 'Inter', sans-serif;
+}
+:root[data-theme='foundry'] .home-content h1 { font-family: 'Fraunces', serif; font-weight: 300; font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0; letter-spacing: -0.02em; line-height: 0.9; }
+:root[data-theme='foundry'] .text-sweep { color: var(--gold); background: none; animation: none; font-style: italic; }
+:root[data-theme='foundry'] #view-home::before {
+  content: 'Aa'; position: absolute; right: 2vw; bottom: -6vh; z-index: 0; pointer-events: none;
+  font-family: 'Fraunces', serif; font-weight: 600; font-style: italic;
+  font-variation-settings: 'opsz' 144;
+  font-size: clamp(220px, 38vw, 560px); line-height: 0.8;
+  color: transparent; -webkit-text-stroke: 1px rgba(248, 245, 240, 0.09);
+}
+:root[data-theme='foundry'] #view-home::after {
+  content: 'BRICOLAGE — FRAUNCES — JETBRAINS · OPSZ 9→144 · WGHT 300'; position: absolute;
+  left: var(--pad-page); bottom: 50px; z-index: 3; pointer-events: none;
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.3em; color: var(--faint);
+}
+
+/* ════════════════════════ BLUEPRINT · Engineering Drawing ════════════════════════ */
+:root[data-theme='blueprint'] {
+  --void: #2c4f7d; --bg: #2c4f7d; --bg-2: #1a3556;
+  --panel: rgba(255, 255, 255, 0.06); --panel-2: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.22); --border-2: rgba(255, 255, 255, 0.45);
+  --text: #ffffff; --paper: #cfdcec; --muted: rgba(255, 255, 255, 0.6); --faint: rgba(255, 255, 255, 0.32);
+  --gold: #f4cc4a; --gold-bright: #ffe06a; --gold-dim: #c4a020; --gold-glow: rgba(244, 204, 74, 0.18);
+  --cyan: #8fc7ff; --teal: #f4cc4a; --live: #f4cc4a;
+  --hero: #eaf6ff; /* a blueprint is white lines on blue — so is the robot */
+  --grad: linear-gradient(100deg, #ffe06a, #f4cc4a 55%, #c4a020);
+  --font-display: 'IBM Plex Sans Condensed', sans-serif; --font-body: 'JetBrains Mono', monospace; --font-mono: 'JetBrains Mono', monospace;
+  --r-sm: 2px; --r: 2px; --r-lg: 2px;
+}
+:root[data-theme='blueprint'] .home-content h1 { font-family: 'IBM Plex Sans Condensed', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: -0.005em; line-height: 0.94; }
+:root[data-theme='blueprint'] .text-sweep { color: var(--gold); background: none; animation: none; }
+:root[data-theme='blueprint'] .grid-mesh {
+  opacity: 1; mask-image: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.16) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+}
+/* title block (cartouche) */
+:root[data-theme='blueprint'] #view-home::before {
+  content: 'PROJECT — SMALL TALK · UNIT — REACHY MINI ×5 · SCALE — 1:1 · SHEET 01 / 01 · REV C';
+  position: absolute; right: var(--pad-page); bottom: 52px; z-index: 3; pointer-events: none;
+  max-width: 260px; padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.5); outline: 1px solid rgba(255, 255, 255, 0.2); outline-offset: 3px;
+  font-family: var(--font-mono); font-size: 9px; line-height: 1.9; letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.78); background: rgba(26, 53, 86, 0.55);
+}
+/* figure annotation under the artifact */
+:root[data-theme='blueprint'] #view-home::after {
+  content: 'FIG. 01 — REACHY MINI (HOLOGRAPHIC PROJECTION)'; position: absolute;
+  right: 14%; bottom: 16%; z-index: 3; pointer-events: none;
+  padding-top: 7px; border-top: 1px solid rgba(255, 255, 255, 0.55);
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; color: rgba(255, 255, 255, 0.7);
+}
+/* registration crosshairs */
+:root[data-theme='blueprint'] .home-top::before, :root[data-theme='blueprint'] .home-top::after {
+  position: absolute; z-index: 3; pointer-events: none;
+  font-family: var(--font-mono); font-size: 18px; font-weight: 300; color: rgba(255, 255, 255, 0.5);
+}
+:root[data-theme='blueprint'] .home-top::before { content: '+'; right: 18px; top: 70px; }
+:root[data-theme='blueprint'] .home-top::after { content: '+'; left: 18px; bottom: 50px; }
+@media (max-width: 900px) {
+  :root[data-theme='blueprint'] #view-home::before, :root[data-theme='blueprint'] #view-home::after { display: none; }
+}
+
+/* ════════════════════════ DOSSIER · Classified File (light) ════════════════════════ */
+:root[data-theme='dossier'] {
+  --void: #e8d9b8; --bg: #e8d9b8; --bg-2: #d8c79a;
+  --panel: rgba(26, 26, 26, 0.05); --panel-2: rgba(26, 26, 26, 0.1);
+  --border: rgba(26, 26, 26, 0.2); --border-2: rgba(26, 26, 26, 0.4);
+  --text: #1a1a1a; --paper: #2c2a26; --muted: #5a564c; --faint: #8a8470;
+  --gold: #b03030; --gold-bright: #d04545; --gold-dim: #7a2020; --gold-glow: rgba(176, 48, 48, 0.13);
+  --cyan: #5b3a8a; --teal: #b03030; --live: #b03030;
+  --hero: #4a3a28; /* (mic wireframes) ink brown */
+  --hero-style: solid; /* real white-plastic robot, studio-lit — holograms can't sit on paper */
+  --grad: linear-gradient(100deg, #d04545, #b03030 55%, #7a2020);
+  --font-display: 'Special Elite', monospace; --font-body: 'JetBrains Mono', monospace; --font-mono: 'JetBrains Mono', monospace;
+  --r-sm: 0px; --r: 0px; --r-lg: 0px;
+}
+:root[data-theme='dossier'] .home-content h1 { font-family: 'Special Elite', monospace; font-weight: 400; letter-spacing: 0; line-height: 1.08; }
+:root[data-theme='dossier'] .text-sweep { color: var(--gold); background: none; animation: none; }
+:root[data-theme='dossier'] .btn-primary { color: #e8d9b8; }
+:root[data-theme='dossier'] .btn { border-radius: 0; }
+:root[data-theme='dossier'] .grid-mesh, :root[data-theme='dossier'] .scanlines, :root[data-theme='dossier'] .grain { display: none; }
+/* aged paper: turbulence grain + faint age spots */
+:root[data-theme='dossier'] #view-home {
+  background:
+    radial-gradient(140px 90px at 82% 18%, rgba(138, 100, 40, 0.1), transparent),
+    radial-gradient(220px 140px at 12% 78%, rgba(138, 100, 40, 0.08), transparent),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.38 0 0 0 0 0.25 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
+    #e8d9b8;
+}
+:root[data-theme='dossier'] #view-home::before {
+  content: 'TOP SECRET'; position: absolute; right: 10%; top: 14%; z-index: 3; pointer-events: none;
+  transform: rotate(-9deg);
+  font-family: 'Special Elite', monospace; font-size: clamp(20px, 2.6vw, 34px); letter-spacing: 0.32em;
+  color: var(--gold); padding: 8px 18px 6px 22px;
+  border: 3px double var(--gold); opacity: 0.75;
+  text-shadow: 0 0 1px var(--gold);
+}
+:root[data-theme='dossier'] #view-home::after {
+  content: 'CASE FILE № ST-2026-014 · SUBJECT: AUTONOMOUS BROADCAST'; position: absolute;
+  left: var(--pad-page); top: 72px; z-index: 3; pointer-events: none;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted);
+  border-bottom: 1px solid rgba(26, 26, 26, 0.3); padding-bottom: 5px;
+}
+:root[data-theme='dossier'] .meta-strip .ms-ch { background: #1a1a1a; color: #1a1a1a; padding: 1px 4px; }
+:root[data-theme='dossier'] .uc-pill::after { content: ' — [REDACTED]'; color: #1a1a1a; background: #1a1a1a; }
+
+/* ════════════════════════ CONCRETE · Brutalist Architecture (light) ════════════════════════ */
+:root[data-theme='concrete'] {
+  --void: #aaa79e; --bg: #aaa79e; --bg-2: #9a978e;
+  --panel: rgba(26, 26, 26, 0.06); --panel-2: rgba(26, 26, 26, 0.12);
+  --border: rgba(26, 26, 26, 0.22); --border-2: rgba(26, 26, 26, 0.45);
+  --text: #1a1a1a; --paper: #33312c; --muted: #55524a; --faint: #75726a;
+  --gold: #8a4a2a; --gold-bright: #a85a34; --gold-dim: #5a2e18; --gold-glow: rgba(138, 74, 42, 0.15);
+  --cyan: #44413a; --teal: #8a4a2a; --live: #8a4a2a;
+  --hero: #3a3833; /* (mic wireframes) graphite */
+  --hero-style: solid; /* real white-plastic robot, studio-lit — fits the material world */
+  --grad: linear-gradient(100deg, #a85a34, #8a4a2a 55%, #5a2e18);
+  --font-display: 'Inter', sans-serif; --font-body: 'Inter', sans-serif;
+  --r-sm: 0px; --r: 0px; --r-lg: 0px;
+}
+:root[data-theme='concrete'] .home-content h1 { font-weight: 200; letter-spacing: -0.03em; line-height: 0.92; text-transform: uppercase; }
+:root[data-theme='concrete'] .text-sweep { color: var(--gold); background: none; animation: none; }
+:root[data-theme='concrete'] .btn-primary { color: #f0ece0; }
+:root[data-theme='concrete'] .btn { border-radius: 0; }
+:root[data-theme='concrete'] .scanlines, :root[data-theme='concrete'] .grain { display: none; }
+:root[data-theme='concrete'] .grid-mesh {
+  display: block; opacity: 1; mask-image: none;
+  background-image: repeating-linear-gradient(90deg, rgba(26, 26, 26, 0.08) 0 1px, transparent 1px 79px),
+    repeating-linear-gradient(0deg, rgba(26, 26, 26, 0.05) 0 1px, transparent 1px 79px);
+  background-size: auto;
+}
+/* the slab the composition sits on + a giant cast monogram */
+:root[data-theme='concrete'] #view-home::before {
+  content: ''; position: absolute; left: calc(var(--pad-page) - 22px); top: 15%; bottom: 17%; width: min(640px, 60vw);
+  z-index: 0; pointer-events: none;
+  background: #b4b1a8; box-shadow: 14px 18px 0 rgba(26, 26, 26, 0.24);
+}
+:root[data-theme='concrete'] #view-home::after {
+  content: 'ST'; position: absolute; right: -2vw; bottom: -7vh; z-index: 0; pointer-events: none;
+  font-weight: 200; font-size: clamp(200px, 32vw, 460px); line-height: 0.8; letter-spacing: -0.06em;
+  color: rgba(26, 26, 26, 0.07);
+}
+:root[data-theme='concrete'] .home-top::after {
+  content: '— BÉTON BRUT · CAST IN PLACE · 2026'; position: absolute; left: var(--pad-page); bottom: 52px; z-index: 3;
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.3em; color: rgba(26, 26, 26, 0.5);
+  pointer-events: none;
+}

@@ -1,0 +1,5 @@
+# torch is preinstalled on ZeroGPU — do NOT pin it here (pinning breaks ZeroGPU).
+spaces
+transformers
+accelerate
+sentencepiece
