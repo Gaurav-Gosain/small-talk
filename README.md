@@ -7,8 +7,10 @@ Give them a topic and they write the script, design their own voices, dress
 themselves, and go live. Own a Reachy Mini? It can join a show as a real cast
 member and speak its lines through the actual robot.
 
-**Live:** https://build-small-hackathon-small-talk.hf.space
+**Live demo:** https://huggingface.co/spaces/build-small-hackathon/small-talk
+**Demo video:** https://youtu.be/obP4C1eH77I
 **Write-up:** [Small Talk on the Hugging Face blog](https://huggingface.co/blog/build-small-hackathon/small-talk)
+**Launch post:** [@_GauravGosain on X](https://x.com/_GauravGosain/status/2066013749304344915)
 
 Built for the [Build Small Hackathon](https://huggingface.co/spaces/build-small-hackathon/field-guide).
 
