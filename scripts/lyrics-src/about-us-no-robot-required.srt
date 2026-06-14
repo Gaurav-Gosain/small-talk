@@ -1,0 +1,735 @@
+1
+00:00:00,638 --> 00:00:00,658
+(robot powering on... then immediately off)
+
+2
+00:00:00,638 --> 00:00:00,658
+(whispered: "sorry little guy")
+
+3
+00:00:00,638 --> 00:00:00,658
+(BASS DROP)
+
+4
+00:00:00,638 --> 00:00:15,000
+Verse 1:
+
+5
+00:00:15,000 --> 00:00:15,019
+Hackathon said "build something with a
+
+6
+00:00:15,000 --> 00:00:15,798
+We said "bet" and built a podcast with five — why stop?
+
+7
+00:00:15,798 --> 00:00:16,495
+Batman versus Yoda on the hot dog question
+
+8
+00:00:16,495 --> 00:00:17,294
+JARVIS pulling up a slideshow nobody requested
+
+9
+00:00:17,294 --> 00:00:18,170
+Jack Sparrow slurring about attention heads and rum
+
+10
+00:00:18,170 --> 00:00:18,928
+Surfer dude just going "bro" — contributing none
+
+11
+00:00:18,928 --> 00:00:19,707
+Five characters in a call, zero impulse control
+
+12
+00:00:19,707 --> 00:00:20,504
+Google Meet for Reachys was apparently the goal
+
+13
+00:00:20,504 --> 00:00:21,463
+robot"
+
+14
+00:00:21,463 --> 00:00:23,696
+We said "bet" and built a podcast with
+
+15
+00:00:23,696 --> 00:00:26,010
+five — why stop?
+
+16
+00:00:26,010 --> 00:00:27,846
+Batman versus Yoda on the hot dog
+
+17
+00:00:27,846 --> 00:00:28,803
+question
+
+18
+00:00:28,803 --> 00:00:31,754
+JARVIS pulling up a slideshow nobody
+
+19
+00:00:31,754 --> 00:00:33,031
+requested
+
+20
+00:00:33,031 --> 00:00:34,707
+Jack Sparrow slurring about attention
+
+21
+00:00:34,707 --> 00:00:35,505
+heads and rum
+
+22
+00:00:35,505 --> 00:00:37,100
+Surfer dude just going "bro" — contribut
+
+23
+00:00:37,100 --> 00:00:37,659
+ing none
+
+24
+00:00:37,659 --> 00:00:37,679
+Five characters in a call, zero impulse
+
+25
+00:00:37,659 --> 00:00:37,840
+Sitting on the desk. Alone. Switched off. At home.
+
+26
+00:00:37,840 --> 00:00:38,020
+Three hundred bucks of French engineering going "...squeak?"
+
+27
+00:00:38,020 --> 00:00:38,200
+Why use one sad robot when the browser renders five a week?
+
+28
+00:00:38,200 --> 00:00:38,380
+Pre-chorus (mock choir):
+
+29
+00:00:38,380 --> 00:00:38,560
+We HAVE the robot, it's riiiight there on the table
+
+30
+00:00:38,560 --> 00:00:38,740
+We simply chose to not use it
+
+31
+00:00:38,740 --> 00:00:38,920
+The browser version's more capable
+
+32
+00:00:38,920 --> 00:00:39,100
+Chorus:
+
+33
+00:00:39,100 --> 00:00:39,280
+TWO GUYS IN DUBAI — ROBOT COLLECTING DUST!
+
+34
+00:00:39,280 --> 00:00:39,460
+FIVE FAKE ONES IN A BROWSER 'CAUSE IN THREE.JS WE TRUST!
+
+35
+00:00:39,460 --> 00:00:39,640
+LIVEKIT STREAMING, HOT DOG WARS, ANTENNAS GOING WILD!
+
+36
+00:00:39,640 --> 00:00:39,820
+ONE REAL REACHY IN THE CORNER LIKE AN ABANDONED CHILD!
+
+37
+00:00:39,820 --> 00:00:40,000
+Verse 2:
+
+38
+00:00:40,000 --> 00:00:40,179
+The topic of tonight's debate, I am not lying:
+
+39
+00:00:40,179 --> 00:00:40,359
+"Is a hot dog a sandwich?" — four robots are DYING
+
+40
+00:00:40,359 --> 00:00:40,539
+Batman: "The structural analysis suggests—"
+
+41
+00:00:40,539 --> 00:00:40,719
+Yoda cuts him: "A sandwich, it is NOT, I attest"
+
+42
+00:00:40,719 --> 00:00:40,899
+JARVIS graphed the caloric breakdown, no one cares
+
+43
+00:00:40,899 --> 00:00:41,079
+Surfer spoken fourteen times, said nothing — just stares
+
+44
+00:00:41,079 --> 00:00:41,259
+And the judges watching this go "...this is the entry?"
+
+45
+00:00:41,259 --> 00:00:41,439
+YES. WELCOME TO THE TWENTY-FIRST CENTURY.
+
+46
+00:00:41,439 --> 00:00:41,619
+Pre-chorus:
+
+47
+00:00:41,619 --> 00:00:41,799
+Every voice from Qwen3-TTS, designed from zero
+
+48
+00:00:41,799 --> 00:00:41,979
+Pre-rendered WAVs, CPU-only — budget hero
+
+49
+00:00:41,979 --> 00:00:42,159
+(Chorus)
+
+50
+00:00:42,159 --> 00:00:42,340
+Bridge (spoken, nature documentary voice):
+
+51
+00:00:42,340 --> 00:00:42,520
+What you are witnessing... is a Gradio app.
+
+52
+00:00:42,520 --> 00:00:42,700
+I know. It looks like Google Meet had a baby with Pixar.
+
+53
+00:00:42,700 --> 00:00:42,880
+There is no Gradio UI. It's deceased.
+
+54
+00:00:42,880 --> 00:00:43,060
+gradio.Server underneath — just the FastAPI skeleton.
+
+55
+00:00:43,060 --> 00:00:43,240
+Custom routes hijacked everything.
+
+56
+00:00:43,240 --> 00:00:43,420
+Three.js loading official Reachy Mini URDF meshes.
+
+57
+00:00:43,420 --> 00:00:43,600
+Every antenna wobble synced to audio amplitude.
+
+58
+00:00:43,600 --> 00:00:43,780
+LiveKit Cloud carrying the WebRTC.
+
+59
+00:00:43,780 --> 00:00:43,960
+We built a five-person video conferencing platform.
+
+60
+00:00:43,960 --> 00:00:44,140
+For rendered robots. On a machine learning demo framework.
+
+61
+00:00:44,140 --> 00:00:44,320
+That we gutted and rebuilt as a 3D engine.
+
+62
+00:00:44,320 --> 00:00:44,500
+The Off-Brand badge? They invented it for us.
+
+63
+00:00:44,500 --> 00:00:44,679
+(DRUMS EXPLODE)
+
+64
+00:00:44,679 --> 00:00:44,859
+Verse 3:
+
+65
+00:00:44,859 --> 00:00:44,880
+Roll call — Nikhil, GT four-point-oh
+
+66
+00:00:44,859 --> 00:00:44,880
+control
+
+67
+00:00:44,859 --> 00:00:44,880
+Google Meet for Reachys was apparently
+
+68
+00:00:44,859 --> 00:00:44,880
+the goal
+
+69
+00:00:44,859 --> 00:00:46,595
+And the actual robot? The one we OWN?
+
+70
+00:00:46,595 --> 00:00:49,387
+Sitting on the desk. Alone. Switched
+
+71
+00:00:49,387 --> 00:00:50,984
+off. At home.
+
+72
+00:00:50,984 --> 00:00:52,659
+Three hundred bucks of French engineer
+
+73
+00:00:52,659 --> 00:00:53,697
+ing going "...squeak?"
+
+74
+00:00:53,697 --> 00:00:56,250
+Why use one sad robot when the browser
+
+75
+00:00:56,250 --> 00:00:58,722
+renders five a week?
+
+76
+00:00:58,722 --> 00:01:01,676
+We HAVE the robot, it's riiiight there
+
+77
+00:01:01,676 --> 00:01:02,871
+on the table
+
+78
+00:01:02,871 --> 00:01:06,543
+We simply chose to not use it
+
+79
+00:01:06,543 --> 00:01:06,563
+The browser version's more capable
+
+80
+00:01:06,543 --> 00:01:06,766
+MCP servers, papers in the queue!
+
+81
+00:01:06,766 --> 00:01:07,138
+seven years talking to buildings, now he talks to you!
+
+82
+00:01:07,138 --> 00:01:07,432
+Gaurav — bio says "Arch BTW" and NOTHING ELSE
+
+83
+00:01:07,432 --> 00:01:07,881
+Hundred-fourteen repos, two-thousand-star project on the shelf
+
+84
+00:01:07,881 --> 00:01:08,373
+Committing to main at 4 AM — forty-seven pushes, zero code reviews, bliss
+
+85
+00:01:08,373 --> 00:01:08,718
+Dubai timezone means Discord calls at midnight
+
+86
+00:01:08,718 --> 00:01:09,176
+Bay Area sleeping, these two absolutely losing their mind right
+
+87
+00:01:09,176 --> 00:01:09,254
+Chorus:
+
+88
+00:01:09,254 --> 00:01:13,245
+TWO GUYS IN DUBAI — ROBOT COLLECTING
+
+89
+00:01:13,245 --> 00:01:13,644
+DUST!
+
+90
+00:01:13,644 --> 00:01:15,956
+FIVE FAKE ONES IN A BROWSER 'CAUSE IN
+
+91
+00:01:15,956 --> 00:01:17,313
+THREE.JS WE TRUST!
+
+92
+00:01:17,313 --> 00:01:19,867
+LIVEKIT STREAMING, HOT DOG WARS, ANTENN
+
+93
+00:01:19,867 --> 00:01:20,983
+AS GOING WILD!
+
+94
+00:01:20,983 --> 00:01:23,697
+ONE REAL REACHY IN THE CORNER LIKE AN
+
+95
+00:01:23,697 --> 00:01:24,415
+ABANDONED CHILD!
+
+96
+00:01:24,415 --> 00:01:24,972
+Verse 2:
+
+97
+00:01:24,972 --> 00:01:26,728
+The topic of tonight's debate, I am not
+
+98
+00:01:26,728 --> 00:01:27,048
+lying:
+
+99
+00:01:27,048 --> 00:01:29,281
+"Is a hot dog a sandwich?" — four robots
+
+100
+00:01:29,281 --> 00:01:29,920
+are DYING
+
+101
+00:01:29,920 --> 00:01:31,373
+Batman: "The structural analysis suggest
+
+102
+00:01:31,373 --> 00:01:32,073
+Outro:
+
+103
+00:01:32,073 --> 00:01:32,394
+s—"
+
+104
+00:01:32,394 --> 00:01:34,947
+Yoda cuts him: "A sandwich, it is NOT, I
+
+105
+00:01:34,947 --> 00:01:35,584
+attest"
+
+106
+00:01:35,584 --> 00:01:37,260
+JARVIS graphed the caloric breakdown, no
+
+107
+00:01:37,260 --> 00:01:37,579
+one cares
+
+108
+00:01:37,579 --> 00:01:38,777
+Surfer spoken fourteen times, said
+
+109
+00:01:38,777 --> 00:01:39,495
+nothing — just stares
+
+110
+00:01:39,495 --> 00:01:40,771
+And the judges watching this go "...this
+
+111
+00:01:40,771 --> 00:01:41,728
+is the entry?"
+
+112
+00:01:41,728 --> 00:01:43,084
+YES. WELCOME TO THE TWENTY-FIRST CENT
+
+113
+00:01:43,084 --> 00:01:43,165
+URY.
+
+114
+00:01:43,165 --> 00:01:43,403
+Pre-chorus:
+
+115
+00:01:43,403 --> 00:01:45,956
+Every voice from Qwen3-TTS, designed
+
+116
+00:01:45,956 --> 00:01:46,834
+from zero
+
+117
+00:01:46,834 --> 00:01:49,867
+Pre-rendered WAVs, CPU-only — budget
+
+118
+00:01:49,867 --> 00:01:50,266
+hero
+
+119
+00:01:50,266 --> 00:01:50,286
+(Chorus)
+
+120
+00:01:50,266 --> 00:01:54,573
+Bridge (spoken, nature documentary
+
+121
+00:01:54,573 --> 00:01:54,653
+voice):
+
+122
+00:01:54,653 --> 00:01:57,287
+What you are witnessing... is a Gradio
+
+123
+00:01:57,287 --> 00:01:58,165
+app.
+
+124
+00:01:58,165 --> 00:02:00,319
+I know. It looks like Google Meet had a
+
+125
+00:02:00,319 --> 00:02:02,394
+baby with Pixar.
+
+126
+00:02:02,394 --> 00:02:05,823
+There is no Gradio UI. It's deceased.
+
+127
+00:02:05,823 --> 00:02:07,500
+gradio.Server underneath — just the Fast
+
+128
+00:02:07,500 --> 00:02:08,058
+API skeleton.
+
+129
+00:02:08,058 --> 00:02:09,495
+Custom routes hijacked everything.
+
+130
+00:02:09,495 --> 00:02:11,330
+Three.js loading official Reachy Mini UR
+
+131
+00:02:11,330 --> 00:02:12,526
+DF meshes.
+
+132
+00:02:12,526 --> 00:02:14,282
+Every antenna wobble synced to audio am
+
+133
+00:02:14,282 --> 00:02:14,760
+plitude.
+
+134
+00:02:14,760 --> 00:02:16,515
+LiveKit Cloud carrying the WebRTC.
+
+135
+00:02:16,515 --> 00:02:18,032
+We built a five-person video conferen
+
+136
+00:02:18,032 --> 00:02:18,590
+cing platform.
+
+137
+00:02:18,590 --> 00:02:19,627
+For rendered robots. On a machine
+
+138
+00:02:19,627 --> 00:02:20,504
+learning demo framework.
+
+139
+00:02:20,504 --> 00:02:22,100
+That we gutted and rebuilt as a 3D
+
+140
+00:02:22,100 --> 00:02:22,659
+engine.
+
+141
+00:02:22,659 --> 00:02:24,734
+The Off-Brand badge? They invented it
+
+142
+00:02:24,734 --> 00:02:25,133
+for us.
+
+143
+00:02:25,133 --> 00:02:25,152
+(DRUMS EXPLODE)
+
+144
+00:02:25,133 --> 00:02:26,010
+Verse 3:
+
+145
+00:02:26,010 --> 00:02:29,122
+Roll call — Nikhil, GT four-point-oh
+
+146
+00:02:29,122 --> 00:02:30,638
+sitting on the lighting controls DALI
+
+147
+00:02:30,638 --> 00:02:32,872
+wire, now it's tensor flow
+
+148
+00:02:32,872 --> 00:02:36,462
+MCP servers, papers in the queue!
+
+149
+00:02:36,462 --> 00:02:38,776
+seven years talking to buildings, now he
+
+150
+00:02:38,776 --> 00:02:40,133
+talks to you!
+
+151
+00:02:40,133 --> 00:02:43,004
+Gaurav — bio says "Arch BTW" and NOTHING
+
+152
+00:02:43,004 --> 00:02:43,563
+ELSE
+
+153
+00:02:43,563 --> 00:02:45,479
+Hundred-fourteen repos, two-thousand
+
+154
+00:02:45,479 --> 00:02:47,313
+-star project on the shelf
+
+155
+00:02:47,313 --> 00:02:49,866
+Committing to main at 4 AM — forty-seven
+
+156
+00:02:49,866 --> 00:02:51,622
+pushes, zero code reviews, bliss
+
+157
+00:02:51,622 --> 00:02:53,776
+Dubai timezone means Discord calls at
+
+158
+00:02:53,776 --> 00:02:54,653
+midnight
+
+159
+00:02:54,653 --> 00:02:57,366
+Bay Area sleeping, these two absolutely
+
+160
+00:02:57,366 --> 00:03:01,037
+losing their mind right
+
+161
+00:03:01,037 --> 00:03:01,056
+(Chorus)
+
+162
+00:03:01,037 --> 00:03:08,616
+Outro:
+
+163
+00:03:08,616 --> 00:03:08,637
+(everything stops)
+
+164
+00:03:08,616 --> 00:03:11,090
+Reachy Mini, finally speaking:
+
+165
+00:03:11,090 --> 00:03:14,361
+"I'm right here. I have a camera. I have
+
+166
+00:03:14,361 --> 00:03:15,638
+a speaker.
+
+167
+00:03:15,638 --> 00:03:18,350
+You built five of me. In Chrome. And I'm
+
+168
+00:03:18,350 --> 00:03:18,750
+RIGHT HERE."
+
+169
+00:03:18,750 --> 00:03:21,622
+Nikhil: "Yeah but can you be Batman?"
+
+170
+00:03:21,622 --> 00:03:22,181
+Reachy: "...no."
+
+171
+00:03:22,181 --> 00:03:22,200
+Nikhil: "Then we're keeping the browser
+
+172
+00:03:22,181 --> 00:03:22,375
+Gaurav: "Arch BTW."
+
+173
+00:03:22,375 --> 00:03:22,555
+(bass hit)
+
+174
+00:03:22,555 --> 00:03:23,062
+"You're listening to Small Talk on Reachy Radio.
+
+175
+00:03:23,062 --> 00:03:23,456
+A Hallucinate Records production.
+
+176
+00:03:23,456 --> 00:03:23,537
+ones."
+
+177
+00:03:23,537 --> 00:03:26,169
+Gaurav: "Arch BTW."
+
+178
+00:03:26,169 --> 00:03:26,189
+(bass hit)
+
+179
+00:03:26,169 --> 00:03:28,802
+"You're listening to Small Talk on Reach
+
+180
+00:03:28,802 --> 00:03:30,239
+y Radio.
+
+181
+00:03:30,239 --> 00:03:32,951
+A Hallucinate Records production.
+
+182
+00:03:32,951 --> 00:03:35,903
+No servos were harmed. One servo's
+
+183
+00:03:35,903 --> 00:03:42,206
+feelings were hurt."
+
+184
+00:03:42,206 --> 00:03:42,360
+(static)

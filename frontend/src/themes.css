@@ -155,7 +155,7 @@
 }
 :root[data-theme='kinetic'] .home-content h1 {
   font-weight: 800; letter-spacing: -0.045em; line-height: 0.88;
-  font-size: clamp(44px, 6.2vw, 88px); text-transform: uppercase;
+  font-size: clamp(40px, min(6.2vw, 8.2vh), 86px); text-transform: uppercase;
 }
 :root[data-theme='kinetic'] #view-home::before {
   content: 'ON AIR'; position: absolute; right: -1vw; top: 8%; z-index: 0; pointer-events: none;
@@ -376,7 +376,9 @@
   --font-display: 'Special Elite', monospace; --font-body: 'JetBrains Mono', monospace; --font-mono: 'JetBrains Mono', monospace;
   --r-sm: 0px; --r: 0px; --r-lg: 0px;
 }
-:root[data-theme='dossier'] .home-content h1 { font-family: 'Special Elite', monospace; font-weight: 400; letter-spacing: 0; line-height: 1.08; }
+/* Special Elite is a wide typewriter face — cap it well below the base hero
+   size so the title doesn't blow the layout out of view on laptop screens */
+:root[data-theme='dossier'] .home-content h1 { font-family: 'Special Elite', monospace; font-weight: 400; letter-spacing: 0; line-height: 1.1; font-size: clamp(30px, min(4.3vw, 6.2vh), 54px); }
 :root[data-theme='dossier'] .text-sweep { color: var(--gold); background: none; animation: none; }
 :root[data-theme='dossier'] .btn-primary { color: #e8d9b8; }
 :root[data-theme='dossier'] .btn { border-radius: 0; }

@@ -1,0 +1,355 @@
+1
+00:00:10,451 --> 00:00:32,552
+Hugging Face (Hold Me Close)Verse 1:
+
+2
+00:00:32,552 --> 00:00:36,542
+I was lost in a world of closed-source
+
+3
+00:00:36,542 --> 00:00:40,052
+pain
+
+4
+00:00:40,052 --> 00:00:47,154
+Every API call was driving me insane
+
+5
+00:00:47,154 --> 00:00:47,173
+Then I found you on the internet one
+
+6
+00:00:47,154 --> 00:00:47,807
+A yellow emoji face that felt so right
+
+7
+00:00:47,807 --> 00:00:48,000
+Pre-chorus:
+
+8
+00:00:48,000 --> 00:00:48,759
+You said "push your model, I'll host it for free"
+
+9
+00:00:48,759 --> 00:00:49,561
+Gave me Spaces, gave me repos, gave me community
+
+10
+00:00:49,561 --> 00:00:50,405
+Fourteen million downloads on a random Tuesday
+
+11
+00:00:50,405 --> 00:00:51,122
+Hugging Face, you complete me in every way
+
+12
+00:00:51,122 --> 00:00:51,302
+Chorus:
+
+13
+00:00:51,302 --> 00:00:54,015
+night
+
+14
+00:00:54,015 --> 00:00:54,036
+A yellow emoji face that felt so right
+
+15
+00:00:54,015 --> 00:00:54,676
+Transformers library treating me right
+
+16
+00:00:54,676 --> 00:00:55,240
+From BERT to Llama, you've seen it all
+
+17
+00:00:55,240 --> 00:00:55,899
+When big tech fumbles, you don't let us fall
+
+18
+00:00:55,899 --> 00:00:56,328
+Hugging Face, hold me close
+
+19
+00:00:56,328 --> 00:00:56,508
+Verse 2:
+
+20
+00:00:56,508 --> 00:00:57,110
+Remember when we only had PyTorch Hub?
+
+21
+00:00:57,110 --> 00:00:57,847
+Dark ages, brother, that's what I'd call that club
+
+22
+00:00:57,847 --> 00:00:58,624
+Then you walked in with your model cards so clean
+
+23
+00:00:58,624 --> 00:00:59,362
+The prettiest leaderboard that I've ever seen
+
+24
+00:00:59,362 --> 00:01:01,914
+Pre-chorus:
+
+25
+00:01:01,914 --> 00:01:04,867
+You said "push your model, I'll host it
+
+26
+00:01:04,867 --> 00:01:05,105
+for free"
+
+27
+00:01:05,105 --> 00:01:05,126
+Gave me Spaces, gave me repos, gave me
+
+28
+00:01:05,105 --> 00:01:06,686
+Datasets, tokenizers, pipelines galore
+
+29
+00:01:06,686 --> 00:01:08,456
+Every time I visit I discover something more
+
+30
+00:01:08,456 --> 00:01:09,813
+community
+
+31
+00:01:09,813 --> 00:01:12,605
+Fourteen million downloads on a random
+
+32
+00:01:12,605 --> 00:01:13,644
+Tuesday
+
+33
+00:01:13,644 --> 00:01:13,664
+Hugging Face, you complete me in every
+
+34
+00:01:13,644 --> 00:01:14,004
+Hugging Face, you make open source complete
+
+35
+00:01:14,004 --> 00:01:14,185
+(Chorus)
+
+36
+00:01:14,185 --> 00:01:14,364
+Bridge:
+
+37
+00:01:14,364 --> 00:01:14,545
+(guitar solo)
+
+38
+00:01:14,545 --> 00:01:14,897
+Clem Delangue, if you're listening tonight
+
+39
+00:01:14,897 --> 00:01:15,319
+Thank you for the revolution, thank you for the fight
+
+40
+00:01:15,319 --> 00:01:15,662
+When OpenAI went closed, you held the door
+
+41
+00:01:15,662 --> 00:01:16,082
+And whispered "open source forever, that's what we're here for"
+
+42
+00:01:16,082 --> 00:01:16,263
+Final Chorus:
+
+43
+00:01:16,263 --> 00:01:16,563
+Hugging Face, hold me close tonight
+
+44
+00:01:16,563 --> 00:01:16,879
+Auto-train got my model running right
+
+45
+00:01:16,879 --> 00:01:17,153
+From zero to deployment in a day
+
+46
+00:01:17,153 --> 00:01:17,394
+way
+
+47
+00:01:17,394 --> 00:01:20,105
+Chorus:
+
+48
+00:01:20,105 --> 00:01:27,048
+Hugging Face, hold me close tonight
+
+49
+00:01:27,048 --> 00:01:32,153
+Transformers library treating me right
+
+50
+00:01:32,153 --> 00:01:39,016
+From BERT to Llama, you've seen it all
+
+51
+00:01:39,016 --> 00:01:42,846
+When big tech fumbles, you don't let us
+
+52
+00:01:42,846 --> 00:01:45,878
+fall
+
+53
+00:01:45,878 --> 00:01:50,504
+Hugging Face, hold me close
+
+54
+00:01:50,504 --> 00:01:54,096
+Verse 2:
+
+55
+00:01:54,096 --> 00:02:00,079
+Remember when we only had PyTorch Hub?
+
+56
+00:02:00,079 --> 00:02:04,388
+Dark ages, brother, that's what I'd call
+
+57
+00:02:04,388 --> 00:02:04,947
+that club
+
+58
+00:02:04,947 --> 00:02:11,808
+Then you walked in with your model cards
+
+59
+00:02:11,808 --> 00:02:15,000
+so clean
+
+60
+00:02:15,000 --> 00:02:19,548
+The prettiest leaderboard that I've ever
+
+61
+00:02:19,548 --> 00:02:19,627
+seen
+
+62
+00:02:19,627 --> 00:02:22,979
+Pre-chorus:
+
+63
+00:02:22,979 --> 00:02:27,048
+Datasets, tokenizers, pipelines galore
+
+64
+00:02:27,048 --> 00:02:29,219
+Every time I visit I discover something
+
+65
+00:02:29,219 --> 00:02:29,919
+Outro:
+
+66
+00:02:29,919 --> 00:02:30,399
+more
+
+67
+00:02:30,399 --> 00:02:33,270
+The community tab is where the real ones
+
+68
+00:02:33,270 --> 00:02:34,467
+meet
+
+69
+00:02:34,467 --> 00:02:38,058
+Hugging Face, you make open source
+
+70
+00:02:38,058 --> 00:02:41,010
+complete
+
+71
+00:02:41,010 --> 00:02:41,031
+(Chorus)
+
+72
+00:02:41,010 --> 00:03:11,330
+Bridge:
+
+73
+00:03:11,330 --> 00:03:11,349
+(guitar solo)
+
+74
+00:03:11,330 --> 00:03:14,760
+Clem Delangue, if you're listening to
+
+75
+00:03:14,760 --> 00:03:17,793
+night
+
+76
+00:03:17,793 --> 00:03:22,580
+Thank you for the revolution, thank you
+
+77
+00:03:22,580 --> 00:03:25,293
+for the fight
+
+78
+00:03:25,293 --> 00:03:29,760
+When OpenAI went closed, you held the
+
+79
+00:03:29,760 --> 00:03:32,234
+door
+
+80
+00:03:32,234 --> 00:03:35,186
+And whispered "open source forever,
+
+81
+00:03:35,186 --> 00:03:39,096
+that's what we're here for"
+
+82
+00:03:39,096 --> 00:03:41,808
+Final Chorus:
+
+83
+00:03:41,808 --> 00:03:49,229
+Hugging Face, hold me close tonight
+
+84
+00:03:49,229 --> 00:03:57,048
+Auto-train got my model running right
+
+85
+00:03:57,048 --> 00:04:01,116
+From zero to deployment in a day
+
+86
+00:04:01,116 --> 00:04:11,409
+Hugging Face, please never go away
+
+87
+00:04:11,409 --> 00:04:21,302
+Hugging Face... hold me close...
+
+88
+00:04:21,302 --> 00:04:26,011
+(softly) Just one more git push... just
+
+89
+00:04:26,011 --> 00:04:28,524
+one more...

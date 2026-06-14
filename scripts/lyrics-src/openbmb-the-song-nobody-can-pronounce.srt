@@ -1,0 +1,743 @@
+1
+00:00:06,621 --> 00:00:21,702
+Verse 1:
+
+2
+00:00:21,702 --> 00:00:24,893
+Open B-M-B, let me spell it out
+
+3
+00:00:24,893 --> 00:00:27,446
+Because nobody at this hackathon can
+
+4
+00:00:27,446 --> 00:00:29,042
+pronounce it, no doubt
+
+5
+00:00:29,042 --> 00:00:31,356
+Is it "Open Bamboo"? "Open Bimby"? "Open
+
+6
+00:00:31,356 --> 00:00:31,995
+Bomb"?
+
+7
+00:00:31,995 --> 00:00:34,947
+It's Open Big Model Base, please stay
+
+8
+00:00:34,947 --> 00:00:35,106
+calm
+
+9
+00:00:35,106 --> 00:00:38,777
+From Tsinghua University, Beijing repres
+
+10
+00:00:38,777 --> 00:00:39,734
+ent
+
+11
+00:00:39,734 --> 00:00:43,164
+MiniCPM is the models that they sent
+
+12
+00:00:43,164 --> 00:00:46,116
+While everyone's arguing about Llama and
+
+13
+00:00:46,116 --> 00:00:46,595
+Qwen
+
+14
+00:00:46,595 --> 00:00:46,615
+OpenBMB said "hold my fried rice, gentle
+
+15
+00:00:46,595 --> 00:00:46,776
+Pre-chorus:
+
+16
+00:00:46,776 --> 00:00:46,956
+Ten thousand dollars in the special prize
+
+17
+00:00:46,956 --> 00:00:47,136
+For anyone who uses their models wise
+
+18
+00:00:47,136 --> 00:00:47,316
+But first you gotta find them in the HuggingFace repo
+
+19
+00:00:47,316 --> 00:00:47,496
+Twelve different versions — which one, though?
+
+20
+00:00:47,496 --> 00:00:47,676
+Chorus:
+
+21
+00:00:47,676 --> 00:00:47,856
+OpenBMB, OpenBMB
+
+22
+00:00:47,856 --> 00:00:48,036
+Nobody can say your name correctly
+
+23
+00:00:48,036 --> 00:00:48,216
+But your models punch above their weight
+
+24
+00:00:48,216 --> 00:00:48,396
+MiniCPM making billion-param models great
+
+25
+00:00:48,396 --> 00:00:48,576
+OpenBMB, OpenBMB
+
+26
+00:00:48,576 --> 00:00:48,756
+I've been saying it wrong this whole hackathon
+
+27
+00:00:48,756 --> 00:00:48,936
+Is it Open-B-M-B or Open-BMB?
+
+28
+00:00:48,936 --> 00:00:49,115
+Please just tell me before the deadline's gone
+
+29
+00:00:49,115 --> 00:00:49,295
+Verse 2:
+
+30
+00:00:49,295 --> 00:00:49,475
+MiniCPM-V four point six for vision
+
+31
+00:00:49,475 --> 00:00:49,655
+MiniCPM-o four point five — omni-mission
+
+32
+00:00:49,655 --> 00:00:49,835
+MiniCPM5-1B — one billion params
+
+33
+00:00:49,835 --> 00:00:50,015
+Running on your phone like "yes I can"
+
+34
+00:00:50,015 --> 00:00:50,195
+MiniCPM4.1-8B for the reasoning heads
+
+35
+00:00:50,195 --> 00:00:50,375
+VoxCPM2 for when your robot needs to talk instead
+
+36
+00:00:50,375 --> 00:00:50,555
+That's FIVE models to choose from, that's FIVE
+
+37
+00:00:50,555 --> 00:00:50,735
+Most sponsors bring one and call it alive
+
+38
+00:00:50,735 --> 00:00:50,915
+But OpenBMB said "nah, here's the whole buffet"
+
+39
+00:00:50,915 --> 00:00:51,095
+Pick your fighter, it's a MiniCPM day
+
+40
+00:00:51,095 --> 00:00:51,115
+Pre-chorus:
+
+41
+00:00:51,095 --> 00:00:51,115
+men"
+
+42
+00:00:51,095 --> 00:00:51,115
+Which means I understand about half of these
+
+43
+00:00:51,095 --> 00:00:51,115
+But the model weights are open, the vibes are right
+
+44
+00:00:51,095 --> 00:00:51,115
+OpenBMB coming through in the Beijing night
+
+45
+00:00:51,095 --> 00:00:51,115
+Pre-chorus:
+
+46
+00:00:51,095 --> 00:00:51,115
+Ten thousand dollars in the special
+
+47
+00:00:51,095 --> 00:00:51,115
+Bridge:
+
+48
+00:00:51,095 --> 00:00:51,183
+(guzheng solo transitioning to 808 drop)
+
+49
+00:00:51,183 --> 00:00:51,363
+(spoken, documentary style)
+
+50
+00:00:51,363 --> 00:00:51,543
+OpenBMB is actually an abbreviation of
+
+51
+00:00:51,543 --> 00:00:51,723
+"Open Lab for Big Model Base"
+
+52
+00:00:51,723 --> 00:00:51,904
+Which is a research group out of Tsinghua University
+
+53
+00:00:51,904 --> 00:00:52,084
+One of the most prestigious universities in China.
+
+54
+00:00:52,084 --> 00:00:52,264
+They've been quietly shipping competitive small models
+
+55
+00:00:52,264 --> 00:00:52,444
+While Western AI Twitter argues about benchmarks
+
+56
+00:00:52,444 --> 00:00:52,624
+And vibes and alignment and whether Claude has feelings.
+
+57
+00:00:52,624 --> 00:00:52,804
+OpenBMB just... makes models. Good ones. Small ones.
+
+58
+00:00:52,804 --> 00:00:52,984
+And then shows up at hackathons with ten K in cash
+
+59
+00:00:52,984 --> 00:00:53,164
+And says "use our stuff."
+
+60
+00:00:53,164 --> 00:00:53,344
+That's it. No drama. No Twitter beef.
+
+61
+00:00:53,344 --> 00:00:53,524
+Just models and money.
+
+62
+00:00:53,524 --> 00:00:53,704
+Honestly? Respect.
+
+63
+00:00:53,704 --> 00:00:53,884
+Verse 3:
+
+64
+00:00:53,884 --> 00:00:54,064
+I tried to tell my team "let's use MiniCPM"
+
+65
+00:00:54,064 --> 00:00:54,243
+They said "Mini what? From where? Say that again?"
+
+66
+00:00:54,243 --> 00:00:54,423
+I said "it's from OpenBMB, a Tsinghua lab"
+
+67
+00:00:54,423 --> 00:00:54,603
+They said "can you just use Llama? We'll grab—"
+
+68
+00:00:54,603 --> 00:00:54,624
+NO. We're using MiniCPM and we're winning that ten K
+
+69
+00:00:54,603 --> 00:00:54,624
+prize
+
+70
+00:00:54,603 --> 00:00:57,845
+For anyone who uses their models wise
+
+71
+00:00:57,845 --> 00:01:00,159
+But first you gotta find them in the Hug
+
+72
+00:01:00,159 --> 00:01:01,835
+gingFace repo
+
+73
+00:01:01,835 --> 00:01:03,909
+Twelve different versions — which one,
+
+74
+00:01:03,909 --> 00:01:03,929
+though?
+
+75
+00:01:03,909 --> 00:01:03,988
+MiniCPM-o is the GOAT and I will not take your call
+
+76
+00:01:03,988 --> 00:01:04,069
+Chorus:
+
+77
+00:01:04,069 --> 00:01:09,254
+OpenBMB, OpenBMB
+
+78
+00:01:09,254 --> 00:01:13,165
+Nobody can say your name correctly
+
+79
+00:01:13,165 --> 00:01:16,117
+But your models punch above their weight
+
+80
+00:01:16,117 --> 00:01:19,388
+MiniCPM making billion-param models
+
+81
+00:01:19,388 --> 00:01:19,408
+great
+
+82
+00:01:19,388 --> 00:01:19,658
+I finally learned to say your name correctly
+
+83
+00:01:19,658 --> 00:01:19,941
+Your models run on phones, your models run on air
+
+84
+00:01:19,941 --> 00:01:20,153
+MiniCPM everywhere and I don't care
+
+85
+00:01:20,153 --> 00:01:20,417
+That nobody at demo day will know who you are
+
+86
+00:01:20,417 --> 00:01:20,745
+Because my Reachy Mini's running your model like a star
+
+87
+00:01:20,745 --> 00:01:23,298
+OpenBMB, OpenBMB
+
+88
+00:01:23,298 --> 00:01:25,850
+I've been saying it wrong this whole h
+
+89
+00:01:25,850 --> 00:01:27,206
+ackathon
+
+90
+00:01:27,206 --> 00:01:30,878
+Is it Open-B-M-B or Open-BMB?
+
+91
+00:01:30,878 --> 00:01:33,750
+Please just tell me before the deadline'
+
+92
+00:01:33,750 --> 00:01:33,989
+s gone
+
+93
+00:01:33,989 --> 00:01:34,069
+Verse 2:
+
+94
+00:01:34,069 --> 00:01:38,617
+MiniCPM-V four point six for vision
+
+95
+00:01:38,617 --> 00:01:42,287
+MiniCPM-o four point five — omni-mission
+
+96
+00:01:42,287 --> 00:01:46,117
+MiniCPM5-1B — one billion params
+
+97
+00:01:46,117 --> 00:01:50,105
+Running on your phone like "yes I can"
+
+98
+00:01:50,105 --> 00:01:52,899
+MiniCPM4.1-8B for the reasoning heads
+
+99
+00:01:52,899 --> 00:01:55,691
+VoxCPM2 for when your robot needs to
+
+100
+00:01:55,691 --> 00:01:56,649
+talk instead
+
+101
+00:01:56,649 --> 00:01:58,882
+That's FIVE models to choose from, that'
+
+102
+00:01:58,882 --> 00:01:59,600
+s FIVE
+
+103
+00:01:59,600 --> 00:02:02,472
+Most sponsors bring one and call it a
+
+104
+00:02:02,472 --> 00:02:02,632
+live
+
+105
+00:02:02,632 --> 00:02:07,021
+But OpenBMB said "nah, here's the whole
+
+106
+00:02:07,021 --> 00:02:08,138
+buffet"
+
+107
+00:02:08,138 --> 00:02:11,568
+Pick your fighter, it's a MiniCPM day
+
+108
+00:02:11,568 --> 00:02:11,649
+Pre-chorus:
+
+109
+00:02:11,649 --> 00:02:14,201
+The documentation is in English AND Ch
+
+110
+00:02:14,201 --> 00:02:15,239
+inese
+
+111
+00:02:15,239 --> 00:02:18,032
+Which means I understand about half of
+
+112
+00:02:18,032 --> 00:02:18,669
+these
+
+113
+00:02:18,669 --> 00:02:20,745
+But the model weights are open, the
+
+114
+00:02:20,745 --> 00:02:22,181
+vibes are right
+
+115
+00:02:22,181 --> 00:02:22,200
+OpenBMB coming through in the Beijing ni
+
+116
+00:02:22,181 --> 00:02:23,901
+Ten thousand dollar prize, HERE I COME
+
+117
+00:02:23,901 --> 00:02:24,308
+Outro:
+
+118
+00:02:24,308 --> 00:02:24,513
+(guzheng flourish)
+
+119
+00:02:24,513 --> 00:02:26,843
+(spoken in badly accented Mandarin) Xièxiè OpenBMB!
+
+120
+00:02:26,843 --> 00:02:27,048
+(808 hit)
+
+121
+00:02:27,048 --> 00:02:27,846
+ght
+
+122
+00:02:27,846 --> 00:02:27,866
+(Chorus)
+
+123
+00:02:27,846 --> 00:02:33,111
+Bridge:
+
+124
+00:02:33,111 --> 00:02:33,132
+(guzheng solo transitioning to 808 drop)
+
+125
+00:02:33,111 --> 00:02:33,132
+(spoken, documentary style)
+
+126
+00:02:33,111 --> 00:02:36,144
+OpenBMB is actually an abbreviation of
+
+127
+00:02:36,144 --> 00:02:39,015
+"Open Lab for Big Model Base"
+
+128
+00:02:39,015 --> 00:02:40,850
+Which is a research group out of Tsingh
+
+129
+00:02:40,850 --> 00:02:42,287
+ua University
+
+130
+00:02:42,287 --> 00:02:44,520
+One of the most prestigious universities
+
+131
+00:02:44,520 --> 00:02:46,037
+in China.
+
+132
+00:02:46,037 --> 00:02:47,872
+They've been quietly shipping competit
+
+133
+00:02:47,872 --> 00:02:49,149
+ive small models
+
+134
+00:02:49,149 --> 00:02:51,543
+While Western AI Twitter argues about
+
+135
+00:02:51,543 --> 00:02:52,340
+benchmarks
+
+136
+00:02:52,340 --> 00:02:54,894
+And vibes and alignment and whether Clau
+
+137
+00:02:54,894 --> 00:02:56,808
+de has feelings.
+
+138
+00:02:56,808 --> 00:03:00,000
+OpenBMB just... makes models. Good ones.
+
+139
+00:03:00,000 --> 00:03:00,717
+Small ones.
+
+140
+00:03:00,717 --> 00:03:03,510
+And then shows up at hackathons with ten
+
+141
+00:03:03,510 --> 00:03:04,627
+K in cash
+
+142
+00:03:04,627 --> 00:03:07,899
+And says "use our stuff."
+
+143
+00:03:07,899 --> 00:03:10,931
+That's it. No drama. No Twitter beef.
+
+144
+00:03:10,931 --> 00:03:12,206
+Just models and money.
+
+145
+00:03:12,206 --> 00:03:13,324
+Honestly? Respect.
+
+146
+00:03:13,324 --> 00:03:13,723
+Verse 3:
+
+147
+00:03:13,723 --> 00:03:16,436
+I tried to tell my team "let's use MiniC
+
+148
+00:03:16,436 --> 00:03:17,074
+PM"
+
+149
+00:03:17,074 --> 00:03:19,627
+They said "Mini what? From where? Say
+
+150
+00:03:19,627 --> 00:03:20,504
+that again?"
+
+151
+00:03:20,504 --> 00:03:23,697
+I said "it's from OpenBMB, a Tsinghua
+
+152
+00:03:23,697 --> 00:03:24,335
+lab"
+
+153
+00:03:24,335 --> 00:03:26,649
+They said "can you just use Llama? We'll
+
+154
+00:03:26,649 --> 00:03:27,526
+grab—"
+
+155
+00:03:27,526 --> 00:03:30,318
+NO. We're using MiniCPM and we're
+
+156
+00:03:30,318 --> 00:03:31,355
+winning that ten K
+
+157
+00:03:31,355 --> 00:03:33,590
+The special prize is OURS if we use
+
+158
+00:03:33,590 --> 00:03:34,548
+their models today
+
+159
+00:03:34,548 --> 00:03:38,217
+Downloaded the weights, loaded the token
+
+160
+00:03:38,217 --> 00:03:39,096
+izer
+
+161
+00:03:39,096 --> 00:03:42,526
+Four billion parameters never felt wiser
+
+162
+00:03:42,526 --> 00:03:45,479
+OCR, vision, voice — this thing does it
+
+163
+00:03:45,479 --> 00:03:45,798
+ALL
+
+164
+00:03:45,798 --> 00:03:48,669
+MiniCPM-o is the GOAT and I will not
+
+165
+00:03:48,669 --> 00:03:49,548
+take your call
+
+166
+00:03:49,548 --> 00:03:52,419
+Final Chorus:
+
+167
+00:03:52,419 --> 00:03:54,894
+OpenBMB, OpenBMB
+
+168
+00:03:54,894 --> 00:03:58,085
+I finally learned to say your name corre
+
+169
+00:03:58,085 --> 00:03:58,883
+ctly
+
+170
+00:03:58,883 --> 00:04:01,436
+Your models run on phones, your models
+
+171
+00:04:01,436 --> 00:04:02,313
+run on air
+
+172
+00:04:02,313 --> 00:04:05,265
+MiniCPM everywhere and I don't care
+
+173
+00:04:05,265 --> 00:04:08,616
+That nobody at demo day will know who
+
+174
+00:04:08,616 --> 00:04:09,495
+you are
+
+175
+00:04:09,495 --> 00:04:11,568
+Because my Reachy Mini's running your
+
+176
+00:04:11,568 --> 00:04:13,563
+model like a star
+
+177
+00:04:13,563 --> 00:04:16,915
+OpenBMB, OpenBMB
+
+178
+00:04:16,915 --> 00:04:21,223
+Ten thousand dollar prize, HERE I COME
+
+179
+00:04:21,223 --> 00:04:21,622
+Outro:
+
+180
+00:04:21,622 --> 00:04:21,641
+(guzheng flourish)
+
+181
+00:04:21,622 --> 00:04:21,641
+(spoken in badly accented Mandarin) Xièxiè OpenBMB!
+
+182
+00:04:21,622 --> 00:04:21,641
+(808 hit)
+
+183
+00:04:21,622 --> 00:04:21,641
+(spoken) Did I say that right?
+
+184
+00:04:21,622 --> 00:04:21,641
+(silence)
+
+185
+00:04:21,622 --> 00:04:28,004
+(spoken) ...I definitely did not.
+
+186
+00:04:28,004 --> 00:04:28,923
+(spoken) ...I definitely did not.

@@ -1,0 +1,535 @@
+1
+00:00:00,000 --> 00:00:00,020
+(snaps throughout)
+
+2
+00:00:00,000 --> 00:00:03,351
+Verse 1:
+
+3
+00:00:03,351 --> 00:00:05,426
+I wrote the README before I wrote a
+
+4
+00:00:05,426 --> 00:00:07,660
+single line of code.
+
+5
+00:00:07,660 --> 00:00:10,371
+Fourteen badges. Build passing. Coverage
+
+6
+00:00:10,371 --> 00:00:11,250
+unknown.
+
+7
+00:00:11,250 --> 00:00:13,164
+A beautiful lie in markdown.
+
+8
+00:00:13,164 --> 00:00:15,718
+"Robust." "Production-ready." "Blazing
+
+9
+00:00:15,718 --> 00:00:17,153
+fast."
+
+10
+00:00:17,153 --> 00:00:17,173
+Brother, the repo has one file and it's
+
+11
+00:00:17,153 --> 00:00:17,333
+But what a README it is.
+
+12
+00:00:17,333 --> 00:00:17,513
+Verse 2:
+
+13
+00:00:17,513 --> 00:00:17,693
+Features section longer than my attention span.
+
+14
+00:00:17,693 --> 00:00:17,873
+Checkboxes — half checked, half aspirational.
+
+15
+00:00:17,873 --> 00:00:18,053
+"Multi-model support" — I support hoping for it.
+
+16
+00:00:18,053 --> 00:00:18,234
+"Real-time inference" — real-time if you're patient.
+
+17
+00:00:18,234 --> 00:00:18,414
+"Comprehensive documentation" — you're reading it. This is it.
+
+18
+00:00:18,414 --> 00:00:18,594
+The architecture diagram was made in Excalidraw
+
+19
+00:00:18,594 --> 00:00:18,774
+At 3 AM with the confidence of a man
+
+20
+00:00:18,774 --> 00:00:18,954
+Who has never actually implemented any of it.
+
+21
+00:00:18,954 --> 00:00:19,134
+Arrows pointing everywhere.
+
+22
+00:00:19,134 --> 00:00:19,314
+"Service mesh." I don't know what that means.
+
+23
+00:00:19,314 --> 00:00:19,493
+But the arrow looks great.
+
+24
+00:00:19,493 --> 00:00:19,673
+Pre-chorus:
+
+25
+00:00:19,673 --> 00:00:19,786
+(whispered) The code doesn't exist yet.
+
+26
+00:00:19,786 --> 00:00:21,222
+the README.
+
+27
+00:00:21,222 --> 00:00:25,850
+But what a README it is.
+
+28
+00:00:25,850 --> 00:00:26,089
+Verse 2:
+
+29
+00:00:26,089 --> 00:00:28,245
+Features section longer than my
+
+30
+00:00:28,245 --> 00:00:29,282
+attention span.
+
+31
+00:00:29,282 --> 00:00:32,552
+Checkboxes — half checked, half aspir
+
+32
+00:00:32,552 --> 00:00:33,670
+ational.
+
+33
+00:00:33,670 --> 00:00:36,064
+"Multi-model support" — I support hoping
+
+34
+00:00:36,064 --> 00:00:36,862
+for it.
+
+35
+00:00:36,862 --> 00:00:39,176
+"Real-time inference" — real-time if
+
+36
+00:00:39,176 --> 00:00:40,371
+you're patient.
+
+37
+00:00:40,371 --> 00:00:42,765
+"Comprehensive documentation" — you're
+
+38
+00:00:42,765 --> 00:00:44,920
+reading it. This is it.
+
+39
+00:00:44,920 --> 00:00:47,792
+The architecture diagram was made in Ex
+
+40
+00:00:47,792 --> 00:00:48,750
+calidraw
+
+41
+00:00:48,750 --> 00:00:52,100
+At 3 AM with the confidence of a man
+
+42
+00:00:52,100 --> 00:00:55,213
+Who has never actually implemented any
+
+43
+00:00:55,213 --> 00:00:55,691
+of it.
+
+44
+00:00:55,691 --> 00:00:57,527
+Arrows pointing everywhere.
+
+45
+00:00:57,527 --> 00:00:59,441
+"Service mesh." I don't know what that
+
+46
+00:00:59,441 --> 00:01:00,558
+means.
+
+47
+00:01:00,558 --> 00:01:03,031
+But the arrow looks great.
+
+48
+00:01:03,031 --> 00:01:08,218
+"Robust." "Production-ready." "Blazing f
+
+49
+00:01:08,218 --> 00:01:08,936
+ast."
+
+50
+00:01:08,936 --> 00:01:08,956
+Brother, the repo has one file and it's
+
+51
+00:01:08,936 --> 00:01:09,188
+Chorus:
+
+52
+00:01:09,188 --> 00:01:10,010
+README driven development
+
+53
+00:01:10,010 --> 00:01:11,653
+Where the docs come first and the code comes... eventually
+
+54
+00:01:11,653 --> 00:01:12,474
+README driven development
+
+55
+00:01:12,474 --> 00:01:13,722
+Ship the vision, worry about reality later
+
+56
+00:01:13,722 --> 00:01:14,920
+the README.
+
+57
+00:01:14,920 --> 00:01:20,426
+But what a README it is.
+
+58
+00:01:20,426 --> 00:01:21,382
+Verse 2:
+
+59
+00:01:21,382 --> 00:01:28,722
+Features section longer than my attent
+
+60
+00:01:28,722 --> 00:01:29,441
+ion span.
+
+61
+00:01:29,441 --> 00:01:39,254
+Checkboxes — half checked, half aspir
+
+62
+00:01:39,254 --> 00:01:39,813
+ational.
+
+63
+00:01:39,813 --> 00:01:47,153
+"Multi-model support" — I support hoping
+
+64
+00:01:47,153 --> 00:01:50,823
+for it.
+
+65
+00:01:50,823 --> 00:01:54,415
+"Real-time inference" — real-time if
+
+66
+00:01:54,415 --> 00:01:57,048
+you're patient.
+
+67
+00:01:57,048 --> 00:02:01,995
+"Comprehensive documentation" — you're r
+
+68
+00:02:01,995 --> 00:02:04,228
+eading it. This is it.
+
+69
+00:02:04,228 --> 00:02:11,090
+The architecture diagram was made in Ex
+
+70
+00:02:11,090 --> 00:02:11,489
+calidraw
+
+71
+00:02:11,489 --> 00:02:17,872
+At 3 AM with the confidence of a man
+
+72
+00:02:17,872 --> 00:02:24,495
+"Real-time inference" — real-time if
+
+73
+00:02:24,495 --> 00:02:26,489
+you're patient.
+
+74
+00:02:26,489 --> 00:02:31,436
+"Comprehensive documentation" — you're r
+
+75
+00:02:31,436 --> 00:02:32,712
+eading it. This is it.
+
+76
+00:02:32,712 --> 00:02:38,537
+The architecture diagram was made in Ex
+
+77
+00:02:38,537 --> 00:02:39,813
+calidraw
+
+78
+00:02:39,813 --> 00:02:43,164
+At 3 AM with the confidence of a man
+
+79
+00:02:43,164 --> 00:02:45,159
+Who has never actually implemented any
+
+80
+00:02:45,159 --> 00:02:45,399
+of it.
+
+81
+00:02:45,399 --> 00:02:53,058
+Arrows pointing everywhere.
+
+82
+00:02:53,058 --> 00:02:59,520
+"Service mesh." I don't know what that
+
+83
+00:02:59,520 --> 00:03:01,037
+means.
+
+84
+00:03:01,037 --> 00:03:05,026
+But the arrow looks great.
+
+85
+00:03:05,026 --> 00:03:10,293
+Pre-chorus:
+
+86
+00:03:10,293 --> 00:03:10,312
+(whispered) The code doesn't exist yet.
+
+87
+00:03:10,293 --> 00:03:10,312
+(normal) But the README... the README is a masterpiece.
+
+88
+00:03:10,293 --> 00:03:10,312
+The README... got us to the finals.
+
+89
+00:03:10,293 --> 00:03:10,312
+Chorus:
+
+90
+00:03:10,293 --> 00:03:10,312
+README driven development
+
+91
+00:03:10,293 --> 00:03:10,312
+Where the docs come first and the code comes... eventually
+
+92
+00:03:10,293 --> 00:03:10,312
+The greatest lie in open source
+
+93
+00:03:10,293 --> 00:03:10,312
+README driven development
+
+94
+00:03:10,293 --> 00:03:10,312
+Ship the vision, worry about reality later
+
+95
+00:03:10,293 --> 00:03:10,312
+The README is the product
+
+96
+00:03:10,293 --> 00:03:10,312
+The code is just a implementation detail
+
+97
+00:03:10,293 --> 00:03:10,312
+Nobody reads the code anyway
+
+98
+00:03:10,293 --> 00:03:10,312
+They star the repo based on the README
+
+99
+00:03:10,293 --> 00:03:10,312
+Verse 3:
+
+100
+00:03:10,293 --> 00:03:10,312
+Installation instructions for software that doesn't install.
+
+101
+00:03:10,293 --> 00:03:10,312
+"pip install hope" — package not found.
+
+102
+00:03:10,293 --> 00:03:10,312
+"docker compose up" — compose file is a TODO.
+
+103
+00:03:10,293 --> 00:03:10,312
+Contributing guidelines for contributors that don't exist.
+
+104
+00:03:10,293 --> 00:03:10,312
+But if they DID exist, they'd know exactly how to contribute.
+
+105
+00:03:10,293 --> 00:03:10,312
+That's good documentation.
+
+106
+00:03:10,293 --> 00:03:10,312
+The GIF in the README is from a different project.
+
+107
+00:03:10,293 --> 00:03:10,312
+Nobody's noticed. Stars keep coming.
+
+108
+00:03:10,293 --> 00:03:10,312
+Forty-three stars and counting.
+
+109
+00:03:10,293 --> 00:03:10,312
+Somebody opened an issue: "This doesn't work."
+
+110
+00:03:10,293 --> 00:03:10,312
+I labeled it "enhancement."
+
+111
+00:03:10,293 --> 00:03:10,312
+Verse 4:
+
+112
+00:03:10,293 --> 00:03:10,312
+My hackathon submission:
+
+113
+00:03:10,293 --> 00:03:10,312
+Demo video — thirty percent README scrolling.
+
+114
+00:03:10,293 --> 00:03:10,312
+Slow scroll. Dramatic music.
+
+115
+00:03:10,293 --> 00:03:10,312
+Badge. Badge. Badge. Architecture diagram. Badge.
+
+116
+00:03:10,293 --> 00:03:10,312
+Judge thinks "wow, comprehensive."
+
+117
+00:03:10,293 --> 00:03:10,312
+I think "wow, I should probably write some code."
+
+118
+00:03:10,293 --> 00:03:10,312
+But here's the thing.
+
+119
+00:03:10,293 --> 00:03:10,312
+Here's the beautiful, terrible thing.
+
+120
+00:03:10,293 --> 00:03:10,312
+The README... got us to the finals.
+
+121
+00:03:10,293 --> 00:03:10,312
+Final Chorus:
+
+122
+00:03:10,293 --> 00:03:10,312
+README driven development
+
+123
+00:03:10,293 --> 00:03:10,312
+The greatest lie in open source
+
+124
+00:03:10,293 --> 00:03:10,312
+README driven development
+
+125
+00:03:10,293 --> 00:03:10,312
+The code will catch up — in due course
+
+126
+00:03:10,293 --> 00:03:10,312
+Ship the README, ship the dream
+
+127
+00:03:10,293 --> 00:03:10,312
+Nothing is real and nothing's what it seems
+
+128
+00:03:10,293 --> 00:03:10,312
+But the badges are green
+
+129
+00:03:10,293 --> 00:03:10,312
+And that's all that matters
+
+130
+00:03:10,293 --> 00:03:10,312
+Outro:
+
+131
+00:03:10,293 --> 00:03:10,312
+(single finger snap)
+
+132
+00:03:10,293 --> 00:03:10,312
+(whispered) ...stars on GitHub don't require working code...
+
+133
+00:03:10,293 --> 00:03:10,312
+(snap)
+
+134
+00:03:10,293 --> 00:03:11,872
+(silence)

@@ -1,0 +1,463 @@
+1
+00:00:02,472 --> 00:00:14,441
+Verse 1:
+
+2
+00:00:14,441 --> 00:00:16,995
+Woke up this morning, it's forty-five
+
+3
+00:00:16,995 --> 00:00:18,431
+degrees
+
+4
+00:00:18,431 --> 00:00:21,940
+AC blasting but I'm coding on my knees
+
+5
+00:00:21,940 --> 00:00:24,814
+Midnight hackathon but the sun never
+
+6
+00:00:24,814 --> 00:00:25,452
+sets
+
+7
+00:00:25,452 --> 00:00:28,564
+On a Dubai developer drowning in tech
+
+8
+00:00:28,564 --> 00:00:29,042
+debt
+
+9
+00:00:29,042 --> 00:00:33,031
+Got a co-working space in Business Bay
+
+10
+00:00:33,031 --> 00:00:36,862
+But I'm working from my bedroom anyway
+
+11
+00:00:36,862 --> 00:00:40,612
+Noon prayer call and I haven't slept yet
+
+12
+00:00:40,612 --> 00:00:43,484
+Debugging Python in a pool of sweat
+
+13
+00:00:43,484 --> 00:00:43,963
+Chorus:
+
+14
+00:00:43,963 --> 00:00:47,713
+Got the Dubai developer blues
+
+15
+00:00:47,713 --> 00:00:51,064
+GPU melting, nothing left to lose
+
+16
+00:00:51,064 --> 00:00:54,814
+Time zone's wrong for every demo call
+
+17
+00:00:54,814 --> 00:00:58,323
+Three AM standup, back against the wall
+
+18
+00:00:58,323 --> 00:01:02,472
+Dubai developer blues
+
+19
+00:01:02,472 --> 00:01:07,500
+Verse 2:
+
+20
+00:01:07,500 --> 00:01:09,254
+HuggingFace headquarters in Paris, Fr
+
+21
+00:01:09,254 --> 00:01:09,653
+ance
+
+22
+00:01:09,653 --> 00:01:11,649
+Pollen Robotics, same, imagine that
+
+23
+00:01:11,649 --> 00:01:12,686
+romance
+
+24
+00:01:12,686 --> 00:01:16,516
+Meanwhile I'm in JLT at a shawarma spot
+
+25
+00:01:16,516 --> 00:01:16,536
+Pushing commits while the hummus gets
+
+26
+00:01:16,516 --> 00:01:16,695
+LinkedIn influencers posting "we're hiring"
+
+27
+00:01:16,695 --> 00:01:16,876
+AI Engineer, Dubai — sounds inspiring
+
+28
+00:01:16,876 --> 00:01:17,055
+Till you read the JD: "ten years of LLM experience"
+
+29
+00:01:17,055 --> 00:01:17,236
+Brother, transformers dropped in 2017, show some lenience
+
+30
+00:01:17,236 --> 00:01:17,415
+Chorus:
+
+31
+00:01:17,415 --> 00:01:17,596
+Got the Dubai developer blues
+
+32
+00:01:17,596 --> 00:01:17,775
+Dirhams in my pocket but I'm paying my dues
+
+33
+00:01:17,775 --> 00:01:17,956
+AI Tinkerers meetup every other Thursday
+
+34
+00:01:17,956 --> 00:01:18,135
+Trying to build the scene the hard way
+
+35
+00:01:18,135 --> 00:01:18,316
+Dubai developer blues
+
+36
+00:01:18,316 --> 00:01:18,495
+Bridge:
+
+37
+00:01:18,495 --> 00:01:18,676
+(harmonica solo)
+
+38
+00:01:18,676 --> 00:01:18,855
+(spoken) You know what's funny?
+
+39
+00:01:18,855 --> 00:01:19,036
+I could be at FAANG pulling three hundred K
+
+40
+00:01:19,036 --> 00:01:19,215
+But instead I'm making a robot DJ
+
+41
+00:01:19,215 --> 00:01:19,396
+On a ten day hackathon with no prize guaranteed
+
+42
+00:01:19,396 --> 00:01:19,575
+And honestly? This is exactly where I need to be.
+
+43
+00:01:19,575 --> 00:01:19,756
+Verse 3:
+
+44
+00:01:19,756 --> 00:01:19,936
+Arranged marriage aunties calling every week
+
+45
+00:01:19,936 --> 00:01:20,115
+"Beta, what is this ML thing you speak?"
+
+46
+00:01:20,115 --> 00:01:20,296
+"Can your robot make chai? Can it fold a shirt?"
+
+47
+00:01:20,296 --> 00:01:20,475
+No auntie, but it vibes and that's got worth
+
+48
+00:01:20,475 --> 00:01:20,656
+The whole world's building agents, RAG, and tools
+
+49
+00:01:20,656 --> 00:01:20,835
+I'm making Reachy sing to break the rules
+
+50
+00:01:20,835 --> 00:01:21,016
+From Deira to Downtown, code compiles the same
+
+51
+00:01:21,016 --> 00:01:21,195
+Dubai developer blues, but I love this game
+
+52
+00:01:21,195 --> 00:01:21,376
+Final Chorus:
+
+53
+00:01:21,376 --> 00:01:21,555
+Got the Dubai developer blues
+
+54
+00:01:21,555 --> 00:01:21,736
+Small model hackathon, nothing left to lose
+
+55
+00:01:21,736 --> 00:01:21,756
+Reachy Radio broadcasting from the sand
+
+56
+00:01:21,736 --> 00:01:21,756
+hot
+
+57
+00:01:21,736 --> 00:01:21,756
+LinkedIn influencers posting "we're hir
+
+58
+00:01:21,736 --> 00:01:21,756
+Dubai developer blues
+
+59
+00:01:21,736 --> 00:01:21,930
+Yeah I got those blues... but I'll never refuse
+
+60
+00:01:21,930 --> 00:01:22,239
+Outro:
+
+61
+00:01:22,239 --> 00:01:22,420
+(guitar fades)
+
+62
+00:01:22,420 --> 00:01:23,138
+ing"
+
+63
+00:01:23,138 --> 00:01:26,649
+AI Engineer, Dubai — sounds inspiring
+
+64
+00:01:26,649 --> 00:01:29,043
+Till you read the JD: "ten years of LLM
+
+65
+00:01:29,043 --> 00:01:29,521
+experience"
+
+66
+00:01:29,521 --> 00:01:32,233
+Brother, transformers dropped in
+
+67
+00:01:32,233 --> 00:01:33,430
+2017, show some lenience
+
+68
+00:01:33,430 --> 00:01:33,510
+Chorus:
+
+69
+00:01:33,510 --> 00:01:36,382
+Got the Dubai developer blues
+
+70
+00:01:36,382 --> 00:01:39,176
+Dirhams in my pocket but I'm paying my
+
+71
+00:01:39,176 --> 00:01:39,653
+dues
+
+72
+00:01:39,653 --> 00:01:43,882
+AI Tinkerers meetup every other Thursday
+
+73
+00:01:43,882 --> 00:01:47,394
+Trying to build the scene the hard way
+
+74
+00:01:47,394 --> 00:02:02,712
+Dubai developer blues
+
+75
+00:02:02,712 --> 00:02:07,819
+Got a co-working space in Business Bay
+
+76
+00:02:07,819 --> 00:02:12,765
+But I'm working from my bedroom anyway
+
+77
+00:02:12,765 --> 00:02:18,909
+Noon prayer call and I haven't slept yet
+
+78
+00:02:18,909 --> 00:02:20,824
+Debugging Python in a pool of sweat
+
+79
+00:02:20,824 --> 00:02:20,903
+Chorus:
+
+80
+00:02:20,903 --> 00:02:25,372
+Got the Dubai developer blues
+
+81
+00:02:25,372 --> 00:02:29,520
+GPU melting, nothing left to lose
+
+82
+00:02:29,520 --> 00:02:36,701
+Time zone's wrong for every demo call
+
+83
+00:02:36,701 --> 00:02:40,931
+Three AM standup, back against the wall
+
+84
+00:02:40,931 --> 00:02:44,840
+Dubai developer blues
+
+85
+00:02:44,840 --> 00:02:46,596
+Chorus:
+
+86
+00:02:46,596 --> 00:02:48,909
+Got the Dubai developer blues
+
+87
+00:02:48,909 --> 00:02:52,580
+GPU melting, nothing left to lose
+
+88
+00:02:52,580 --> 00:02:58,962
+Trying to build the scene the hard way
+
+89
+00:02:58,962 --> 00:03:03,750
+Dubai developer blues
+
+90
+00:03:03,750 --> 00:03:07,419
+Bridge:
+
+91
+00:03:07,419 --> 00:03:07,439
+(harmonica solo)
+
+92
+00:03:07,419 --> 00:03:07,439
+(spoken) You know what's funny?
+
+93
+00:03:07,419 --> 00:03:07,439
+I could be at FAANG pulling three hundred K
+
+94
+00:03:07,419 --> 00:03:07,439
+But instead I'm making a robot DJ
+
+95
+00:03:07,419 --> 00:03:07,439
+On a ten day hackathon with no prize guaranteed
+
+96
+00:03:07,419 --> 00:03:07,439
+And honestly? This is exactly where I need to be.
+
+97
+00:03:07,419 --> 00:03:07,439
+Verse 3:
+
+98
+00:03:07,419 --> 00:03:07,439
+Arranged marriage aunties calling every week
+
+99
+00:03:07,419 --> 00:03:07,439
+"Beta, what is this ML thing you speak?"
+
+100
+00:03:07,419 --> 00:03:07,439
+"Can your robot make chai? Can it fold a shirt?"
+
+101
+00:03:07,419 --> 00:03:07,439
+No auntie, but it vibes and that's got worth
+
+102
+00:03:07,419 --> 00:03:07,439
+The whole world's building agents, RAG, and tools
+
+103
+00:03:07,419 --> 00:03:07,439
+I'm making Reachy sing to break the rules
+
+104
+00:03:07,419 --> 00:03:07,439
+From Deira to Downtown, code compiles the same
+
+105
+00:03:07,419 --> 00:03:07,439
+Dubai developer blues, but I love this game
+
+106
+00:03:07,419 --> 00:03:07,439
+Final Chorus:
+
+107
+00:03:07,419 --> 00:03:07,439
+Got the Dubai developer blues
+
+108
+00:03:07,419 --> 00:03:07,439
+Small model hackathon, nothing left to lose
+
+109
+00:03:07,419 --> 00:03:07,439
+Reachy Radio broadcasting from the sand
+
+110
+00:03:07,419 --> 00:03:07,439
+Hottest robot station in the land
+
+111
+00:03:07,419 --> 00:03:07,439
+Dubai developer blues
+
+112
+00:03:07,419 --> 00:03:07,439
+Yeah I got those blues... but I'll never refuse
+
+113
+00:03:07,419 --> 00:03:07,439
+Outro:
+
+114
+00:03:07,419 --> 00:03:07,439
+(guitar fades)
+
+115
+00:03:07,419 --> 00:03:07,439
+(muezzin-inspired melodic hum fading with harmonica)
+
+116
+00:03:07,419 --> 00:03:08,616
+(spoken) ...yalla, one more commit...

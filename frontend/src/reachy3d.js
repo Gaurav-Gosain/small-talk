@@ -157,6 +157,8 @@ const TAU = Math.PI * 2;
 //    head-platform link (xl_330) directly — the same head-pose abstraction the
 //    real robot uses, sidestepping Stewart-platform IK.
 const BREATHE_Z_M = 0.005; // 5 mm vertical bob
+const BEAT_NOD_RAD = 9 * (Math.PI / 180); // head-dip pitch on a music beat
+const BEAT_DROP_M = 0.0075; // 7.5 mm downward bob on the beat
 const BREATHE_HZ = 0.1;
 const ANT_SWAY_RAD = 15 * D2R; // idle antenna sway
 const ANT_HZ = 0.5;
@@ -247,6 +249,7 @@ export class ReachyTwin {
     this._zoom = 1;
     this.level = 0; // smoothed audio level, 0..1
     this._targetLevel = 0; // raw level from the grid, smoothed in _tick
+    this._beat = 0; // decaying on-beat nod impulse (radio DJ), 0 unless pulse()d
     this._t = 0; // accumulated wall-clock seconds (frame-rate independent)
     this._clock = new THREE.Clock();
     this._disposed = false;
@@ -372,6 +375,9 @@ export class ReachyTwin {
   setLevel(level) {
     this._targetLevel = Math.max(0, Math.min(1, level));
   }
+
+  /** Snap an on-beat head-dip impulse (radio DJ headbang). Decays in _tick. */
+  pulse() { this._beat = 1; }
 
   /** Backstage mode (the show is writing/voicing): react sooner and dance more,
    *  so the wait looks like a green-room hang instead of frozen robots. */
@@ -512,6 +518,7 @@ export class ReachyTwin {
     const tau = this._targetLevel > this.level ? LEVEL_ATTACK_S : LEVEL_RELEASE_S;
     this.level += (this._targetLevel - this.level) * (1 - Math.exp(-dt / tau));
     const lvl = this.level;
+    this._beat *= Math.exp(-dt / 0.13); // on-beat nod impulse decays (~90ms)
 
     if (this.robot && this._rest) {
       const ph = this._seed;
@@ -574,6 +581,15 @@ export class ReachyTwin {
         const antSpeech = ANT_SPEECH_RAD * lvl * Math.sin(TAU * ANT_SPEECH_HZ * t + ph);
         aL += antSpeech;
         aR -= antSpeech;
+      }
+
+      // --- on-beat headbang (radio DJ): a sharp downward nod + dip + antenna
+      //     flick on each detected beat, layered over everything else ---
+      if (this._beat > 0.001) {
+        hpitch += BEAT_NOD_RAD * this._beat;
+        hy -= BEAT_DROP_M * this._beat;
+        aL -= ANT_SPEECH_RAD * 1.4 * this._beat;
+        aR -= ANT_SPEECH_RAD * 1.4 * this._beat;
       }
 
       // --- apply to the head link (world rotation → link-local) + joints ---

@@ -43,19 +43,21 @@ export async function openRadio() {
             <button class="rd-btn" id="rdNextB" title="next">⏭</button>
             <input type="range" id="rdVol" min="0" max="1" step="0.01" value="0.9" title="volume">
           </div>
-          <div class="rd-next" id="rdNext"></div>
+        </div>
+      </div>
+      <div class="rd-stage" id="rdStage">
+        <div class="rd-spot"></div>
+        <div class="rd-floor"></div>
+        <div class="rd-twin" id="rdTwin"></div>
+        <div class="rd-boothmeta">
+          <b>DJ SERVO <span class="rd-eq" id="rdEq"><i></i><i></i><i></i><i></i></span></b>
+          <span class="rd-say" id="rdSay">spinning the small-model classics</span>
+          <span class="rd-next" id="rdNext"></span>
         </div>
       </div>
       <div class="rd-lyrics" id="rdLyrics"><div class="rd-lyrollers" id="rdLyRoll"></div></div>
     </div>
     <div class="rd-bottom">
-      <div class="rd-booth">
-        <div class="rd-twin" id="rdTwin"></div>
-        <div class="rd-boothmeta">
-          <b>DJ Servo</b>
-          <span class="rd-say" id="rdSay">spinning the small-model classics</span>
-        </div>
-      </div>
       <div class="rd-tracks" id="rdTracks"></div>
     </div>
     <div class="rd-gate" id="rdGate">
@@ -69,7 +71,9 @@ export async function openRadio() {
   st.audio.preload = 'auto';
 
   try {
-    st.playlist = await (await fetch('/radio/playlist.json')).json();
+    // cache-bust: playlist.json ships no Cache-Control, so browsers heuristically
+    // cache it and would otherwise serve stale lyrics/timings after an update
+    st.playlist = await (await fetch(`/radio/playlist.json?t=${Date.now()}`, { cache: 'no-store' })).json();
   } catch {
     $id('rdTitle').textContent = 'station offline';
     return;
@@ -150,7 +154,8 @@ function ensureGraph() {
     st.ctx = new (window.AudioContext || window.webkitAudioContext)();
     const src = st.ctx.createMediaElementSource(st.audio);
     st.analyser = st.ctx.createAnalyser();
-    st.analyser.fftSize = 128;
+    st.analyser.fftSize = 256;        // finer bins → cleaner kick/bass for beat sync
+    st.analyser.smoothingTimeConstant = 0.6;
     st.bins = new Uint8Array(st.analyser.frequencyBinCount);
     src.connect(st.analyser);
     st.analyser.connect(st.ctx.destination);
@@ -216,7 +221,7 @@ function setOnAir(on) {
   const t = $id('rdOnAirText');
   if (t) t.textContent = on ? 'ON AIR' : 'NOW PLAYING';
   $id('rdArm')?.classList.toggle('lifted', on);
-  document.querySelector('.rd-booth')?.classList.toggle('talking', on);
+  $id('rdStage')?.classList.toggle('talking', on);
 }
 function setSpin(on) { $id('rdVinyl')?.classList.toggle('spinning', on); }
 function updatePlayBtn(playing) { const b = $id('rdPlay'); if (b) b.textContent = playing ? '⏸' : '▶'; }
@@ -293,19 +298,25 @@ function vizLoop() {
   const ctx2 = cv.getContext('2d');
   ctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx2.clearRect(0, 0, w, hgt);
+  const now = performance.now();
+  const dt = Math.min(60, now - (st.lastFrame || now));
+  st.lastFrame = now;
+
   let level = 0, bass = 0;
   if (st.analyser && !st.audio.paused) {
     st.analyser.getByteFrequencyData(st.bins);
-    const N = 48;
+    const bins = st.bins;
+    const N = 56;
     const cx = w / 2, cy = hgt / 2;
     const r0 = Math.min(w, hgt) * 0.43;
+    const beatPulse = st.groove || 0;
     let sum = 0;
     for (let i = 0; i < N; i++) {
-      const v = st.bins[(i * st.bins.length / N) | 0] / 255;
+      const v = bins[(i * bins.length / N) | 0] / 255;
       sum += v;
       const a = (i / N) * Math.PI * 2 - Math.PI / 2;
-      const len = 3 + v * Math.min(w, hgt) * 0.085;
-      ctx2.strokeStyle = `rgba(255, 211, 77, ${0.25 + v * 0.6})`;
+      const len = 3 + v * Math.min(w, hgt) * 0.085 + beatPulse * Math.min(w, hgt) * 0.03;
+      ctx2.strokeStyle = `rgba(255, 211, 77, ${0.22 + v * 0.55 + beatPulse * 0.2})`;
       ctx2.lineWidth = 2.4;
       ctx2.beginPath();
       ctx2.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0);
@@ -313,12 +324,31 @@ function vizLoop() {
       ctx2.stroke();
     }
     level = sum / N;
-    for (let i = 0; i < 6; i++) bass += st.bins[i] / 255;
-    bass /= 6;
+    // kick/bass band only (first few bins ~0-700Hz at fftSize 256) for the beat
+    for (let i = 1; i < 5; i++) bass += bins[i] / 255;
+    bass /= 4;
   }
-  // the DJ: full-throat on mic breaks; on songs he bops to the BASS (beat-synced
-  // nod), and backstage mode layers random emotes/dances on top
-  st.twin?.setLevel?.(st.phase === 'rj'
-    ? Math.min(1, level * 2.2)
-    : Math.min(0.6, Math.max(0, bass - 0.45) * 1.6));
+
+  // ---- beat-synced groove ----
+  // Compare instantaneous kick energy to a fast-tracking local average; a sharp
+  // spike above it is a beat. Each beat snaps a nod envelope to 1 that decays
+  // fast, so the head pops ON the kick instead of smoothly tracking volume.
+  st.bassAvg = st.bassAvg == null ? bass : st.bassAvg + (bass - st.bassAvg) * Math.min(1, dt / 320);
+  if (st.phase === 'song' && !st.audio.paused
+      && bass > st.bassAvg * 1.28 + 0.05 && bass > 0.2
+      && now - (st.lastBeat || 0) > 200) {
+    st.lastBeat = now;
+    st.groove = 1;                         // beat hit → full nod
+    if (st.twin?.pulse) st.twin.pulse();   // optional extra head-pop on the beat
+  }
+  st.groove = (st.groove || 0) * Math.pow(0.0009, dt / 1000); // ~110ms half-life
+  const sway = Math.max(0, bass - 0.28) * 0.45;               // gentle baseline so he's never frozen
+  const groove = Math.max(st.groove, sway);
+
+  // mic break = full-throat lip sync; song = beat-locked bop
+  st.twin?.setLevel?.(st.phase === 'rj' ? Math.min(1, level * 2.2) : Math.min(0.8, groove));
+
+  // expose the beat envelope to CSS for the spotlight + eq pulse
+  const root = document.querySelector('.radio');
+  if (root) root.style.setProperty('--beat', (st.phase === 'rj' ? level * 1.4 : st.groove).toFixed(3));
 }

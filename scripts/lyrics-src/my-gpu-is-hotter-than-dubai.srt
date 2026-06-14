@@ -1,0 +1,391 @@
+1
+00:00:00,000 --> 00:00:14,042
+Verse 1:
+
+2
+00:00:14,042 --> 00:00:17,234
+Forty-five degrees outside my door
+
+3
+00:00:17,234 --> 00:00:19,786
+But my RTX is running forty more
+
+4
+00:00:19,786 --> 00:00:22,181
+Thermal throttling like a desert storm
+
+5
+00:00:22,181 --> 00:00:24,893
+My inference speed is lukewarm
+
+6
+00:00:24,893 --> 00:00:27,446
+Fans spinning like a helicopter blade
+
+7
+00:00:27,446 --> 00:00:29,839
+My electric bill? I'm getting played
+
+8
+00:00:29,839 --> 00:00:32,393
+NVIDIA said "efficient compute"
+
+9
+00:00:32,393 --> 00:00:34,707
+My AC unit begs to dispute
+
+10
+00:00:34,707 --> 00:00:34,947
+Pre-chorus:
+
+11
+00:00:34,947 --> 00:00:38,137
+I put my laptop on the balcony to cool
+
+12
+00:00:38,137 --> 00:00:40,612
+It came back cooked — I am the fool
+
+13
+00:00:40,612 --> 00:00:40,691
+Chorus:
+
+14
+00:00:40,691 --> 00:00:43,963
+My GPU is hotter than Dubai
+
+15
+00:00:43,963 --> 00:00:46,515
+Hotter than the sun in July
+
+16
+00:00:46,515 --> 00:00:48,271
+Hotter than shawarma off the spit
+
+17
+00:00:48,271 --> 00:00:50,744
+My VRAM's on fire and I love it
+
+18
+00:00:50,744 --> 00:00:53,856
+My GPU is hotter than Dubai-ai-ai
+
+19
+00:00:53,856 --> 00:01:00,478
+Cool it down? No I won't even try-y-y
+
+20
+00:01:00,478 --> 00:01:00,637
+Verse 2:
+
+21
+00:01:00,637 --> 00:01:02,871
+Roommate said "why is the room so hot?"
+
+22
+00:01:02,871 --> 00:01:04,468
+I said "I'm training a model, that's
+
+23
+00:01:04,468 --> 00:01:05,426
+what I got"
+
+24
+00:01:05,426 --> 00:01:07,340
+He said "it's fifty degrees in here, hab
+
+25
+00:01:07,340 --> 00:01:07,899
+iibi"
+
+26
+00:01:07,899 --> 00:01:09,573
+I said "that's the price of running Mini
+
+27
+00:01:09,573 --> 00:01:10,850
+CPM-V"
+
+28
+00:01:10,850 --> 00:01:13,323
+Opened the window — Dubai air came in
+
+29
+00:01:13,323 --> 00:01:15,558
+Somehow hotter than my GPU fan spin
+
+30
+00:01:15,558 --> 00:01:17,552
+Now I'm sweating from both sides of the
+
+31
+00:01:17,552 --> 00:01:18,430
+equation
+
+32
+00:01:18,430 --> 00:01:20,346
+This is what they call thermal escal
+
+33
+00:01:20,346 --> 00:01:20,426
+ation
+
+34
+00:01:20,426 --> 00:01:20,665
+Pre-chorus:
+
+35
+00:01:20,665 --> 00:01:22,819
+I tried water cooling but the water bo
+
+36
+00:01:22,819 --> 00:01:23,378
+iled
+
+37
+00:01:23,378 --> 00:01:25,371
+My hackathon dreams are medium-well bro
+
+38
+00:01:25,371 --> 00:01:25,930
+iled
+
+39
+00:01:25,930 --> 00:01:25,950
+Chorus:
+
+40
+00:01:25,930 --> 00:01:26,111
+Bridge:
+
+41
+00:01:26,111 --> 00:01:26,290
+(spoken in nature documentary voice)
+
+42
+00:01:26,290 --> 00:01:26,471
+And here we observe the Dubai-based developer
+
+43
+00:01:26,471 --> 00:01:26,650
+In his natural habitat
+
+44
+00:01:26,650 --> 00:01:26,831
+Surrounded by three fans, two ACs
+
+45
+00:01:26,831 --> 00:01:27,010
+And a laptop producing enough heat
+
+46
+00:01:27,010 --> 00:01:27,191
+To power a small village
+
+47
+00:01:27,191 --> 00:01:27,370
+He has not been outside in six days
+
+48
+00:01:27,370 --> 00:01:27,551
+His vitamin D levels are theoretical
+
+49
+00:01:27,551 --> 00:01:27,730
+Verse 3:
+
+50
+00:01:27,730 --> 00:01:27,911
+Jensen Huang I'm writing you a letter
+
+51
+00:01:27,911 --> 00:01:28,090
+My electricity bill needs to get better
+
+52
+00:01:28,090 --> 00:01:28,271
+I'm just running 8 billion parameters bro
+
+53
+00:01:28,271 --> 00:01:28,450
+Why does my apartment feel like a volcano?
+
+54
+00:01:28,450 --> 00:01:28,631
+The hackathon ends June fifteenth, thank God
+
+55
+00:01:28,631 --> 00:01:28,811
+After that my laptop gets a cooling rod
+
+56
+00:01:28,811 --> 00:01:28,990
+But until then we burn, we sweat, we grind
+
+57
+00:01:28,990 --> 00:01:29,171
+My GPU's the hottest thing of any kind
+
+58
+00:01:29,171 --> 00:01:29,191
+Final Chorus:
+
+59
+00:01:29,171 --> 00:01:30,000
+My GPU is hotter than Dubai
+
+60
+00:01:30,000 --> 00:01:32,472
+Hotter than the sun in July
+
+61
+00:01:32,472 --> 00:01:34,228
+Hotter than shawarma off the spit
+
+62
+00:01:34,228 --> 00:01:37,100
+My VRAM's on fire and I love it
+
+63
+00:01:37,100 --> 00:01:39,016
+And here we observe the Dubai-based de
+
+64
+00:01:39,016 --> 00:01:39,813
+veloper
+
+65
+00:01:39,813 --> 00:01:41,968
+In his natural habitat
+
+66
+00:01:41,968 --> 00:01:44,760
+Surrounded by three fans, two ACs
+
+67
+00:01:44,760 --> 00:01:47,472
+And a laptop producing enough heat
+
+68
+00:01:47,472 --> 00:01:50,186
+To power a small village
+
+69
+00:01:50,186 --> 00:01:53,218
+He has not been outside in six days
+
+70
+00:01:53,218 --> 00:01:56,649
+His vitamin D levels are theoretical
+
+71
+00:01:56,649 --> 00:01:56,808
+Verse 3:
+
+72
+00:01:56,808 --> 00:01:59,680
+Jensen Huang I'm writing you a letter
+
+73
+00:01:59,680 --> 00:02:02,153
+My electricity bill needs to get better
+
+74
+00:02:02,153 --> 00:02:04,468
+I'm just running 8 billion parameters
+
+75
+00:02:04,468 --> 00:02:04,787
+bro
+
+76
+00:02:04,787 --> 00:02:07,260
+Why does my apartment feel like a volc
+
+77
+00:02:07,260 --> 00:02:07,500
+ano?
+
+78
+00:02:07,500 --> 00:02:09,574
+The hackathon ends June fifteenth, thank
+
+79
+00:02:09,574 --> 00:02:10,052
+God
+
+80
+00:02:10,052 --> 00:02:12,447
+After that my laptop gets a cooling rod
+
+81
+00:02:12,447 --> 00:02:14,600
+But until then we burn, we sweat, we
+
+82
+00:02:14,600 --> 00:02:15,000
+grind
+
+83
+00:02:15,000 --> 00:02:16,995
+My GPU's the hottest thing of any kind
+
+84
+00:02:16,995 --> 00:02:17,014
+Final Chorus:
+
+85
+00:02:16,995 --> 00:02:17,175
+Hotter than a tandoori chai
+
+86
+00:02:17,175 --> 00:02:17,372
+Hotter than my arranged marriage prospects
+
+87
+00:02:17,372 --> 00:02:17,552
+According to every auntie's audit
+
+88
+00:02:17,552 --> 00:02:20,664
+My GPU is hotter than Dubai
+
+89
+00:02:20,664 --> 00:02:22,260
+Hotter than a tandoori chai
+
+90
+00:02:22,260 --> 00:02:25,133
+Hotter than my arranged marriage pros
+
+91
+00:02:25,133 --> 00:02:25,931
+pects
+
+92
+00:02:25,931 --> 00:02:27,846
+According to every auntie's audit
+
+93
+00:02:27,846 --> 00:02:30,956
+My GPU is hotter than Dubai-ai-ai
+
+94
+00:02:30,956 --> 00:02:38,217
+Send help... or just more RAM supply-y-y
+
+95
+00:02:38,217 --> 00:02:38,298
+Outro:
+
+96
+00:02:38,298 --> 00:02:38,318
+(fire alarm sound)
+
+97
+00:02:38,298 --> 00:02:40,931
+(spoken) That's not a sound effect.
+
+98
+00:02:40,931 --> 00:02:42,846
+That's my actual apartment.

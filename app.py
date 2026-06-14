@@ -43,10 +43,23 @@ for sub in ("assets", "robot-3d", "moves", "props"):
         cls = CachedStaticFiles if sub == "assets" else StaticFiles
         app.mount(f"/{sub}", cls(directory=str(d)), name=sub)
 
+class RadioStaticFiles(StaticFiles):
+    """Songs/art are immutable (cache hard); playlist.json must always revalidate
+    so updated lyrics/timings are never served stale."""
+
+    def file_response(self, *args, **kwargs):
+        resp = super().file_response(*args, **kwargs)
+        full_path = str(args[0]) if args else ""
+        resp.headers["Cache-Control"] = (
+            "no-cache, must-revalidate" if full_path.endswith(".json")
+            else "public, max-age=604800")
+        return resp
+
+
 # Reachy FM: songs + album art + DJ Servo's prerecorded mic breaks
 RADIO = pathlib.Path(__file__).parent / "radio"
 if RADIO.is_dir():
-    app.mount("/radio", StaticFiles(directory=str(RADIO)), name="radio")
+    app.mount("/radio", RadioStaticFiles(directory=str(RADIO)), name="radio")
 
 
 # index.html must NEVER be cached: each deploy replaces the hashed bundle it

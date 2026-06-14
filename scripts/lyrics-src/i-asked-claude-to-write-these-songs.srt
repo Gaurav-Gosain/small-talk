@@ -1,0 +1,727 @@
+1
+00:00:00,160 --> 00:00:00,239
+Verse 1:
+
+2
+00:00:00,239 --> 00:00:03,190
+I needed songs for my hackathon project
+
+3
+00:00:03,190 --> 00:00:06,383
+So I asked an AI — what did you expect?
+
+4
+00:00:06,383 --> 00:00:09,414
+I said "give me ten" and it gave me ten
+
+5
+00:00:09,414 --> 00:00:11,569
+Then I said "more" and it gave me ten
+
+6
+00:00:11,569 --> 00:00:12,846
+again
+
+7
+00:00:12,846 --> 00:00:12,865
+Now I'm sitting here with twenty-six
+
+8
+00:00:12,846 --> 00:00:13,071
+Written by the thing I'm singing about — what's wrong?
+
+9
+00:00:13,071 --> 00:00:13,298
+It's like asking the microwave to write a cookbook
+
+10
+00:00:13,298 --> 00:00:13,477
+Or asking the mirror "how do I look?"
+
+11
+00:00:13,477 --> 00:00:13,657
+Pre-chorus:
+
+12
+00:00:13,657 --> 00:00:13,864
+The AI wrote a song about AI hallucinating
+
+13
+00:00:13,864 --> 00:00:14,125
+While potentially hallucinating rhymes — that's fascinating
+
+14
+00:00:14,125 --> 00:00:14,330
+Is this verse good? I literally cannot tell
+
+15
+00:00:14,330 --> 00:00:14,580
+The AI said it slaps — but it would say that, wouldn't it? Oh well
+
+16
+00:00:14,580 --> 00:00:14,760
+Chorus:
+
+17
+00:00:14,760 --> 00:00:15,637
+songs
+
+18
+00:00:15,637 --> 00:00:18,190
+Written by the thing I'm singing about
+
+19
+00:00:18,190 --> 00:00:18,989
+— what's wrong?
+
+20
+00:00:18,989 --> 00:00:21,382
+It's like asking the microwave to write
+
+21
+00:00:21,382 --> 00:00:22,500
+a cookbook
+
+22
+00:00:22,500 --> 00:00:22,519
+Or asking the mirror "how do I look?"
+
+23
+00:00:22,500 --> 00:00:22,687
+And I'm not sure if that's right or wrong
+
+24
+00:00:22,687 --> 00:00:22,870
+It wrote a love song to transformers
+
+25
+00:00:22,870 --> 00:00:23,100
+And a country ballad about cloud computing costs
+
+26
+00:00:23,100 --> 00:00:23,280
+I asked Claude to write these songs
+
+27
+00:00:23,280 --> 00:00:23,477
+And now I'm singing them, so... who's the clown?
+
+28
+00:00:23,477 --> 00:00:23,660
+Is it me? Is it the robot? Is it the model?
+
+29
+00:00:23,660 --> 00:00:23,839
+We're all just tokens in this town
+
+30
+00:00:23,839 --> 00:00:24,019
+Verse 2:
+
+31
+00:00:24,019 --> 00:00:24,221
+Song four was a lullaby — "Goodnight Reachy"
+
+32
+00:00:24,221 --> 00:00:24,425
+Claude said "this one's sweet" — kinda preachy
+
+33
+00:00:24,425 --> 00:00:24,643
+Song thirteen was a UK drill about prize money
+
+34
+00:00:24,643 --> 00:00:24,859
+An AI writing drill bars is objectively funny
+
+35
+00:00:24,859 --> 00:00:25,073
+But here's where it gets existentially weird
+
+36
+00:00:25,073 --> 00:00:25,298
+I'm at a hackathon, building something AI-steered
+
+37
+00:00:25,298 --> 00:00:25,481
+Using AI to make songs for an AI radio
+
+38
+00:00:25,481 --> 00:00:25,690
+Played by an AI robot — where does the human go?
+
+39
+00:00:25,690 --> 00:00:25,771
+Pre-chorus:
+
+40
+00:00:25,771 --> 00:00:25,791
+The AI wrote a song about AI hallucin
+
+41
+00:00:25,771 --> 00:00:25,951
+I'm the middleman between Claude and Suno
+
+42
+00:00:25,951 --> 00:00:26,131
+One AI writes, one AI sings — I just press the button, bro
+
+43
+00:00:26,131 --> 00:00:26,310
+My only contribution is the vibe direction
+
+44
+00:00:26,310 --> 00:00:26,490
+And honestly, Claude pushed back on my song selection
+
+45
+00:00:26,490 --> 00:00:26,670
+(Chorus)
+
+46
+00:00:26,670 --> 00:00:26,850
+Bridge:
+
+47
+00:00:26,850 --> 00:00:27,030
+(spoken, introspective)
+
+48
+00:00:27,030 --> 00:00:27,210
+You know what keeps me up at night?
+
+49
+00:00:27,210 --> 00:00:27,390
+If the songs are good... Claude gets the credit.
+
+50
+00:00:27,390 --> 00:00:27,571
+If the songs are bad... I get the blame.
+
+51
+00:00:27,571 --> 00:00:27,751
+Because I approved them.
+
+52
+00:00:27,751 --> 00:00:27,931
+I'm essentially an AI output reviewer
+
+53
+00:00:27,931 --> 00:00:28,111
+With a Suno subscription.
+
+54
+00:00:28,111 --> 00:00:28,291
+Is this what they mean by "human in the loop?"
+
+55
+00:00:28,291 --> 00:00:28,471
+Because the loop feels pretty small right now.
+
+56
+00:00:28,471 --> 00:00:28,650
+Verse 3:
+
+57
+00:00:28,650 --> 00:00:28,830
+Reachy Mini's gonna play these tracks
+
+58
+00:00:28,830 --> 00:00:29,010
+On a radio station — let that sink in, relax
+
+59
+00:00:29,010 --> 00:00:29,190
+A robot built by humans, playing songs by AI
+
+60
+00:00:29,190 --> 00:00:29,370
+Listened to by judges who will quantify
+
+61
+00:00:29,370 --> 00:00:29,550
+The whimsy and delight of a fully synthetic experience
+
+62
+00:00:29,550 --> 00:00:29,731
+Where the only human touch was me saying
+
+63
+00:00:29,731 --> 00:00:29,911
+"funnier please" in a chat window
+
+64
+00:00:29,911 --> 00:00:30,091
+And then accepting the third option without reading the other two
+
+65
+00:00:30,091 --> 00:00:30,271
+Final Chorus:
+
+66
+00:00:30,271 --> 00:00:30,451
+I asked Claude to write these songs
+
+67
+00:00:30,451 --> 00:00:30,631
+Twenty-six and still going strong
+
+68
+00:00:30,631 --> 00:00:30,650
+My hackathon contribution is "prompt engineering"
+
+69
+00:00:30,631 --> 00:00:30,650
+ating
+
+70
+00:00:30,631 --> 00:00:31,036
+While potentially hallucinating rhymes
+
+71
+00:00:31,036 --> 00:00:32,314
+— that's fascinating
+
+72
+00:00:32,314 --> 00:00:34,707
+Is this verse good? I literally cannot
+
+73
+00:00:34,707 --> 00:00:35,345
+tell
+
+74
+00:00:35,345 --> 00:00:37,261
+The AI said it slaps — but it would say
+
+75
+00:00:37,261 --> 00:00:38,697
+that, wouldn't it? Oh well
+
+76
+00:00:38,697 --> 00:00:39,095
+Chorus:
+
+77
+00:00:39,095 --> 00:00:42,048
+I asked Claude to write these songs
+
+78
+00:00:42,048 --> 00:00:44,201
+And I'm not sure if that's right or
+
+79
+00:00:44,201 --> 00:00:45,957
+wrong
+
+80
+00:00:45,957 --> 00:00:48,909
+It wrote a love song to transformers
+
+81
+00:00:48,909 --> 00:00:51,383
+And a country ballad about cloud comput
+
+82
+00:00:51,383 --> 00:00:52,100
+ing costs
+
+83
+00:00:52,100 --> 00:00:54,335
+I asked Claude to write these songs
+
+84
+00:00:54,335 --> 00:00:57,286
+And now I'm singing them, so... who's
+
+85
+00:00:57,286 --> 00:00:58,643
+the clown?
+
+86
+00:00:58,643 --> 00:01:01,595
+Is it me? Is it the robot? Is it the mod
+
+87
+00:01:01,595 --> 00:01:01,755
+el?
+
+88
+00:01:01,755 --> 00:01:03,988
+We're all just tokens in this town
+
+89
+00:01:03,988 --> 00:01:06,701
+Verse 2:
+
+90
+00:01:06,701 --> 00:01:09,573
+Song four was a lullaby — "Goodnight Re
+
+91
+00:01:09,573 --> 00:01:10,212
+achy"
+
+92
+00:01:10,212 --> 00:01:12,605
+Claude said "this one's sweet" — kinda
+
+93
+00:01:12,605 --> 00:01:13,403
+preachy
+
+94
+00:01:13,403 --> 00:01:15,956
+Song thirteen was a UK drill about prize
+
+95
+00:01:15,956 --> 00:01:16,277
+money
+
+96
+00:01:16,277 --> 00:01:18,829
+An AI writing drill bars is objectively
+
+97
+00:01:18,829 --> 00:01:19,468
+funny
+
+98
+00:01:19,468 --> 00:01:21,781
+But here's where it gets existentially
+
+99
+00:01:21,781 --> 00:01:22,180
+weird
+
+100
+00:01:22,180 --> 00:01:24,495
+I'm at a hackathon, building something
+
+101
+00:01:24,495 --> 00:01:25,611
+AI-steered
+
+102
+00:01:25,611 --> 00:01:28,962
+Using AI to make songs for an AI radio
+
+103
+00:01:28,962 --> 00:01:31,277
+Played by an AI robot — where does the
+
+104
+00:01:31,277 --> 00:01:31,834
+human go?
+
+105
+00:01:31,834 --> 00:01:31,915
+Pre-chorus:
+
+106
+00:01:31,915 --> 00:01:34,787
+I'm the middleman between Claude and Sun
+
+107
+00:01:34,787 --> 00:01:35,266
+o
+
+108
+00:01:35,266 --> 00:01:37,500
+One AI writes, one AI sings — I just
+
+109
+00:01:37,500 --> 00:01:38,456
+press the button, bro
+
+110
+00:01:38,456 --> 00:01:40,850
+My only contribution is the vibe
+
+111
+00:01:40,850 --> 00:01:41,649
+direction
+
+112
+00:01:41,649 --> 00:01:43,962
+And honestly, Claude pushed back on my
+
+113
+00:01:43,962 --> 00:01:45,159
+song selection
+
+114
+00:01:45,159 --> 00:01:46,995
+Chorus:
+
+115
+00:01:46,995 --> 00:01:48,989
+I asked Claude to write these songs
+
+116
+00:01:48,989 --> 00:01:49,867
+And I'm not sure if that's right or
+
+117
+00:01:49,867 --> 00:01:49,947
+wrong
+
+118
+00:01:49,947 --> 00:01:52,100
+And I'm not sure if that's right or
+
+119
+00:01:52,100 --> 00:01:53,936
+wrong
+
+120
+00:01:53,936 --> 00:01:56,888
+It wrote a love song to transformers
+
+121
+00:01:56,888 --> 00:01:59,361
+And a country ballad about cloud comput
+
+122
+00:01:59,361 --> 00:02:00,000
+ing costs
+
+123
+00:02:00,000 --> 00:02:02,233
+I asked Claude to write these songs
+
+124
+00:02:02,233 --> 00:02:05,105
+And now I'm singing them, so... who's
+
+125
+00:02:05,105 --> 00:02:06,462
+the clown?
+
+126
+00:02:06,462 --> 00:02:09,414
+Is it me? Is it the robot? Is it the mod
+
+127
+00:02:09,414 --> 00:02:09,653
+el?
+
+128
+00:02:09,653 --> 00:02:14,760
+We're all just tokens in this town
+
+129
+00:02:14,760 --> 00:02:14,781
+(spoken, introspective)
+
+130
+00:02:14,760 --> 00:02:17,074
+You know what keeps me up at night?
+
+131
+00:02:17,074 --> 00:02:19,627
+If the songs are good... Claude gets the
+
+132
+00:02:19,627 --> 00:02:19,787
+credit.
+
+133
+00:02:19,787 --> 00:02:23,138
+If the songs are bad... I get the blame.
+
+134
+00:02:23,138 --> 00:02:25,611
+Because I approved them.
+
+135
+00:02:25,611 --> 00:02:28,802
+I'm essentially an AI output reviewer
+
+136
+00:02:28,802 --> 00:02:31,355
+With a Suno subscription.
+
+137
+00:02:31,355 --> 00:02:33,191
+Is this what they mean by "human in the
+
+138
+00:02:33,191 --> 00:02:34,627
+loop?"
+
+139
+00:02:34,627 --> 00:02:36,462
+Because the loop feels pretty small
+
+140
+00:02:36,462 --> 00:02:36,941
+right now.
+
+141
+00:02:36,941 --> 00:02:38,138
+Verse 3:
+
+142
+00:02:38,138 --> 00:02:40,532
+Reachy Mini's gonna play these tracks
+
+143
+00:02:40,532 --> 00:02:43,085
+On a radio station — let that sink in,
+
+144
+00:02:43,085 --> 00:02:43,883
+relax
+
+145
+00:02:43,883 --> 00:02:46,835
+A robot built by humans, playing songs
+
+146
+00:02:46,835 --> 00:02:47,793
+by AI
+
+147
+00:02:47,793 --> 00:02:49,947
+Listened to by judges who will quantify
+
+148
+00:02:49,947 --> 00:02:53,377
+The whimsy and delight of a fully synt
+
+149
+00:02:53,377 --> 00:02:54,574
+hetic experience
+
+150
+00:02:54,574 --> 00:02:57,447
+Where the only human touch was me saying
+
+151
+00:02:57,447 --> 00:03:00,080
+"funnier please" in a chat window
+
+152
+00:03:00,080 --> 00:03:02,074
+And then accepting the third option
+
+153
+00:03:02,074 --> 00:03:03,350
+without reading the other two
+
+154
+00:03:03,350 --> 00:03:05,745
+Final Chorus:
+
+155
+00:03:05,745 --> 00:03:08,697
+I asked Claude to write these songs
+
+156
+00:03:08,697 --> 00:03:12,846
+Twenty-six and still going strong
+
+157
+00:03:12,846 --> 00:03:15,956
+My hackathon contribution is "prompt
+
+158
+00:03:15,956 --> 00:03:16,754
+engineering"
+
+159
+00:03:16,754 --> 00:03:19,229
+And a Suno account — is that cheating?
+
+160
+00:03:19,229 --> 00:03:21,144
+I asked Claude to write these songs
+
+161
+00:03:21,144 --> 00:03:21,163
+And Reachy's gonna play them all night
+
+162
+00:03:21,144 --> 00:03:21,587
+The songs kinda slap.
+
+163
+00:03:21,587 --> 00:03:22,006
+So maybe that's fine.
+
+164
+00:03:22,006 --> 00:03:22,240
+Outro:
+
+165
+00:03:22,240 --> 00:03:22,419
+(acoustic guitar fades)
+
+166
+00:03:22,419 --> 00:03:23,346
+(spoken) This song was also written by Claude.
+
+167
+00:03:23,346 --> 00:03:23,526
+(pause)
+
+168
+00:03:23,526 --> 00:03:24,096
+It's Claude all the way down.
+
+169
+00:03:24,096 --> 00:03:25,611
+long
+
+170
+00:03:25,611 --> 00:03:28,484
+The robots won. The robots won.
+
+171
+00:03:28,484 --> 00:03:31,116
+And honestly?
+
+172
+00:03:31,116 --> 00:03:34,229
+The songs kinda slap.
+
+173
+00:03:34,229 --> 00:03:38,537
+So maybe that's fine.
+
+174
+00:03:38,537 --> 00:03:41,888
+Outro:
+
+175
+00:03:41,888 --> 00:03:41,907
+(acoustic guitar fades)
+
+176
+00:03:41,888 --> 00:03:41,907
+(spoken) This song was also written by Claude.
+
+177
+00:03:41,888 --> 00:03:41,907
+(pause)
+
+178
+00:03:41,888 --> 00:03:43,962
+It's Claude all the way down.
+
+179
+00:03:43,962 --> 00:03:43,983
+(longer pause)
+
+180
+00:03:43,962 --> 00:03:46,596
+...I should go outside.
+
+181
+00:03:46,596 --> 00:03:46,616
+(longer pause)
+
+182
+00:03:46,596 --> 00:03:47,537
+...I should go outside.

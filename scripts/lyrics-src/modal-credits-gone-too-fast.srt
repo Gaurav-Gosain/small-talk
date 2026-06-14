@@ -1,0 +1,83 @@
+1
+00:00:00,000 --> 00:00:12,048
+Verse 1:
+
+2
+00:00:12,048 --> 00:00:19,628
+They gave me two-fifty in Modal credits
+
+3
+00:00:19,628 --> 00:00:24,254
+Thought I was rich, I should've said it
+
+4
+00:00:24,254 --> 00:00:32,472
+Spun up a GPU, ran one job
+
+5
+00:00:32,472 --> 00:00:36,383
+Now my wallet's empty and I sob
+
+6
+00:00:36,383 --> 00:00:39,494
+Chorus:
+
+7
+00:00:39,494 --> 00:00:45,319
+Modal credits gone too fast
+
+8
+00:00:45,319 --> 00:00:51,862
+Like summer love that didn't last
+
+9
+00:00:51,862 --> 00:00:54,734
+Serverless but priceless pain
+
+10
+00:00:54,734 --> 00:01:04,308
+I'll never see those credits again
+
+11
+00:01:04,308 --> 00:01:07,899
+Verse 2:
+
+12
+00:01:07,899 --> 00:01:14,760
+Cold start warming up my heart
+
+13
+00:01:14,760 --> 00:01:20,745
+Then the billing tore it apart
+
+14
+00:01:20,745 --> 00:01:23,936
+Should've used a smaller batch
+
+15
+00:01:23,936 --> 00:01:37,335
+Now I'm crying, strike the match
+
+16
+00:01:37,335 --> 00:01:37,686
+(Chorus)
+
+17
+00:01:37,686 --> 00:01:38,456
+Outro:
+
+18
+00:01:38,456 --> 00:01:40,052
+(spoken) If anyone from Modal is
+
+19
+00:01:40,052 --> 00:01:43,644
+listening...
+
+20
+00:01:43,644 --> 00:01:46,596
+I just need fifty more dollars...
+
+21
+00:01:46,596 --> 00:01:50,864
+please...

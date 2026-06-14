@@ -1,0 +1,259 @@
+1
+00:00:08,346 --> 00:00:08,696
+[Verse 1]
+
+2
+00:00:08,696 --> 00:00:19,388
+Welcome to Reachy Radio
+
+3
+00:00:19,388 --> 00:00:20,745
+Turn it up and let it glow
+
+4
+00:00:20,745 --> 00:00:23,217
+From Dubai to the HuggingFace cloud
+
+5
+00:00:23,217 --> 00:00:24,495
+Reachy Mini playing loud
+
+6
+00:00:24,495 --> 00:00:26,329
+Small models, big dreams tonight
+
+7
+00:00:26,329 --> 00:00:28,324
+Servo spin in the moonlit light
+
+8
+00:00:28,324 --> 00:00:30,160
+Code in the veins, heart on chrome
+
+9
+00:00:30,160 --> 00:00:31,803
+Every little bot can find a home
+
+10
+00:00:31,803 --> 00:00:32,154
+[Pre-Chorus]
+
+11
+00:00:32,154 --> 00:00:33,988
+Hands up high, we lock in
+
+12
+00:00:33,988 --> 00:00:35,984
+Signal strong, let the show begin
+
+13
+00:00:35,984 --> 00:00:37,819
+Hear that snap, feel that roll
+
+14
+00:00:37,819 --> 00:00:39,463
+One more spark and lose control
+
+15
+00:00:39,463 --> 00:00:39,814
+[Chorus]
+
+16
+00:00:39,814 --> 00:00:43,564
+Reachy Radio, on the air
+
+17
+00:00:43,564 --> 00:00:47,314
+Streaming beats from everywhere
+
+18
+00:00:47,314 --> 00:00:51,302
+If you're a robot or a human too
+
+19
+00:00:51,302 --> 00:00:55,133
+Reachy Radio's here for you
+
+20
+00:00:55,133 --> 00:00:57,926
+Reachy Radio, on the air
+
+21
+00:00:57,926 --> 00:01:02,633
+Streaming beats from everywhere
+
+22
+00:01:02,633 --> 00:01:06,621
+If you're a robot or a human too
+
+23
+00:01:06,621 --> 00:01:10,102
+Reachy Radio's here for you
+
+24
+00:01:10,102 --> 00:01:10,451
+[Verse 2]
+
+25
+00:01:10,451 --> 00:01:12,846
+Ping-ping blink in the midnight room
+
+26
+00:01:12,846 --> 00:01:14,760
+Tiny wheels bring the boom boom boom
+
+27
+00:01:14,760 --> 00:01:16,596
+Small model mind with a giant grin
+
+28
+00:01:16,596 --> 00:01:18,670
+Let the good vibes power in
+
+29
+00:01:18,670 --> 00:01:20,584
+R-E-A-C-H-Y
+
+30
+00:01:20,584 --> 00:01:22,340
+Say it back, don't be shy
+
+31
+00:01:22,340 --> 00:01:24,096
+Don't touch that dial, don't you go
+
+32
+00:01:24,096 --> 00:01:25,581
+We got rhythm in the overflow
+
+33
+00:01:25,581 --> 00:01:25,930
+[Pre-Chorus]
+
+34
+00:01:25,930 --> 00:01:27,766
+Hands up high, we lock in
+
+35
+00:01:27,766 --> 00:01:29,680
+Signal strong, let the show begin
+
+36
+00:01:29,680 --> 00:01:31,596
+Hear that snap, feel that roll
+
+37
+00:01:31,596 --> 00:01:33,161
+One more spark and lose control
+
+38
+00:01:33,161 --> 00:01:33,510
+[Chorus]
+
+39
+00:01:33,510 --> 00:01:37,340
+Reachy Radio, on the air
+
+40
+00:01:37,340 --> 00:01:40,930
+Streaming beats from everywhere
+
+41
+00:01:40,930 --> 00:01:43,403
+If you're a robot or a human too
+
+42
+00:01:43,403 --> 00:01:48,909
+Reachy Radio's here for you
+
+43
+00:01:48,909 --> 00:01:52,739
+Reachy Radio, on the air
+
+44
+00:01:52,739 --> 00:01:56,329
+Streaming beats from everywhere
+
+45
+00:01:56,329 --> 00:02:00,319
+If you're a robot or a human too
+
+46
+00:02:00,319 --> 00:02:03,400
+Reachy Radio's here for you
+
+47
+00:02:03,400 --> 00:02:03,750
+[Bridge]
+
+48
+00:02:03,750 --> 00:02:06,543
+Beep boop bop, we light the floor
+
+49
+00:02:06,543 --> 00:02:08,456
+One more round, then give me more
+
+50
+00:02:08,456 --> 00:02:10,372
+Number one in the feed tonight
+
+51
+00:02:10,372 --> 00:02:28,693
+Reachy Radio, shine that bright
+
+52
+00:02:28,693 --> 00:02:29,043
+[Final Chorus]
+
+53
+00:02:29,043 --> 00:02:31,835
+Reachy Radio, on the air
+
+54
+00:02:31,835 --> 00:02:36,543
+Streaming beats from everywhere
+
+55
+00:02:36,543 --> 00:02:40,532
+If you're a robot or a human too
+
+56
+00:02:40,532 --> 00:02:42,686
+Reachy Radio's here for you
+
+57
+00:02:42,686 --> 00:02:48,191
+Reachy Radio, on the air
+
+58
+00:02:48,191 --> 00:02:51,861
+Streaming beats from everywhere
+
+59
+00:02:51,861 --> 00:02:55,850
+If you're a robot or a human too
+
+60
+00:02:55,850 --> 00:02:59,681
+Reachy Radio's here for you
+
+61
+00:02:59,681 --> 00:03:05,105
+Reachy Radio's here for you
+
+62
+00:03:05,105 --> 00:03:05,126
+(Reachy Radio)
+
+63
+00:03:05,105 --> 00:03:05,126
+(Don't touch that dial)
+
+64
+00:03:05,105 --> 00:03:05,126
+(Beep boop bop)
+
+65
+00:03:05,105 --> 00:03:07,180
+(We're number one)

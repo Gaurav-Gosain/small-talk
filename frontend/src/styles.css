@@ -165,10 +165,21 @@ button { font-family: inherit; color: inherit; }
 /* ── home ──────────────────────────────────────────────────────────── */
 #view-home {
   display: flex; flex-direction: column;
+  /* when the content is taller than the viewport (short laptops, phones) the
+     view scrolls; the decorative layers below stay pinned to the viewport */
+  overflow-y: auto; overflow-x: hidden;
   background:
     radial-gradient(680px circle at 78% 42%, var(--gold-glow), transparent 60%),
     var(--void);
 }
+#view-home > .grid-mesh,
+#view-home > .fx-grid,
+#view-home > .fx-kanji,
+#view-home > .lithos-reveal,
+#view-home > #hero3d,
+#view-home > .scanlines,
+#view-home > .boot,
+#view-home > .ticker { position: fixed; }
 #view-home .grid-mesh {
   position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5;
   mask-image: radial-gradient(120% 100% at 50% 0%, #000 55%, transparent 100%);
@@ -193,9 +204,11 @@ button { font-family: inherit; color: inherit; }
 
 .home-top {
   position: relative; z-index: 2;
-  flex: 1; min-height: 0;
+  /* grow to content height so the view can scroll past it, but never shrink
+     below it (which would clip the centred content) */
+  flex: 1 0 auto;
   display: flex; align-items: center;
-  padding: 58px var(--pad-page) 40px;
+  padding: 78px var(--pad-page) 64px;
   pointer-events: none;
 }
 .home-content { max-width: 580px; pointer-events: auto; }
@@ -216,7 +229,9 @@ button { font-family: inherit; color: inherit; }
 .home-content h1 {
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: clamp(44px, 6vw, 86px);
+  /* width- AND height-aware: shrinks on short laptops so the hero never pushes
+     the call-to-action buttons out of view */
+  font-size: clamp(40px, min(6vw, 8.4vh), 86px);
   line-height: 0.94;
   letter-spacing: -0.045em;
   margin: 24px 0 20px;
@@ -697,10 +712,13 @@ html, body, #app { height: 100dvh; }
   .brand { font-size: 14px; }
   .btn { height: 40px; padding: 0 16px; }
 
-  /* home */
-  .home-top { padding-top: 70px; padding-bottom: 56px; align-items: flex-start; }
-  .home-content { padding-top: 6vh; }
-  .home-content h1 { font-size: clamp(36px, 11vw, 56px); margin: 18px 0 14px; }
+  /* home: top-aligned and scrollable (the hero stays pinned behind) */
+  .home-top {
+    padding-top: 66px; padding-bottom: 48px; align-items: flex-start;
+    pointer-events: auto; /* so touch scrolling works over the content */
+  }
+  .home-content { padding-top: 3vh; width: 100%; }
+  .home-content h1 { font-size: clamp(34px, 10.5vw, 54px); margin: 16px 0 14px; }
   .home-content p { font-size: 14.5px; }
   .home-actions { margin-top: 24px; }
   .home-actions .btn { flex: 1 1 calc(50% - 10px); min-width: 130px; }
@@ -890,11 +908,11 @@ html, body, #app { height: 100dvh; }
 
 .rd-main {
   z-index: 1; flex: 1; min-height: 0;
-  display: grid; grid-template-columns: minmax(360px, 46%) 1fr;
-  gap: 34px; padding: 6px 44px 200px; align-items: center;
+  display: grid; grid-template-columns: minmax(240px, 0.95fr) minmax(360px, 1.5fr) minmax(240px, 0.95fr);
+  gap: 30px; padding: 6px 40px 150px; align-items: center;
 }
-.rd-deck { display: flex; flex-direction: column; align-items: center; gap: 18px; }
-.rd-platterwrap { position: relative; width: min(370px, 30vh + 130px); aspect-ratio: 1; }
+.rd-deck { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.rd-platterwrap { position: relative; width: min(300px, 24vh + 120px); aspect-ratio: 1; }
 .rd-viz { position: absolute; inset: -13%; width: 126%; height: 126%; pointer-events: none; }
 .rd-platter {
   position: absolute; inset: 0; border-radius: 50%;
@@ -944,25 +962,70 @@ html, body, #app { height: 100dvh; }
 
 .rd-lyrics {
   position: relative; height: min(62vh, 560px); overflow: hidden;
+  /* room on both sides so the active line's scale-up + glow never clip */
+  padding: 0 18px 0 2px;
   mask-image: linear-gradient(transparent, #000 16%, #000 72%, transparent);
   -webkit-mask-image: linear-gradient(transparent, #000 16%, #000 72%, transparent);
 }
-.rd-lyrollers { transition: transform 0.55s cubic-bezier(0.3, 0, 0.2, 1); will-change: transform; }
+.rd-lyrollers { transition: transform 0.42s cubic-bezier(0.3, 0, 0.2, 1); will-change: transform; }
 .rd-line {
-  padding: 9px 0; font-weight: 650; line-height: 1.35;
-  font-size: clamp(15px, 1.7vw, 21px);
+  padding: 9px 2px; font-weight: 650; line-height: 1.35;
+  font-size: clamp(15px, 1.6vw, 20px);
   color: color-mix(in srgb, var(--text) 32%, transparent);
   transition: color 0.3s, transform 0.3s; transform-origin: left center;
 }
-.rd-line.active { color: var(--gold); transform: scale(1.045); text-shadow: 0 0 26px color-mix(in srgb, var(--gold) 28%, transparent); }
+.rd-line.active { color: var(--gold); transform: scale(1.03); text-shadow: 0 0 20px color-mix(in srgb, var(--gold) 26%, transparent); }
 .rd-line.past { color: color-mix(in srgb, var(--text) 16%, transparent); }
 .rd-line.stage { font-style: italic; font-weight: 400; font-size: 0.8em; color: var(--muted); }
+
+/* ── DJ Servo: the centre-stage star ─────────────────────────────── */
+.rd-stage {
+  position: relative; z-index: 1; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  --beat: 0;
+}
+.rd-spot { /* spotlight cone behind Servo, brightens on the beat / mic break */
+  position: absolute; left: 50%; top: 2%; width: 116%; height: 92%;
+  transform: translateX(-50%);
+  background: radial-gradient(60% 55% at 50% 38%,
+    color-mix(in srgb, var(--gold) calc(22% + var(--beat) * 26%), transparent),
+    transparent 70%);
+  filter: blur(6px); pointer-events: none;
+  transition: opacity 0.4s; opacity: 0.85;
+}
+.rd-stage.talking .rd-spot { opacity: 1; }
+.rd-floor { /* elliptical stage puck under him, pulses with the beat */
+  position: absolute; left: 50%; bottom: 8%; width: 54%; height: 26px;
+  transform: translateX(-50%) scaleX(calc(1 + var(--beat) * 0.12));
+  background: radial-gradient(50% 50%, color-mix(in srgb, var(--gold) 30%, transparent), transparent 72%);
+  filter: blur(3px); pointer-events: none;
+}
+.rd-twin {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 480px; height: min(56vh, 540px);
+}
+.rd-boothmeta { position: relative; z-index: 2; text-align: center; margin-top: -6px; }
+.rd-boothmeta b {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.26em; color: var(--gold);
+}
+.rd-eq { display: inline-flex; align-items: flex-end; gap: 2.5px; height: 13px; }
+.rd-eq i {
+  width: 3px; height: 13px; border-radius: 1.5px; background: var(--gold);
+  transform: scaleY(calc(0.25 + var(--beat) * 0.75)); transform-origin: bottom;
+  animation: rdEq 0.7s var(--ease-in-out) infinite;
+}
+.rd-eq i:nth-child(2) { animation-delay: 0.12s; }
+.rd-eq i:nth-child(3) { animation-delay: 0.26s; }
+.rd-eq i:nth-child(4) { animation-delay: 0.06s; }
+@keyframes rdEq { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+.rd-say { display: block; margin-top: 7px; font-family: var(--font-mono); font-size: 12px; line-height: 1.55; color: var(--paper); min-height: 18px; }
+.rd-next { display: block; margin-top: 8px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--muted); }
 
 .rd-bottom {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 3;
   display: flex; align-items: flex-end; gap: 18px; padding: 0 22px 14px;
 }
-.rd-booth { flex: 0 0 auto; display: flex; align-items: flex-end; gap: 14px; max-width: min(460px, 48vw); }
 .rd-tracks {
   flex: 1; min-width: 0; display: flex; gap: 10px;
   overflow-x: auto; padding: 10px 6px 4px; scrollbar-width: thin;
@@ -986,15 +1049,6 @@ html, body, #app { height: 100dvh; }
 .rd-tile.active { opacity: 1; }
 .rd-tile.active img { border-color: var(--gold); box-shadow: 0 0 18px color-mix(in srgb, var(--gold) 32%, transparent); }
 .rd-tile.active span { color: var(--gold); }
-.rd-twin {
-  flex: 0 0 auto; width: 215px; height: 172px; overflow: hidden;
-  border: 1px solid var(--border); border-radius: var(--r-lg);
-  background: color-mix(in srgb, var(--void) 55%, transparent); backdrop-filter: blur(8px);
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-.rd-booth.talking .rd-twin { border-color: color-mix(in srgb, var(--gold) 55%, transparent); box-shadow: 0 0 26px color-mix(in srgb, var(--gold) 16%, transparent); }
-.rd-boothmeta b { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.22em; color: var(--gold); }
-.rd-say { display: block; margin-top: 5px; font-family: var(--font-mono); font-size: 11.5px; line-height: 1.55; color: var(--muted); }
 
 .rd-gate {
   position: absolute; inset: 0; z-index: 9;
@@ -1005,13 +1059,15 @@ html, body, #app { height: 100dvh; }
 .rd-gatesub { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--muted); }
 
 @media (max-width: 900px) {
-  .rd-main { grid-template-columns: 1fr; gap: 16px; overflow-y: auto; padding: 0 18px 230px; align-items: start; }
-  .rd-platterwrap { width: min(280px, 70vw); margin: 0 auto; }
-  .rd-lyrics { height: 280px; }
-  .rd-bottom { flex-direction: column; align-items: stretch; gap: 8px; padding: 0 12px 10px; }
-  .rd-booth { gap: 10px; max-width: none; }
-  .rd-twin { width: 124px; height: 100px; }
-  .rd-say { font-size: 10.5px; }
+  .rd-main {
+    grid-template-columns: 1fr; gap: 18px; overflow-y: auto;
+    padding: 4px 18px 96px; align-items: start;
+  }
+  .rd-stage { order: -1; height: auto; }          /* Servo leads on mobile */
+  .rd-twin { max-width: 340px; height: min(42vh, 330px); margin: 0 auto; }
+  .rd-platterwrap { width: min(260px, 64vw); margin: 0 auto; }
+  .rd-lyrics { height: 240px; }
+  .rd-say { font-size: 11px; }
   .rd-tile { width: 62px; }
   .rd-tile img { width: 54px; height: 54px; }
 }

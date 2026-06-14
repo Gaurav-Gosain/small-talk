@@ -1,0 +1,79 @@
+1
+00:00:00,000 --> 00:00:03,589
+Verse 1:
+
+2
+00:00:03,511 --> 00:00:05,266
+Jensen in the leather jacket drip
+
+3
+00:00:07,020 --> 00:00:08,617
+Handed us the CUDA chip
+
+4
+00:00:10,053 --> 00:00:11,887
+Said go build some AI stuff
+
+5
+00:00:11,887 --> 00:00:14,919
+We made robots do the Macarena — is that
+
+6
+00:00:14,919 --> 00:00:15,478
+enough?
+
+7
+00:00:15,558 --> 00:00:15,637
+Chorus:
+
+8
+00:00:15,637 --> 00:00:18,111
+NVIDIA gave us GPUs
+
+9
+00:00:18,111 --> 00:00:19,388
+And we used them for vibes
+
+10
+00:00:19,388 --> 00:00:21,861
+RTX 5080 in the prize pool
+
+11
+00:00:21,861 --> 00:00:23,378
+But we just want the good times
+
+12
+00:00:26,170 --> 00:00:26,410
+Verse 2:
+
+13
+00:00:26,329 --> 00:00:28,963
+Tensor cores doing matrix math
+
+14
+00:00:29,440 --> 00:00:32,472
+So my robot takes a bubble bath
+
+15
+00:00:33,430 --> 00:00:36,222
+VRAM running hot tonight
+
+16
+00:00:36,463 --> 00:00:38,697
+Inference speed? Yeah it's aight
+
+17
+00:00:38,697 --> 00:00:39,095
+(Chorus)
+
+18
+00:00:38,697 --> 00:00:39,095
+Bridge:
+
+19
+00:00:39,095 --> 00:00:40,850
+Thank you Jensen, leather king
+
+20
+00:00:42,366 --> 00:00:45,000
+For every GPU and everything
