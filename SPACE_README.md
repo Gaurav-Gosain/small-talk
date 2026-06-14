@@ -20,6 +20,7 @@ tags:
   - achievement:llama
   - achievement:fieldnotes
   - achievement:offgrid
+  - badge-tiny-titan
 ---
 
 # Small Talk
