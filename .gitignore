@@ -24,3 +24,6 @@ frontend/public/robot-3d/
 
 # CC-BY 3D prop library (~170MB, re-fetch via scripts/fetch-props.py; manifest has attribution)
 frontend/props-lib/
+
+# macOS noise
+.DS_Store

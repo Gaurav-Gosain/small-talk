@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DJ Reachy — green-screen mascot</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎧</text></svg>" />
+    <style>
+      :root { color-scheme: light; }
+      html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background: #00ff00; }
+      #twin { position: fixed; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="twin"></div>
+    <script type="module">
+      import * as THREE from 'three';
+      import { ReachyTwin } from './src/reachy3d.js';
+
+      const GREEN = 0x00ff00;
+      const ACCENT = '#ffd34d';
+
+      const twin = new ReachyTwin(document.getElementById('twin'), { accent: ACCENT });
+      twin.renderer.setClearColor(new THREE.Color(GREEN), 1);
+
+      let recorder = null;
+      let chunks = [];
+
+      window.djStartRecording = (fps = 60) => {
+        const canvas = twin.renderer.domElement;
+        // canvas.captureStream pulls frames from the WebGL canvas itself,
+        // no screen capture in the loop — every frame the WebGL pipeline
+        // produces lands in the stream at the requested fps.
+        const stream = canvas.captureStream(fps);
+        const mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
+          ? 'video/webm;codecs=vp9'
+          : 'video/webm;codecs=vp8';
+        chunks = [];
+        recorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 8_000_000 });
+        recorder.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
+        recorder.start(100); // 100 ms timeslice
+        return { mime, fps };
+      };
+
+      // Stop, assemble the blob, and return base64 so Playwright can save it.
+      window.djStopRecording = async () => {
+        await new Promise((resolve) => {
+          recorder.onstop = resolve;
+          recorder.stop();
+        });
+        const blob = new Blob(chunks, { type: chunks[0]?.type || 'video/webm' });
+        const buf = await blob.arrayBuffer();
+        // chunked base64 to avoid stack overflow on huge buffers
+        let bin = '';
+        const bytes = new Uint8Array(buf);
+        const CHUNK = 0x8000;
+        for (let i = 0; i < bytes.length; i += CHUNK) {
+          bin += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+        }
+        return { b64: btoa(bin), bytes: bytes.length, type: blob.type };
+      };
+
+      (async () => {
+        for (let i = 0; i < 150; i++) {
+          if (twin.setHeadphones?.(ACCENT)) break;
+          await new Promise((r) => setTimeout(r, 100));
+        }
+        // No backstage / dance reactions — we want talking, not raving. The
+        // speech tapper inside ReachyTwin handles head + antenna motion as
+        // long as setLevel is fed a speech-shaped envelope.
+        twin.renderer.setClearColor(new THREE.Color(GREEN), 1);
+        window._djReady = true;
+
+        // Speech-shaped envelope without sharp transients (those were the
+        // source of the antenna snapping). Three incommensurate sinusoids
+        // multiplied together produce a non-repeating, organic amplitude
+        // curve in roughly the vowel-rate band (2–6 Hz). A second slow
+        // sinusoid modulates overall intensity. Phrase windows gate it on
+        // and off so we get sentence-then-pause cadence. Capped at 0.6 so
+        // even the loudest moment doesn't whip the antennas.
+        const rand = (a, b) => a + Math.random() * (b - a);
+        const t0 = performance.now();
+        let phraseEndAt = 0;
+        let pauseEndAt = 0;
+        let inPhrase = false;
+
+        (function tick() {
+          const t = (performance.now() - t0) / 1000;
+          if (t >= pauseEndAt) {
+            if (!inPhrase) {
+              phraseEndAt = t + rand(2.0, 4.5);
+              inPhrase = true;
+            } else if (t >= phraseEndAt) {
+              pauseEndAt = t + rand(0.35, 0.9);
+              inPhrase = false;
+            }
+          }
+
+          let level = 0;
+          if (inPhrase && t < phraseEndAt) {
+            const a = 0.5 + 0.5 * Math.sin(t * 3.1 * Math.PI * 2 + 0.7);
+            const b = 0.5 + 0.5 * Math.sin(t * 5.3 * Math.PI * 2 + 2.1);
+            const c = 0.5 + 0.5 * Math.sin(t * 1.7 * Math.PI * 2 + 4.4);
+            const env = 0.55 + 0.45 * (0.5 + 0.5 * Math.sin(t * 0.6 * Math.PI * 2));
+            level = Math.min(0.6, (0.4 * a * b + 0.4 * c) * env);
+          }
+
+          twin.setLevel?.(level);
+          requestAnimationFrame(tick);
+        })();
+      })();
+    </script>
+  </body>
+</html>
