@@ -66,7 +66,9 @@ flowchart LR
   antenna motion driven by the RTP audio level blended with recorded Reachy
   emotions and dances.
 
-The Space runs CPU-only and delegates all inference to Modal serverless GPUs.
+The Space runs CPU-only and delegates all inference to Modal serverless GPUs. The
+Modal serving code for the Nemotron (llama.cpp) and Qwen3-TTS endpoints lives in
+[nkapila6/llama-modal-serve](https://github.com/nkapila6/llama-modal-serve).
 
 ## Hackathon
 

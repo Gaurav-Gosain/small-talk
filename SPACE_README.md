@@ -84,6 +84,8 @@ flowchart LR
   emotions and dances.
 
 The Space itself runs CPU-only. All inference is delegated to Modal serverless GPUs.
+The Modal serving code for the Nemotron (llama.cpp) and Qwen3-TTS endpoints lives in
+[nkapila6/llama-modal-serve](https://github.com/nkapila6/llama-modal-serve).
 
 ## Built for the Build Small Hackathon
 
