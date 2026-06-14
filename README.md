@@ -116,6 +116,30 @@ Secrets (LiveKit and Modal endpoint URLs/keys, admin token) live in `.env`
 (gitignored) and as Space secrets, never in the repo. `scripts/deploy-space.py`
 pushes the built app to Hugging Face.
 
+## Self-hosting LiveKit (optional)
+
+The WebRTC transport is a standard LiveKit SFU, so you can run your own instead of
+LiveKit Cloud. The short version:
+
+1. Install the server on a VM: `curl -sSL https://get.livekit.io | bash`.
+2. In `livekit.yaml`, set your API key/secret and ports (7880 signal, 7881 TCP, a
+   UDP range like 50000-60000). On a cloud VM, pin `node_ip` to the public IP so
+   ICE candidates are reachable from behind NAT.
+3. Put it behind a TLS reverse proxy (e.g. Caddy) so the browser can reach it over
+   `wss://`.
+4. Point the app at it via `.env` (`LIVEKIT_URL` / `LIVEKIT_API_KEY` / `LIVEKIT_API_SECRET`).
+
+Three things worth knowing, learned the hard way:
+
+- Pin server **v1.12.0**. In single peer connection mode, v1.13.x answers Firefox
+  and Gecko browsers with a mismatched Opus payload type, so audio arrives but
+  plays silent. The client already sets `singlePeerConnection: false` (dual peer
+  connection) which sidesteps it, but the older server is the safe pairing.
+- Raise the kernel UDP buffers (`net.core.rmem_max` and `wmem_max` to roughly
+  25 MB); the defaults drop audio under load.
+- Open **TCP 7881** on both the host firewall and any cloud security list, so
+  viewers on UDP-blocked networks can fall back to TCP.
+
 ## Repo layout
 
 | Path | What |
