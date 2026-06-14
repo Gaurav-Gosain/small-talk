@@ -9,10 +9,11 @@ member and speak its lines through the actual robot.
 
 **Live demo:** https://huggingface.co/spaces/build-small-hackathon/small-talk
 **Demo video:** https://youtu.be/obP4C1eH77I
-**Write-up:** [Small Talk on the Hugging Face blog](https://huggingface.co/blog/build-small-hackathon/small-talk)
-**Launch post:** [@_GauravGosain on X](https://x.com/_GauravGosain/status/2066013749304344915)
+**Write-ups:** [Hugging Face blog](https://huggingface.co/blog/build-small-hackathon/small-talk) · [nkapila.me](https://nkapila.me/posts/small-talk)
+**Launch posts:** [@_GauravGosain on X](https://x.com/_GauravGosain/status/2066013749304344915) · [Nikhil Kapila on LinkedIn](https://www.linkedin.com/posts/nikhilkapila_buildsmall-huggingface-modal-ugcPost-7471791298199408640-OBzS/)
 
-Built for the [Build Small Hackathon](https://huggingface.co/spaces/build-small-hackathon/field-guide).
+Built for the [Build Small Hackathon](https://huggingface.co/spaces/build-small-hackathon/field-guide) by
+[GauravGosain](https://huggingface.co/GauravGosain) and [nkapila6](https://huggingface.co/nkapila6).
 
 ## What it does
 
