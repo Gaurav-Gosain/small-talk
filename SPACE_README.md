@@ -19,6 +19,7 @@ tags:
   - achievement:offbrand
   - achievement:llama
   - achievement:fieldnotes
+  - achievement:offgrid
 ---
 
 # Small Talk
@@ -96,6 +97,7 @@ a single 4B model. Small Talk is in the running for:
 | **Off Brand** | A fully custom three.js UI built on `gradio.Server`. |
 | **Tiny Titan** | The reasoning brain is a 4B model. |
 | **Llama Champion** | Nemotron is served through the llama.cpp runtime. |
+| **Off the Grid** | No proprietary or closed model APIs. Every model (Nemotron, Qwen3-TTS) is open-weight and self-hosted via llama.cpp; Modal provides the compute, not the model. |
 | **Field Notes** | A full build write-up is published on the HF blog. |
 | **Bonus Quest Champion** | The most bonus criteria met across the board. |
 
