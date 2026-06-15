@@ -4,6 +4,7 @@
 // the karaoke lyrics sync off the SRT-derived timestamps, and a 3D Reachy in
 // the booth wears procedural headphones and vibes to the music.
 import { ReachyTwin } from './reachy3d.js';
+import { openExplainer } from './explainer.js';
 
 const ACCENT = '#ffd34d';
 const $id = (s) => document.getElementById(s);
@@ -18,7 +19,10 @@ export async function openRadio() {
     <div class="rd-bg" id="rdBg"></div>
     <div class="rd-head">
       <span class="rd-logo">REACHY <b>FM</b><em>88.8 · the small model station</em></span>
-      <span class="rd-onair" id="rdOnAir"><i></i><span id="rdOnAirText">OFF AIR</span></span>
+      <span style="display:flex;align-items:center;gap:12px">
+        <button class="xp-q" id="rdHelp" title="How DJ Servo grooves">?</button>
+        <span class="rd-onair" id="rdOnAir"><i></i><span id="rdOnAirText">OFF AIR</span></span>
+      </span>
     </div>
     <div class="rd-main">
       <div class="rd-deck">
@@ -96,6 +100,7 @@ export async function openRadio() {
   st.audio.onplay = () => updatePlayBtn(true);
   st.audio.onpause = () => { updatePlayBtn(false); st.twin?.setDance?.(null); }; // freeze the groove when paused
 
+  $id('rdHelp').onclick = () => openExplainer('beat');
   $id('rdTune').onclick = () => {
     $id('rdGate').classList.add('hidden');
     ensureGraph();

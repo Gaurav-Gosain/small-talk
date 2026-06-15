@@ -3,6 +3,7 @@ import { Room, RoomEvent, Track } from 'livekit-client';
 import { ReachyTwin } from './reachy3d.js';
 import { HeroReachy } from './hero.js';
 import { openRadio, closeRadio } from './radio.js';
+import { openExplainer } from './explainer.js';
 import './styles.css';
 import './themes.css';
 
@@ -1325,6 +1326,7 @@ if ($('admRefresh')) {
 }
 
 // ------------------------------------------------------------------ boot
+if ($('topHelp')) $('topHelp').onclick = () => openExplainer();
 setTheme(theme, { rebuild: false }); // apply saved/default theme before first paint
 buildThemePicker();
 spotlightLoop(); // Lithos cursor reveal (no-op until that theme is active)
