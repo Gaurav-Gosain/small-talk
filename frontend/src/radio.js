@@ -88,13 +88,13 @@ export async function openRadio() {
       if (st.twin.setHeadphones?.(ACCENT)) clearInterval(iv);
     }, 120);
   } catch {
-    st.twin = { setLevel() {}, dispose() {} };
+    st.twin = { setLevel() {}, setDance() {}, dispose() {} };
   }
 
   st.audio.onended = () => advance();
   st.audio.ontimeupdate = () => onTime();
-  st.audio.onplay = () => { updatePlayBtn(true); if (st.phase === 'song') st.twin?.setBackstage?.(true); };
-  st.audio.onpause = () => { updatePlayBtn(false); st.twin?.setBackstage?.(false); }; // no dancing in silence
+  st.audio.onplay = () => updatePlayBtn(true);
+  st.audio.onpause = () => { updatePlayBtn(false); st.twin?.setDance?.(null); }; // freeze the groove when paused
 
   $id('rdTune').onclick = () => {
     $id('rdGate').classList.add('hidden');
@@ -192,7 +192,7 @@ function micBreak(t) {
   st.phase = 'rj';
   setOnAir(true);
   setSpin(false);
-  st.twin?.setBackstage?.(false); // no dancing while addressing the listeners
+  st.twin?.setDance?.(null); // talking to the listeners, not dancing
   st.audio.src = t.rj.src;
   st.audio.play().catch(() => {});
   typeSay(t.rj.text);
@@ -203,7 +203,7 @@ function playSong() {
   st.phase = 'song';
   setOnAir(false);
   setSpin(true);
-  st.twin?.setBackstage?.(true); // grooving: frequent emotes, plenty of dances
+  // the dance is driven each frame in vizLoop from the beat clock once playing
   st.lyAt = -1;
   st.audio.src = t.mp3;
   st.audio.play().catch(() => {});
@@ -309,7 +309,7 @@ function vizLoop() {
     const N = 56;
     const cx = w / 2, cy = hgt / 2;
     const r0 = Math.min(w, hgt) * 0.43;
-    const beatPulse = st.groove || 0;
+    const beatPulse = st.beatFlash || 0;
     let sum = 0;
     for (let i = 0; i < N; i++) {
       const v = bins[(i * bins.length / N) | 0] / 255;
@@ -329,26 +329,37 @@ function vizLoop() {
     bass /= 4;
   }
 
-  // ---- beat-synced groove ----
-  // Compare instantaneous kick energy to a fast-tracking local average; a sharp
-  // spike above it is a beat. Each beat snaps a nod envelope to 1 that decays
-  // fast, so the head pops ON the kick instead of smoothly tracking volume.
-  st.bassAvg = st.bassAvg == null ? bass : st.bassAvg + (bass - st.bassAvg) * Math.min(1, dt / 320);
-  if (st.phase === 'song' && !st.audio.paused
-      && bass > st.bassAvg * 1.28 + 0.05 && bass > 0.2
-      && now - (st.lastBeat || 0) > 200) {
-    st.lastBeat = now;
-    st.groove = 1;                         // beat hit → full nod
-    if (st.twin?.pulse) st.twin.pulse();   // optional extra head-pop on the beat
+  // ---- beat tracking + procedural dance ----
+  // Detect kick onsets, lock a fractional "beat clock" to them with a soft phase
+  // correction, and learn the tempo. The clock keeps advancing between detected
+  // beats so the groove stays in time, and every dance move is derived from it.
+  // No random library dances: the motion is 100% music-synced.
+  const playing = st.phase === 'song' && !st.audio.paused;
+  if (playing) {
+    st.kickAvg = st.kickAvg == null ? bass : st.kickAvg + (bass - st.kickAvg) * Math.min(1, dt / 200);
+    const onset = bass > st.kickAvg * 1.3 + 0.04 && bass > 0.16 && now - (st.lastBeat || 0) > 215;
+    if (st.beatInterval == null) st.beatInterval = 0.5; // 120 BPM until the tempo is learned
+    if (st.beatClock == null) st.beatClock = 0;
+    if (onset) {
+      const iv = (now - (st.lastBeat || now)) / 1000;
+      if (iv > 0.3 && iv < 0.9) st.beatInterval = st.beatInterval * 0.7 + iv * 0.3; // smooth tempo
+      st.lastBeat = now;
+      st.beatClock += (Math.round(st.beatClock) - st.beatClock) * 0.5; // nudge phase onto the beat
+      st.beatFlash = 1;
+    }
+    st.beatClock += dt / 1000 / st.beatInterval;
+    const intensity = Math.min(1, Math.max(0, (level - 0.05) * 2.6));
+    st.twin?.setDance?.({ clock: st.beatClock, intensity });
+    st.twin?.setLevel?.(0);
+  } else {
+    st.twin?.setDance?.(null);
+    st.twin?.setLevel?.(st.phase === 'rj' ? Math.min(1, level * 2.2) : 0); // mic-break lip sync
   }
-  st.groove = (st.groove || 0) * Math.pow(0.0009, dt / 1000); // ~110ms half-life
-  const sway = Math.max(0, bass - 0.28) * 0.45;               // gentle baseline so he's never frozen
-  const groove = Math.max(st.groove, sway);
+  st.beatFlash = (st.beatFlash || 0) * Math.pow(0.0008, dt / 1000); // decays ~85ms
 
-  // mic break = full-throat lip sync; song = beat-locked bop
-  st.twin?.setLevel?.(st.phase === 'rj' ? Math.min(1, level * 2.2) : Math.min(0.8, groove));
-
-  // expose the beat envelope to CSS for the spotlight + eq pulse
+  // expose a beat pulse to CSS for the spotlight + eq (the on-beat snap)
+  const bp = (((st.beatClock || 0) % 1) + 1) % 1;
+  const bobNow = playing ? Math.max(Math.exp(-bp * 8), Math.exp(-(1 - bp) * 8)) * Math.min(1, level * 2.6) : 0;
   const root = document.querySelector('.radio');
-  if (root) root.style.setProperty('--beat', (st.phase === 'rj' ? level * 1.4 : st.groove).toFixed(3));
+  if (root) root.style.setProperty('--beat', (st.phase === 'rj' ? level * 1.4 : Math.max(bobNow, st.beatFlash || 0)).toFixed(3));
 }

@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import URDFLoader from 'urdf-loader';
+import { makeDanceState, danceStep, makeTalkState, talkStep } from './dance.js';
 
 const _gltf = new GLTFLoader();
 const DEG = Math.PI / 180;
@@ -157,30 +158,19 @@ const TAU = Math.PI * 2;
 //    head-platform link (xl_330) directly — the same head-pose abstraction the
 //    real robot uses, sidestepping Stewart-platform IK.
 const BREATHE_Z_M = 0.005; // 5 mm vertical bob
-const BEAT_NOD_RAD = 9 * (Math.PI / 180); // head-dip pitch on a music beat
-const BEAT_DROP_M = 0.0075; // 7.5 mm downward bob on the beat
 const BREATHE_HZ = 0.1;
 const ANT_SWAY_RAD = 15 * D2R; // idle antenna sway
 const ANT_HZ = 0.5;
-const ANT_SPEECH_RAD = 7 * D2R; // extra antenna perk while talking
-const ANT_SPEECH_HZ = 1.6;
 const BODY_YAW_RAD = 2.5 * D2R; // slow idle "look around" (gentle, so props don't swing off-centre)
 const BODY_YAW_HZ = 0.06;
-// Audio-level envelope time constants (seconds): quick to rise, slow to fall,
-// so the head swells with speech and settles smoothly instead of jittering.
+// Audio-level envelope time constants (seconds): quick to rise, slow to fall.
 const LEVEL_ATTACK_S = 0.08;
 const LEVEL_RELEASE_S = 0.32;
-// [amplitude, frequencyHz] — rotations in rad, translations in metres.
-// Frequencies are softened vs the real robot's values: the physical head has
-// inertia, an on-screen twin at the same Hz reads as twitchy.
-const SWAY = {
-  pitch: [3.5 * D2R, 1.2],
-  yaw: [3.5 * D2R, 0.45], // gentler head-shake so props don't swing off-centre while talking
-  roll: [2 * D2R, 0.8],
-  x: [0.0045, 0.3],
-  y: [0.00375, 0.4],
-  z: [0.00225, 0.22],
-};
+// antenna spring (VTuber-style secondary motion): the antennas trail + overshoot
+// the target pose like ears/hair. ~2.7 Hz, slightly underdamped.
+const ANT_STIFF = 280;
+const ANT_DAMP = 13;
+// expressive dance + talking motion lives in dance.js (danceStep / talkStep)
 
 // Load + parse the URDF once, then clone the resulting object per card.
 let _robotProto = null;
@@ -249,7 +239,7 @@ export class ReachyTwin {
     this._zoom = 1;
     this.level = 0; // smoothed audio level, 0..1
     this._targetLevel = 0; // raw level from the grid, smoothed in _tick
-    this._beat = 0; // decaying on-beat nod impulse (radio DJ), 0 unless pulse()d
+    this._dance = null; // music dance params {clock, intensity} (radio DJ), or null
     this._t = 0; // accumulated wall-clock seconds (frame-rate independent)
     this._clock = new THREE.Clock();
     this._disposed = false;
@@ -376,8 +366,11 @@ export class ReachyTwin {
     this._targetLevel = Math.max(0, Math.min(1, level));
   }
 
-  /** Snap an on-beat head-dip impulse (radio DJ headbang). Decays in _tick. */
-  pulse() { this._beat = 1; }
+  /** Drive a music-synced dance. `p.clock` is a fractional beat count (the whole
+   *  number is the beat, the fraction is the phase, 0 = on the beat); `p.intensity`
+   *  (0..1) scales how big the moves are. Pass null to stop (mic breaks / paused).
+   *  While dancing, the random recorded-move scheduler is suppressed. */
+  setDance(p) { this._dance = p || null; }
 
   /** Backstage mode (the show is writing/voicing): react sooner and dance more,
    *  so the wait looks like a green-room hang instead of frozen robots. */
@@ -518,7 +511,6 @@ export class ReachyTwin {
     const tau = this._targetLevel > this.level ? LEVEL_ATTACK_S : LEVEL_RELEASE_S;
     this.level += (this._targetLevel - this.level) * (1 - Math.exp(-dt / tau));
     const lvl = this.level;
-    this._beat *= Math.exp(-dt / 0.13); // on-beat nod impulse decays (~90ms)
 
     if (this.robot && this._rest) {
       const ph = this._seed;
@@ -526,9 +518,10 @@ export class ReachyTwin {
 
       // --- reaction scheduler: a listener (not currently speaking) periodically
       //     plays a recorded emotion/dance so it emotes while someone else talks.
-      if (this._lib) {
-        // backstage mode keeps reacting even at high audio levels — that's the
-        // radio DJ grooving to the music rather than someone talking over it
+      //     Suppressed entirely while music-dancing (that motion is procedural).
+      if (this._dance) {
+        this._move = null;
+      } else if (this._lib) {
         if (speaking && !this._backstage) {
           this._move = null;
           this._nextReactAt = t + this._reactGap();
@@ -569,27 +562,20 @@ export class ReachyTwin {
         yawV = lerp(yawV, this._rest.yaw_body + s.bodyYaw, w);
       }
 
-      // --- speech wobble, added on top and scaled by audio level (WORLD axes:
-      //     pitch=nod(X), yaw=shake(Y), roll=tilt(Z)) ---
-      if (lvl > 0.001) {
-        hpitch += SWAY.pitch[0] * lvl * Math.sin(TAU * SWAY.pitch[1] * t + ph);
-        hyaw += SWAY.yaw[0] * lvl * Math.sin(TAU * SWAY.yaw[1] * t + ph + 1.3);
-        hroll += SWAY.roll[0] * lvl * Math.sin(TAU * SWAY.roll[1] * t + ph + 2.6);
-        hx += SWAY.x[0] * lvl * Math.sin(TAU * SWAY.x[1] * t + ph + 0.7);
-        hy += SWAY.y[0] * lvl * Math.sin(TAU * SWAY.y[1] * t + ph + 1.9);
-        hz += SWAY.z[0] * lvl * Math.sin(TAU * SWAY.z[1] * t + ph + 3.1);
-        const antSpeech = ANT_SPEECH_RAD * lvl * Math.sin(TAU * ANT_SPEECH_HZ * t + ph);
-        aL += antSpeech;
-        aR -= antSpeech;
-      }
-
-      // --- on-beat headbang (radio DJ): a sharp downward nod + dip + antenna
-      //     flick on each detected beat, layered over everything else ---
-      if (this._beat > 0.001) {
-        hpitch += BEAT_NOD_RAD * this._beat;
-        hy -= BEAT_DROP_M * this._beat;
-        aL -= ANT_SPEECH_RAD * 1.4 * this._beat;
-        aR -= ANT_SPEECH_RAD * 1.4 * this._beat;
+      // --- expressive layer: a beat-locked dance (radio DJ, music) or
+      //     speech-driven talking motion (mic breaks + live-show twins) ---
+      if (this._dance) {
+        const o = (this._danceState ||= makeDanceState());
+        const p = danceStep(o, dt, this._dance.clock || 0, this._dance.intensity || 0);
+        hpitch += p.pitch; hyaw += p.yaw; hroll += p.roll;
+        hx += p.x; hy += p.y; hz += p.z; yawV += p.body;
+        aL += p.antL; aR += p.antR;
+      } else {
+        const o = (this._talkState ||= makeTalkState());
+        const p = talkStep(o, dt, this._targetLevel);
+        hpitch += p.pitch; hyaw += p.yaw; hroll += p.roll;
+        hx += p.x; hy += p.y; hz += p.z;
+        aL += p.antL; aR += p.antR;
       }
 
       // --- apply to the head link (world rotation → link-local) + joints ---
@@ -604,8 +590,14 @@ export class ReachyTwin {
         this._tmp.set(hx, hy, hz).applyQuaternion(this._parentWorldQuatInv);
         this.head.position.copy(this._headRestPos).add(this._tmp);
       }
-      this._setJoint('left_antenna', aL);
-      this._setJoint('right_antenna', aR);
+      // antenna spring: trail + overshoot the target (aL/aR), VTuber-style
+      if (this._antL == null) { this._antL = aL; this._antR = aR; this._antLV = 0; this._antRV = 0; }
+      this._antLV += ((aL - this._antL) * ANT_STIFF - this._antLV * ANT_DAMP) * dt;
+      this._antRV += ((aR - this._antR) * ANT_STIFF - this._antRV * ANT_DAMP) * dt;
+      this._antL += this._antLV * dt;
+      this._antR += this._antRV * dt;
+      this._setJoint('left_antenna', this._antL);
+      this._setJoint('right_antenna', this._antR);
       // keep the body roughly camera-facing even during expressive moves
       this._setJoint('yaw_body', Math.max(-0.5, Math.min(0.5, yawV)));
     }

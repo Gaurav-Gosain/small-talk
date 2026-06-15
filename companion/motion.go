@@ -1,11 +1,16 @@
 package main
 
-// The digital twin's motion model (frontend/src/reachy3d.js), ported to the
-// robot's own frame (x forward, y left, z up): idle breathing + antenna sway,
-// and a speech wobble whose amplitude follows the audio level envelope.
+// The physical Reachy's motion model. Idle breathing + a speech-driven head
+// sway: a sum of low-frequency, incommensurate sinusoids per axis (a slow big
+// yaw turn + a faster small pitch nod + subtle roll/drift) scaled by loudness
+// and a VAD gate, so the robot reads as a talking head rather than vibrating
+// with the volume. Matches talkStep in frontend/src/dance.js and the official
+// Reachy conversation app's speech tapper. The antennas run on a spring
+// (VTuber-style secondary motion) so they trail and overshoot.
 
 import (
 	"math"
+	"math/rand"
 	"sync"
 	"time"
 )
@@ -16,41 +21,52 @@ const (
 	breatheZ  = 0.005 // 5 mm vertical bob
 	breatheHz = 0.1
 
-	antSwayRad   = 15 * d2r // idle antenna sway
-	antHz        = 0.5
-	antSpeechRad = 7 * d2r // extra perk while talking
-	antSpeechHz  = 1.6
-	antRestR     = -0.1745 // INIT_ANTENNAS_JOINT_POSITIONS
-	antRestL     = 0.1745
+	antSwayRad = 15 * d2r // idle antenna sway
+	antHz      = 0.5
+	antRestR   = -0.1745 // INIT_ANTENNAS_JOINT_POSITIONS
+	antRestL   = 0.1745
 
 	bodyYawRad = 2.5 * d2r // slow idle "look around"
 	bodyYawHz  = 0.06
 
-	// speech sway: amplitude, frequency (level-scaled)
-	swayPitch, swayPitchHz = 3.5 * d2r, 1.2  // nod
-	swayYaw, swayYawHz     = 3.5 * d2r, 0.45 // shake
-	swayRoll, swayRollHz   = 2.0 * d2r, 0.8  // tilt
-	swayY, swayYHz         = 0.0045, 0.3     // lateral
-	swayZ, swayZHz         = 0.00375, 0.4    // vertical
-	swayX, swayXHz         = 0.00225, 0.22   // fore-aft
+	antStiff = 280.0 // antenna spring (~2.7 Hz natural freq)
+	antDamp  = 13.0  // underdamped → a little bounce, then settle
+)
 
-	attackS  = 0.09 // fast attack, slow release — same envelope as the twin
-	releaseS = 0.25
+func clamp(v, lo, hi float64) float64 { return math.Max(lo, math.Min(hi, v)) }
+
+// speech sway: [amplitude, frequencyHz] per axis (official tuning).
+var (
+	swayPitch = [2]float64{4.5 * d2r, 2.2}   // small fast nods
+	swayYaw   = [2]float64{7.5 * d2r, 0.6}   // big slow side-to-side turns
+	swayRoll  = [2]float64{2.25 * d2r, 1.3}  // subtle tilt
+	swayX     = [2]float64{0.0045, 0.35}     // fore-aft drift (m)
+	swayY     = [2]float64{0.00375, 0.45}    // lateral drift (m)
+	swayZ     = [2]float64{0.00225, 0.25}    // vertical drift (m)
 )
 
 // Motion turns a raw 0..1 speech level into smooth head/antenna/body targets.
 type Motion struct {
 	mu     sync.Mutex
 	target float64 // raw level, set by the audio side
-	level  float64 // smoothed envelope
 	start  time.Time
 	last   time.Time
-	phase  float64
+
+	env  float64 // VAD gate (0..1)
+	loud float64 // smoothed loudness
+
+	phPitch, phYaw, phRoll, phX, phY, phZ float64 // random per-axis phases
+
+	// antenna spring state [pos, vel] for right + left
+	antPosR, antVelR, antPosL, antVelL float64
 }
 
 func NewMotion() *Motion {
 	now := time.Now()
-	return &Motion{start: now, last: now, phase: 1.7}
+	r := func() float64 { return rand.Float64() * 2 * math.Pi }
+	return &Motion{start: now, last: now,
+		phPitch: r(), phYaw: r(), phRoll: r(), phX: r(), phY: r(), phZ: r(),
+		antPosR: antRestR, antPosL: antRestL}
 }
 
 // SetLevel feeds the latest speech intensity (0..1).
@@ -67,40 +83,55 @@ type Pose struct {
 	BodyYaw  float64
 }
 
-// Tick advances the envelope and returns the current pose.
+func spring(pos, vel, target, dt float64) (float64, float64) {
+	vel += ((target-pos)*antStiff - vel*antDamp) * dt
+	return pos + vel*dt, vel
+}
+
+// Tick advances the talking sway and returns the current pose.
 func (m *Motion) Tick() Pose {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
 	now := time.Now()
-	dt := math.Min(now.Sub(m.last).Seconds(), 0.1)
+	dt := math.Min(now.Sub(m.last).Seconds(), 0.05)
 	m.last = now
 	t := now.Sub(m.start).Seconds()
+	lv := m.target
 
-	tau := releaseS
-	if m.target > m.level {
-		tau = attackS
+	// VAD gate: rises fast when the voice starts, releases slowly on a pause
+	envTarget, envTau := 0.0, 0.28
+	if lv > 0.05 {
+		envTarget = 1.0
 	}
-	m.level += (m.target - m.level) * (1 - math.Exp(-dt/tau))
-	lvl := m.level
-	ph := m.phase
-	tau2 := 2 * math.Pi
+	if envTarget > m.env {
+		envTau = 0.05
+	}
+	m.env += (envTarget - m.env) * (1 - math.Exp(-dt/envTau))
+	m.loud += (lv - m.loud) * (1 - math.Exp(-dt/0.06))
+	g := clamp(math.Pow(m.loud, 0.7)*2.3, 0, 1.25) * m.env
 
-	// idle breathing + speech sway, in the robot frame
-	x := swayX * lvl * math.Sin(tau2*swayXHz*t+ph+3.1)
-	y := swayY * lvl * math.Sin(tau2*swayYHz*t+ph+0.7)
-	z := breatheZ*math.Sin(tau2*breatheHz*t) + swayZ*lvl*math.Sin(tau2*swayZHz*t+ph+1.9)
-	pitch := swayPitch * lvl * math.Sin(tau2*swayPitchHz*t+ph)
-	yaw := swayYaw * lvl * math.Sin(tau2*swayYawHz*t+ph+1.3)
-	roll := swayRoll * lvl * math.Sin(tau2*swayRollHz*t+ph+2.6)
+	osc := func(a [2]float64, ph float64) float64 {
+		return a[0] * g * math.Sin(2*math.Pi*a[1]*t+ph)
+	}
+	pitch := osc(swayPitch, m.phPitch)
+	yaw := osc(swayYaw, m.phYaw)
+	roll := osc(swayRoll, m.phRoll)
+	x := osc(swayX, m.phX)
+	y := osc(swayY, m.phY)
+	z := breatheZ*math.Sin(2*math.Pi*breatheHz*t) + osc(swayZ, m.phZ) // breathing + drift
 
-	antB := antSwayRad * math.Sin(tau2*antHz*t) * (0.3 + 0.7*lvl)
-	antS := antSpeechRad * lvl * math.Sin(tau2*antSpeechHz*t+ph)
-	bodyYaw := bodyYawRad * math.Sin(tau2*bodyYawHz*t+ph) * (1 - 0.6*lvl)
+	// antenna TARGETS (idle sway + gentle perk), then spring toward them
+	antB := antSwayRad * math.Sin(2*math.Pi*antHz*t) * (0.3 + 0.7*m.env)
+	perk := 5 * d2r * g
+	m.antPosR, m.antVelR = spring(m.antPosR, m.antVelR, antRestR-antB-perk, dt)
+	m.antPosL, m.antVelL = spring(m.antPosL, m.antVelL, antRestL+antB-perk, dt)
+
+	bodyYaw := bodyYawRad * math.Sin(2*math.Pi*bodyYawHz*t) * (1 - 0.5*m.env)
 
 	return Pose{
 		Head:     se3(x, y, z, roll, pitch, yaw),
-		Antennas: [2]float64{antRestR - antB - antS, antRestL + antB + antS},
+		Antennas: [2]float64{m.antPosR, m.antPosL},
 		BodyYaw:  bodyYaw,
 	}
 }
