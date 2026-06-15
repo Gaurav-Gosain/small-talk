@@ -1161,6 +1161,35 @@ html, body, #app { height: 100dvh; }
   background: color-mix(in srgb, var(--void) 45%, transparent);
 }
 .xp-canvas { display: block; width: 100%; height: 240px; }
+/* split stage: 2D diagram beside the live three.js Reachy twin */
+.xp-split { display: flex; gap: 14px; align-items: stretch; height: 248px; }
+.xp-split-2d { position: relative; flex: 1 1 auto; min-width: 0; }
+.xp-split-2d .xp-canvas { height: 100%; }
+.xp-split-3d {
+  position: relative; flex: 0 0 210px; width: 210px; border-radius: var(--r);
+  overflow: hidden; border: 1px solid var(--border);
+  background:
+    radial-gradient(120% 90% at 50% 18%, color-mix(in srgb, var(--gold) 9%, transparent), transparent 60%),
+    color-mix(in srgb, var(--void) 60%, transparent);
+}
+.xp-twin { position: absolute; inset: 0; }
+.xp-twin canvas { display: block; }
+/* wardrobe stylist: big robot + a JSON-ish slot readout */
+.xp-stylist .xp-split-3d { flex: 0 0 300px; width: 300px; }
+.xp-stylist-info { flex: 1 1 auto; min-width: 0; align-self: center; padding: 0 6px; }
+.xp-look { font-family: var(--font-mono); font-size: 15px; color: var(--text); font-weight: 600; margin-bottom: 14px; }
+.xp-slot { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 13px; padding: 3px 0; }
+.xp-slot > span { color: var(--muted); width: 48px; }
+.xp-slot > b { color: var(--gold); font-weight: 600; display: inline-flex; align-items: center; gap: 7px; }
+.xp-slot > b.nul { color: color-mix(in srgb, var(--muted) 70%, transparent); font-weight: 400; }
+.xp-slot > b i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; border: 1px solid var(--border-2); }
+.xp-reason { margin-top: 14px; max-width: 34ch; font-size: 12px; line-height: 1.55; color: var(--muted); }
+.xp-reason code { font-family: var(--font-mono); font-size: 0.92em; color: var(--gold); }
+@media (max-width: 720px) {
+  .xp-split { flex-direction: column; height: auto; }
+  .xp-split-2d { height: 220px; }
+  .xp-split-3d, .xp-stylist .xp-split-3d { flex-basis: auto; width: 100%; height: 220px; }
+}
 .xp-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 10px; }
 .xp-btn {
   cursor: pointer; padding: 6px 13px; border-radius: 999px;

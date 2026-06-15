@@ -372,6 +372,42 @@ export class ReachyTwin {
    *  While dancing, the random recorded-move scheduler is suppressed. */
   setDance(p) { this._dance = p || null; }
 
+  /** Drive the head to an explicit pose (radians) + antenna offsets (radians),
+   *  bypassing the idle/dance/talk layers. Used by the in-app "how it works"
+   *  explainer to pose the REAL robot from each algorithm. Fields (all optional):
+   *  pitch/yaw/roll, x/y/z (metres), antL/antR, antStiff/antDamp (spring tuning),
+   *  spring:false to snap the antennas. Pass null to restore the auto motion. */
+  setPose(p) { this._manualPose = p || null; }
+
+  _applyManualPose(dt) {
+    const m = this._manualPose;
+    if (this.head && this._euler) {
+      this._euler.set(m.pitch || 0, m.yaw || 0, m.roll || 0, 'XYZ');
+      this._q.setFromEuler(this._euler);
+      this._qLocal.copy(this._parentWorldQuatInv).multiply(this._q).multiply(this._headRestWorldQuat);
+      this.head.quaternion.copy(this._qLocal);
+      this._tmp.set(m.x || 0, m.y || 0, m.z || 0).applyQuaternion(this._parentWorldQuatInv);
+      this.head.position.copy(this._headRestPos).add(this._tmp);
+    }
+    const aL = (this._rest?.left_antenna || 0) + (m.antL || 0);
+    const aR = (this._rest?.right_antenna || 0) + (m.antR || 0);
+    if (this._antL == null) { this._antL = aL; this._antR = aR; this._antLV = 0; this._antRV = 0; }
+    if (m.spring === false) { this._antL = aL; this._antR = aR; this._antLV = 0; this._antRV = 0; }
+    else {
+      const k = m.antStiff || ANT_STIFF, c = m.antDamp || ANT_DAMP;
+      this._antLV += ((aL - this._antL) * k - this._antLV * c) * dt;
+      this._antRV += ((aR - this._antR) * k - this._antRV * c) * dt;
+      this._antL += this._antLV * dt; this._antR += this._antRV * dt;
+    }
+    this._setJoint('left_antenna', this._antL);
+    this._setJoint('right_antenna', this._antR);
+  }
+
+  /** Stop/start the render loop without disturbing the pose — lets the explainer
+   *  keep many twins alive but only render the ones currently on screen. */
+  pause() { if (this._paused) return; this._paused = true; cancelAnimationFrame(this._raf); }
+  resume() { if (!this._paused) return; this._paused = false; this._clock.getDelta(); this._raf = requestAnimationFrame(this._tick); }
+
   /** Backstage mode (the show is writing/voicing): react sooner and dance more,
    *  so the wait looks like a green-room hang instead of frozen robots. */
   setBackstage(on) {
@@ -511,6 +547,13 @@ export class ReachyTwin {
     const tau = this._targetLevel > this.level ? LEVEL_ATTACK_S : LEVEL_RELEASE_S;
     this.level += (this._targetLevel - this.level) * (1 - Math.exp(-dt / tau));
     const lvl = this.level;
+
+    // explainer override: pose the head explicitly, skip the auto layers
+    if (this._manualPose) {
+      if (this.robot && this._rest) this._applyManualPose(dt);
+      this.renderer.render(this.scene, this.camera);
+      return;
+    }
 
     if (this.robot && this._rest) {
       const ph = this._seed;

@@ -2,6 +2,8 @@
 // visualizations of the actual algorithms (beat-tracking PLL, antenna spring,
 // talking sway, dance moves, beat-shape curves). Open via openExplainer().
 
+import { ReachyTwin } from './reachy3d.js';
+
 const TAU = Math.PI * 2;
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const D2R = Math.PI / 180;
@@ -20,61 +22,62 @@ function highlight(code) {
     .replace(/\b(\d+\.?\d*)\b/g, '<span class="c-num">$1</span>');
 }
 
-// ---- a cute Reachy head, posed by the widgets -----------------------------
-function drawHead(ctx, cx, cy, s, p = {}) {
-  const { roll = 0, dx = 0, dy = 0, antL = 0, antR = 0, glow = 0.5, sx = 1, sy = 1 } = p;
-  const gold = '#ffd34d';
-  ctx.save();
-  ctx.translate(cx, cy);
-  // --- body: STATIC base, never moves (it is the platform, not the head) ---
-  const bodyG = ctx.createLinearGradient(0, s * 0.32, 0, s * 1.02);
-  bodyG.addColorStop(0, '#edeef3'); bodyG.addColorStop(1, '#d0d0d8');
-  ctx.fillStyle = bodyG;
-  rrect(ctx, -s * 0.5, s * 0.32, s, s * 0.7, s * 0.18); ctx.fill();
-  ctx.fillStyle = '#c3c3cb';
-  rrect(ctx, -s * 0.5, s * 0.78, s, s * 0.18, s * 0.09); ctx.fill();
-  // --- head: only this moves, pivoting about the neck where it meets the body ---
-  ctx.save();
-  const pivot = s * 0.34;
-  ctx.translate(dx, dy);
-  ctx.translate(0, pivot); ctx.rotate(roll); ctx.scale(sx, sy); ctx.translate(0, -pivot);
-  // antennas first so their stalks tuck behind the dome
-  ant(ctx, -s * 0.26, -s * 0.46, -0.28 + antL, s, gold);
-  ant(ctx, s * 0.26, -s * 0.46, 0.28 + antR, s, gold);
-  // dome, lit softly from the top
-  const headG = ctx.createLinearGradient(0, -s * 0.5, 0, s * 0.42);
-  headG.addColorStop(0, '#fbfbff'); headG.addColorStop(1, '#e7e7ef');
-  ctx.fillStyle = headG;
-  rrect(ctx, -s * 0.46, -s * 0.5, s * 0.92, s * 0.92, s * 0.32); ctx.fill();
-  // two camera eyes
-  const eyeX = s * 0.215, eyeY = -s * 0.04, eyeR = s * 0.165;
-  for (const dir of [-1, 1]) {
-    const ex = dir * eyeX;
-    ctx.fillStyle = '#101118';                          // lens housing
-    ctx.beginPath(); ctx.arc(ex, eyeY, eyeR, 0, TAU); ctx.fill();
-    ctx.save();                                         // glowing iris
-    ctx.shadowColor = gold; ctx.shadowBlur = 11 * glow;
-    const iris = ctx.createRadialGradient(ex, eyeY, 0, ex, eyeY, eyeR * 0.62);
-    iris.addColorStop(0, `rgba(255,226,140,${0.7 + 0.3 * glow})`);
-    iris.addColorStop(1, `rgba(255,176,42,${0.25 + 0.5 * glow})`);
-    ctx.fillStyle = iris;
-    ctx.beginPath(); ctx.arc(ex, eyeY, eyeR * 0.52, 0, TAU); ctx.fill();
-    ctx.restore();
-    ctx.fillStyle = 'rgba(18,16,9,0.8)';                // pupil
-    ctx.beginPath(); ctx.arc(ex, eyeY, eyeR * 0.2, 0, TAU); ctx.fill();
-    ctx.fillStyle = 'rgba(255,255,255,0.85)';           // catchlight
-    ctx.beginPath(); ctx.arc(ex - eyeR * 0.24, eyeY - eyeR * 0.26, eyeR * 0.12, 0, TAU); ctx.fill();
-  }
-  ctx.restore();
-  ctx.restore();
+// ---- the REAL Reachy, embedded as a live three.js twin --------------------
+// Lazily spins up a ReachyTwin when its slot scrolls into view and pauses it
+// when it leaves, so many widgets can each show the actual robot without
+// keeping a dozen WebGL contexts rendering at once. Returns a small handle the
+// widget drives via pose()/dance()/level()/prop()/tint().
+function makeTwin(host, opts = {}) {
+  const stage = el('div', 'xp-twin');
+  host.appendChild(stage);
+  let twin = null;
+  const state = { props: {}, tint: undefined }; // replayed if the twin is born later
+  const io = new IntersectionObserver((es) => {
+    const vis = es[0].isIntersecting;
+    if (vis && !twin) {
+      twin = new ReachyTwin(stage, { interactive: false, ...opts });
+      if (state.tint !== undefined) twin.setBodyTint(state.tint);
+      for (const [slot, [url, ov]] of Object.entries(state.props)) twin.setProp(slot, url, ov);
+    } else if (twin) (vis ? twin.resume() : twin.pause());
+  }, { threshold: 0.01 });
+  io.observe(stage);
+  return {
+    el: stage,
+    pose: (p) => twin && twin.setPose(p),
+    dance: (p) => twin && twin.setDance(p),
+    level: (l) => twin && twin.setLevel(l),
+    prop: (slot, url, ov) => { state.props[slot] = [url, ov]; if (twin) twin.setProp(slot, url, ov); },
+    tint: (c) => { state.tint = c; if (twin) twin.setBodyTint(c); },
+    stop: () => { io.disconnect(); if (twin) twin.dispose(); },
+  };
 }
-function ant(ctx, x, y, a, s, color) {
-  const len = s * 0.42;
-  const ex = x + Math.sin(a) * len, ey = y - Math.cos(a) * len;
-  ctx.strokeStyle = '#2a2a30'; ctx.lineWidth = s * 0.035; ctx.lineCap = 'round';
-  ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(ex, ey); ctx.stroke();
-  ctx.fillStyle = color;
-  ctx.beginPath(); ctx.arc(ex, ey, s * 0.07, 0, TAU); ctx.fill();
+// a side-by-side stage: a 2D diagram canvas on the left, the live robot on the
+// right. Returns { left, right } containers.
+function splitStage(host) {
+  const row = el('div', 'xp-split');
+  const left = el('div', 'xp-split-2d');
+  const right = el('div', 'xp-split-3d');
+  row.append(left, right); host.appendChild(row);
+  return { left, right };
+}
+// a clean, friendly little robot avatar for list/chip use (no rendered eyes —
+// just a calm visor) so the cast cards read as roster tiles, not faces
+function drawChip(ctx, cx, cy, r, kind) {
+  const col = kind === 'guest' ? '#ffd34d' : kind === 'pad' ? '#7bbf6a' : '#c7ccd6';
+  ctx.save();
+  ctx.strokeStyle = col; ctx.lineWidth = Math.max(1.5, r * 0.12); ctx.lineCap = 'round';
+  for (const d of [-1, 1]) {
+    ctx.beginPath(); ctx.moveTo(cx + d * r * 0.5, cy - r * 0.6); ctx.lineTo(cx + d * r * 0.8, cy - r * 1.15); ctx.stroke();
+    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx + d * r * 0.8, cy - r * 1.15, r * 0.14, 0, TAU); ctx.fill();
+  }
+  const g = ctx.createLinearGradient(cx, cy - r, cx, cy + r);
+  g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0.25)');
+  ctx.fillStyle = kind === 'guest' ? col : g; ctx.globalAlpha = kind === 'host' ? 0.92 : 1;
+  rrect(ctx, cx - r, cy - r * 0.85, r * 2, r * 1.85, r * 0.55); ctx.fill(); ctx.globalAlpha = 1;
+  ctx.fillStyle = 'rgba(18,18,24,0.9)'; rrect(ctx, cx - r * 0.6, cy - r * 0.25, r * 1.2, r * 0.55, r * 0.27); ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  for (const d of [-1, 1]) { ctx.beginPath(); ctx.arc(cx + d * r * 0.26, cy + r * 0.02, r * 0.09, 0, TAU); ctx.fill(); }
+  ctx.restore();
 }
 function rrect(ctx, x, y, w, h, r) {
   ctx.beginPath();
@@ -127,11 +130,13 @@ function wBeat(host) {
     ctl.appendChild(b);
   });
   host.appendChild(ctl);
+  const { left, right } = splitStage(host);
+  const twin = makeTwin(right, { accent: '#ffd34d' });
   // PLL state (the real algorithm) + a simulated kick source
   let clock = 0, beatInterval = 0.52, lastBeat = -1, simT = 0, nextBeat = 0.6, bpm = 120;
   const trueIv = 0.5;        // ground-truth tempo (120 BPM)
-  const kicks = [];          // flashes: where the clock pointed when each kick landed {ang, life, off}
-  const stop = makeCanvas(host, (ctx, w, h, dt) => {
+  const kicks = [];          // each kick, logged at the clock phase when it landed
+  const stopCanvas = makeCanvas(left, (ctx, w, h, dt) => {
     simT += dt;
     // emit a simulated kick at each true beat, with jitter / drops per mode
     if (simT >= nextBeat) {
@@ -154,23 +159,22 @@ function wBeat(host) {
     clock += dt / beatInterval;
     for (let i = kicks.length - 1; i >= 0; i--) { kicks[i].life -= dt * 0.9; if (kicks[i].life <= 0) kicks.splice(i, 1); }
     const phase = ((clock % 1) + 1) % 1;
-    const dip = beatHit(phase);
+    // drive the REAL robot: a beat-locked dance on our PLL clock. The kicks may
+    // scatter or drop, but the clock — and so the groove — stays smooth.
+    twin.dance({ clock, intensity: 0.95 });
 
     // phase dial: the clock hand sweeps smoothly; each kick leaves a fading dot
     // at the angle the clock pointed when it arrived (on the beat = straight up)
-    const cx = w * 0.27, cy = h * 0.48, r = Math.min(w * 0.2, h * 0.32);
+    const cx = w * 0.5, cy = h * 0.47, r = Math.min(w * 0.34, h * 0.36);
     ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.arc(cx, cy, r, 0, TAU); ctx.stroke();
-    // "on the beat" marker at top
     ctx.fillStyle = 'rgba(255,255,255,0.25)';
     ctx.beginPath(); ctx.arc(cx, cy - r, 3, 0, TAU); ctx.fill();
-    // kick flashes, scattered around the top in jitter mode, sparse in drop mode
     for (const k of kicks) {
       const ang = k.off * TAU - Math.PI / 2;
       ctx.fillStyle = `rgba(255,95,107,${k.life})`;
       ctx.beginPath(); ctx.arc(cx + Math.cos(ang) * r, cy + Math.sin(ang) * r, 5 + 4 * k.life, 0, TAU); ctx.fill();
     }
-    // the clock hand
     const a = phase * TAU - Math.PI / 2;
     ctx.strokeStyle = '#ffd34d'; ctx.lineWidth = 3; ctx.lineCap = 'round';
     ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(a) * r * 0.84, cy + Math.sin(a) * r * 0.84); ctx.stroke();
@@ -179,15 +183,8 @@ function wBeat(host) {
     ctx.fillText(`${bpm.toFixed(0)} BPM`, cx, cy + r + 24);
     ctx.fillStyle = 'rgba(255,95,107,0.85)'; ctx.fillText('kick', cx - r - 4, cy - r + 2);
     ctx.fillStyle = '#ffd34d'; ctx.fillText('clock', cx + r + 8, cy - r + 2);
-
-    // the head dips on the CLOCK's beat (smooth), so it stays steady even when
-    // the kicks scatter or drop — that is the whole point of the loop
-    drawHead(ctx, w * 0.7, h * 0.5, Math.min(w * 0.13, h * 0.3), {
-      dy: dip * h * 0.04, sy: 1 - dip * 0.04,
-      antL: -dip * 0.5, antR: -dip * 0.5, glow: 0.4 + 0.6 * dip,
-    });
   });
-  return stop;
+  return () => { stopCanvas(); twin.stop(); };
 }
 
 function wSpring(host) {
@@ -209,41 +206,39 @@ function wSpring(host) {
   const u2 = mk('damping', 2, 50, damp, (v) => damp = v);
   host.appendChild(ctl); u1(); u2();
   const tap = el('button', 'xp-btn', 'tap a beat'); host.appendChild(tap);
-  // spring sim on the two antenna angles
-  let posL = 0, velL = 0, posR = 0, velR = 0, target = 0, autoT = 0;
+  const { left, right } = splitStage(host);
+  const twin = makeTwin(right, { accent: '#ffd34d' });
+  // a JS copy of the spring drives the trace; the real robot runs the same
+  // constants on its own antennas so the graph and the bot stay in step
+  let posR = 0, velR = 0, target = 0, autoT = 0;
   tap.onclick = () => { target = 1; };
-  const stop = makeCanvas(host, (ctx, w, h, dt) => {
+  const trace = [];
+  const stopCanvas = makeCanvas(left, (ctx, w, h, dt) => {
     autoT += dt;
-    if (autoT > 0.8) { autoT = 0; target = 1; }
+    if (autoT > 0.9) { autoT = 0; target = 1; }
     target = Math.max(0, target - dt * 2.2); // the head dips then recovers; antennas chase
     const t = target;
-    velL += ((-t - posL) * stiff - velL * damp) * dt; posL += velL * dt;
     velR += ((-t - posR) * stiff - velR * damp) * dt; posR += velR * dt;
-    drawHead(ctx, w * 0.3, h * 0.5, Math.min(w * 0.13, h * 0.32), {
-      dy: t * h * 0.05, antL: posL, antR: posR, glow: 0.4 + 0.5 * t,
-    });
-    // trace of the right antenna angle vs its (instant) target
-    const gx = w * 0.52, gw = w * 0.43, gy = h * 0.5, gh = h * 0.7;
-    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    // drive the REAL robot: head dips, antennas spring with the slider constants
+    twin.pose({ y: -t * 0.012, pitch: t * 0.14, antL: -t * 0.8, antR: -t * 0.8, antStiff: stiff, antDamp: damp });
+    // trace: the instant target vs the springy antenna
+    const gx = 36, gw = w - 52, gy = h * 0.52, gh = h * 0.72;
+    ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx + gw, gy); ctx.stroke();
-    host._trace = host._trace || [];
-    host._trace.push({ t: -t, p: posR });
-    if (host._trace.length > 160) host._trace.shift();
+    trace.push({ t: -t, p: posR });
+    if (trace.length > 200) trace.shift();
     const plot = (key, color, wid) => {
       ctx.strokeStyle = color; ctx.lineWidth = wid; ctx.beginPath();
-      host._trace.forEach((s, i) => {
-        const x = gx + (i / 160) * gw, y = gy - s[key] * gh * 0.4;
-        i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-      });
+      trace.forEach((s, i) => { const x = gx + (i / 200) * gw, y = gy - s[key] * gh * 0.42; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
       ctx.stroke();
     };
-    plot('t', 'rgba(245,241,232,0.35)', 1.5);
+    plot('t', 'rgba(245,241,232,0.32)', 1.5);
     plot('p', '#ffd34d', 2.5);
     ctx.fillStyle = 'rgba(245,241,232,0.5)'; ctx.font = '10px ui-monospace,monospace'; ctx.textAlign = 'left';
-    ctx.fillText('target', gx + 4, gy - gh * 0.36);
-    ctx.fillStyle = '#ffd34d'; ctx.fillText('antenna (spring)', gx + 4, gy - gh * 0.36 + 14);
+    ctx.fillText('target', gx + 4, gy - gh * 0.42 + 2);
+    ctx.fillStyle = '#ffd34d'; ctx.fillText('antenna (spring)', gx + 4, gy - gh * 0.42 + 16);
   });
-  return stop;
+  return () => { stopCanvas(); twin.stop(); };
 }
 
 function wTalk(host) {
@@ -255,47 +250,43 @@ function wTalk(host) {
   const tg = el('button', 'xp-btn on', 'speaking');
   tg.onclick = () => { speaking = !speaking; tg.classList.toggle('on', speaking); tg.textContent = speaking ? 'speaking' : 'paused'; };
   ctl.appendChild(tg); host.appendChild(ctl);
-  const A = { pitch: [4.5 * D2R, 2.2], yaw: [7.5 * D2R, 0.6], roll: [2.25 * D2R, 1.3] };
-  const ph = { pitch: Math.random() * TAU, yaw: Math.random() * TAU, roll: Math.random() * TAU };
+  const { left, right } = splitStage(host);
+  const twin = makeTwin(right, { accent: '#ffd34d' });
   let t = 0, env = 0, lo = 0;
-  const stop = makeCanvas(host, (ctx, w, h, dt) => {
+  const stopCanvas = makeCanvas(left, (ctx, w, h, dt) => {
     t += dt;
+    // drive the REAL robot's talking motion (the same talkStep sum of sinusoids)
+    twin.level(speaking ? loud : 0);
+    // illustrate the component sinusoids that add up to that motion
     const target = speaking ? 1 : 0;
     env += (target - env) * (1 - Math.exp(-dt / (target > env ? 0.05 : 0.28)));
     lo += ((speaking ? loud : 0) - lo) * (1 - Math.exp(-dt / 0.06));
     const g = clamp(Math.pow(lo, 0.7) * 2.3, 0, 1.25) * env;
-    const o = (k) => A[k][0] * g * Math.sin(TAU * A[k][1] * t + ph[k]);
-    const pitch = o('pitch'), yaw = o('yaw'), roll = o('roll');
-    drawHead(ctx, w * 0.3, h * 0.5, Math.min(w * 0.14, h * 0.32), {
-      roll, dx: yaw * 240, dy: pitch * 160, glow: 0.35 + 0.65 * g,
-    });
-    // component sines on the right
-    const gx = w * 0.5, gw = w * 0.46, gy = h * 0.5, gh = h * 0.66;
-    ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx + gw, gy); ctx.stroke();
-    const drawWave = (freq, amp, color, wid, off) => {
+    const gx = 30, gw = w - 46, gy = h * 0.5, gh = h * 0.6;
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)'; ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx + gw, gy); ctx.stroke();
+    const drawWave = (freq, amp, color, wid) => {
       ctx.strokeStyle = color; ctx.lineWidth = wid; ctx.beginPath();
-      for (let i = 0; i <= 100; i++) {
-        const tt = t - (1 - i / 100) * 3;
-        const y = gy + off - amp * g * Math.sin(TAU * freq * tt) * gh * 0.5;
-        const x = gx + (i / 100) * gw; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      for (let i = 0; i <= 110; i++) {
+        const tt = t - (1 - i / 110) * 3.2;
+        const y = gy - amp * g * Math.sin(TAU * freq * tt) * gh * 0.5;
+        const x = gx + (i / 110) * gw; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
       }
       ctx.stroke();
     };
-    drawWave(2.2, 0.3, 'rgba(124,211,255,0.5)', 1.3, 0);
-    drawWave(0.6, 0.5, 'rgba(123,191,106,0.5)', 1.3, 0);
-    drawWave(1.3, 0.2, 'rgba(255,107,139,0.5)', 1.3, 0);
-    // the sum
+    drawWave(2.2, 0.3, 'rgba(124,211,255,0.5)', 1.3); // pitch nod
+    drawWave(0.6, 0.5, 'rgba(123,191,106,0.5)', 1.3); // yaw turn
+    drawWave(1.3, 0.2, 'rgba(255,107,139,0.5)', 1.3); // roll tilt
     ctx.strokeStyle = '#ffd34d'; ctx.lineWidth = 2.5; ctx.beginPath();
-    for (let i = 0; i <= 100; i++) {
-      const tt = t - (1 - i / 100) * 3;
+    for (let i = 0; i <= 110; i++) {
+      const tt = t - (1 - i / 110) * 3.2;
       const sum = 0.3 * Math.sin(TAU * 2.2 * tt) + 0.5 * Math.sin(TAU * 0.6 * tt) + 0.2 * Math.sin(TAU * 1.3 * tt);
-      const y = gy - sum * g * gh * 0.4; const x = gx + (i / 100) * gw; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      const y = gy - sum * g * gh * 0.4; const x = gx + (i / 110) * gw; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
     }
     ctx.stroke();
-    ctx.fillStyle = 'rgba(245,241,232,0.5)'; ctx.font = '10px ui-monospace,monospace'; ctx.textAlign = 'right';
-    ctx.fillText('sum = head motion', gx + gw, gy - gh * 0.46);
+    ctx.fillStyle = 'rgba(245,241,232,0.5)'; ctx.font = '10px ui-monospace,monospace'; ctx.textAlign = 'left';
+    ctx.fillText('sum → head motion', gx + 2, gy - gh * 0.5 + 4);
   });
-  return stop;
+  return () => { stopCanvas(); twin.stop(); };
 }
 
 function wMoves(host) {
@@ -315,25 +306,34 @@ function wMoves(host) {
     ctl.appendChild(b);
   });
   host.appendChild(ctl);
+  const { left, right } = splitStage(host);
+  const twin = makeTwin(right, { accent: '#ffd34d' });
   let clock = 0, flash = 0;
-  const stop = makeCanvas(host, (ctx, w, h, dt) => {
+  const stopCanvas = makeCanvas(left, (ctx, w, h, dt) => {
     const prev = clock; clock += dt / 0.5; // 120 BPM
     if (Math.floor(clock) !== Math.floor(prev)) flash = 1;
     flash = Math.max(0, flash - dt * 4);
     const o = moves[cur](clock);
     const k = 1 - Math.exp(-dt / 0.045);
     for (const key of ['dy', 'dx', 'roll', 'antL', 'antR']) sm[key] += ((o[key] || 0) - sm[key]) * k;
-    // beat dots
+    // drive the REAL robot from the selected move formula
+    twin.pose({
+      pitch: sm.dy * 0.32, yaw: sm.dx * 0.5, roll: sm.roll * 0.6,
+      y: -sm.dy * 0.012, x: sm.dx * 0.006, antL: sm.antL * 0.5, antR: sm.antR * 0.5,
+    });
+    // beat dots + the formula name
     for (let i = 0; i < 4; i++) {
       const on = (Math.floor(clock) % 4) === i;
       ctx.fillStyle = on ? `rgba(255,211,77,${0.4 + 0.6 * flash})` : 'rgba(255,255,255,0.15)';
-      ctx.beginPath(); ctx.arc(w * 0.5 + (i - 1.5) * 22, h * 0.12, on ? 6 : 4, 0, TAU); ctx.fill();
+      ctx.beginPath(); ctx.arc(w * 0.5 + (i - 1.5) * 24, h * 0.26, on ? 7 : 4.5, 0, TAU); ctx.fill();
     }
-    drawHead(ctx, w * 0.5, h * 0.56, Math.min(w * 0.17, h * 0.34), {
-      dy: sm.dy * h * 0.07, dx: sm.dx * w * 0.1, roll: sm.roll, antL: sm.antL, antR: sm.antR, glow: 0.4 + 0.6 * flash,
-    });
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#ffd34d'; ctx.font = '600 22px ui-monospace,monospace';
+    ctx.fillText(cur + '(c)', w * 0.5, h * 0.56);
+    ctx.fillStyle = 'rgba(245,241,232,0.45)'; ctx.font = '11px ui-monospace,monospace';
+    ctx.fillText('a formula of the beat clock', w * 0.5, h * 0.56 + 22);
   });
-  return stop;
+  return () => { stopCanvas(); twin.stop(); };
 }
 
 function wShape(host) {
@@ -462,7 +462,7 @@ function wCast(host) {
       else if (t === 'host') { ctx.fillStyle = 'rgba(255,255,255,0.05)'; ctx.strokeStyle = 'rgba(255,255,255,0.4)'; }
       else { ctx.fillStyle = 'rgba(123,191,106,0.1)'; ctx.strokeStyle = 'rgba(123,191,106,0.7)'; ctx.setLineDash([5, 4]); }
       rrect(ctx, x, y - ch / 2, cw, ch, 10); ctx.fill(); ctx.stroke(); ctx.setLineDash([]);
-      drawHead(ctx, x + cw / 2, y - ch * 0.06, cw * 0.26, { glow: t === 'guest' ? 0.9 : 0.4 });
+      drawChip(ctx, x + cw / 2, y - ch * 0.04, cw * 0.2, t);
       ctx.fillStyle = 'rgba(245,241,232,0.75)'; ctx.font = '10px ui-monospace,monospace'; ctx.textAlign = 'center';
       ctx.fillText(t === 'guest' ? 'guest' : t === 'host' ? 'AI host' : '+ filler', x + cw / 2, y + ch / 2 - 9);
       ctx.restore();
@@ -524,67 +524,42 @@ function wCascade(host) {
 }
 
 const LOOKS = {
-  'grizzled cowboy': { hat: 'cowboy', face: null, neck: 'bandana', color: '#b5651d', reason: 'frontier sheriff energy' },
+  'grizzled cowboy': { hat: 'cowboy', face: null, neck: 'bowtie', color: '#b5651d', reason: 'frontier sheriff energy' },
   'arcane wizard': { hat: 'wizard', face: null, neck: null, color: '#7c5cff', reason: 'mystical and ancient' },
   'British butler': { hat: null, face: 'monocle', neck: 'bowtie', color: '#d4af37', reason: 'impeccably refined' },
   'party starter': { hat: 'party', face: 'sunglasses', neck: null, color: '#ff6bcb', reason: 'here to celebrate' },
   'noir detective': { hat: 'tophat', face: null, neck: 'necktie', color: '#5a6577', reason: 'shadowy and sharp' },
 };
-function drawProps(ctx, cx, cy, s, L) {
-  const top = cy - s * 0.5, col = L.color || '#ffd34d';
-  if (L.hat === 'cowboy') { ctx.fillStyle = '#7a5230'; ctx.beginPath(); ctx.ellipse(cx, top + s * 0.02, s * 0.62, s * 0.12, 0, 0, TAU); ctx.fill(); rrect(ctx, cx - s * 0.28, top - s * 0.26, s * 0.56, s * 0.32, 7); ctx.fill(); }
-  else if (L.hat === 'wizard') { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(cx, top - s * 0.6); ctx.lineTo(cx - s * 0.36, top + s * 0.04); ctx.lineTo(cx + s * 0.36, top + s * 0.04); ctx.closePath(); ctx.fill(); ctx.fillStyle = '#ffd34d'; ctx.beginPath(); ctx.arc(cx + s * 0.08, top - s * 0.22, s * 0.045, 0, TAU); ctx.fill(); }
-  else if (L.hat === 'tophat') { ctx.fillStyle = '#1a1a1f'; ctx.beginPath(); ctx.ellipse(cx, top + s * 0.02, s * 0.5, s * 0.1, 0, 0, TAU); ctx.fill(); ctx.fillRect(cx - s * 0.26, top - s * 0.46, s * 0.52, s * 0.48); ctx.fillStyle = col; ctx.fillRect(cx - s * 0.26, top - s * 0.06, s * 0.52, s * 0.07); }
-  else if (L.hat === 'party') { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(cx, top - s * 0.5); ctx.lineTo(cx - s * 0.22, top + s * 0.02); ctx.lineTo(cx + s * 0.22, top + s * 0.02); ctx.closePath(); ctx.fill(); ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(cx, top - s * 0.5, s * 0.05, 0, TAU); ctx.fill(); }
-  const eY = cy - s * 0.04, eX = s * 0.215;
-  if (L.face === 'sunglasses') {
-    ctx.fillStyle = '#14151c';
-    for (const dir of [-1, 1]) { ctx.beginPath(); ctx.arc(cx + dir * eX, eY, s * 0.2, 0, TAU); ctx.fill(); }
-    ctx.strokeStyle = col; ctx.lineWidth = s * 0.045;
-    ctx.beginPath(); ctx.moveTo(cx - eX * 0.45, eY); ctx.lineTo(cx + eX * 0.45, eY); ctx.stroke(); // bridge
-    ctx.strokeStyle = 'rgba(255,255,255,0.28)'; ctx.lineWidth = s * 0.028;
-    for (const dir of [-1, 1]) { ctx.beginPath(); ctx.arc(cx + dir * eX, eY, s * 0.13, -2.5, -1.6); ctx.stroke(); } // glint
-  } else if (L.face === 'monocle') {
-    const mx = cx + eX;
-    ctx.strokeStyle = '#ffd34d'; ctx.lineWidth = s * 0.05;
-    ctx.beginPath(); ctx.arc(mx, eY, s * 0.22, 0, TAU); ctx.stroke();
-    ctx.lineWidth = s * 0.022; ctx.beginPath(); ctx.moveTo(mx + s * 0.13, eY + s * 0.18); ctx.lineTo(mx + s * 0.02, eY + s * 0.52); ctx.stroke();
-  }
-  const nY = cy + s * 0.32;
-  if (L.neck === 'bowtie' || L.neck === 'bandana') {
-    ctx.fillStyle = col;
-    if (L.neck === 'bandana') { ctx.beginPath(); ctx.moveTo(cx - s * 0.34, nY - s * 0.08); ctx.lineTo(cx + s * 0.34, nY - s * 0.08); ctx.lineTo(cx, nY + s * 0.22); ctx.closePath(); ctx.fill(); }
-    else { ctx.beginPath(); ctx.moveTo(cx, nY); ctx.lineTo(cx - s * 0.2, nY - s * 0.11); ctx.lineTo(cx - s * 0.2, nY + s * 0.11); ctx.closePath(); ctx.moveTo(cx, nY); ctx.lineTo(cx + s * 0.2, nY - s * 0.11); ctx.lineTo(cx + s * 0.2, nY + s * 0.11); ctx.closePath(); ctx.fill(); ctx.beginPath(); ctx.arc(cx, nY, s * 0.055, 0, TAU); ctx.fill(); }
-  } else if (L.neck === 'necktie') { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(cx - s * 0.07, nY - s * 0.06); ctx.lineTo(cx + s * 0.07, nY - s * 0.06); ctx.lineTo(cx + s * 0.11, nY + s * 0.3); ctx.lineTo(cx, nY + s * 0.42); ctx.lineTo(cx - s * 0.11, nY + s * 0.3); ctx.closePath(); ctx.fill(); }
-}
 function wStylist(host) {
   let cur = 'grizzled cowboy';
   const ctl = el('div', 'xp-controls');
   Object.keys(LOOKS).forEach((k) => {
     const b = el('button', 'xp-btn' + (k === cur ? ' on' : ''), k);
-    b.onclick = () => { cur = k; [...ctl.children].forEach((c) => c.classList.remove('on')); b.classList.add('on'); };
+    b.onclick = () => { cur = k; [...ctl.children].forEach((c) => c.classList.remove('on')); b.classList.add('on'); apply(); };
     ctl.appendChild(b);
   });
   host.appendChild(ctl);
-  const stop = makeCanvas(host, (ctx, w, h, dt) => {
-    const L = LOOKS[cur], cx = w * 0.3, cy = h * 0.54, s = Math.min(w * 0.15, h * 0.32);
-    drawHead(ctx, cx, cy, s, { glow: 0.65 });
-    drawProps(ctx, cx, cy, s, L);
-    const tx = Math.min(w * 0.56, cx + s + 40);
-    ctx.textAlign = 'left';
-    ctx.fillStyle = '#f5f1e8'; ctx.font = '600 13px ui-monospace,monospace';
-    ctx.fillText(`"${cur}"`, tx, h * 0.28);
-    ctx.font = '12px ui-monospace,monospace';
-    [['hat', L.hat], ['face', L.face], ['neck', L.neck]].forEach(([k, v], i) => {
-      ctx.fillStyle = 'rgba(245,241,232,0.5)'; ctx.fillText(k, tx, h * 0.42 + i * 22);
-      ctx.fillStyle = v ? '#ffd34d' : 'rgba(245,241,232,0.3)'; ctx.fillText(v || 'null', tx + 46, h * 0.42 + i * 22);
-    });
-    ctx.fillStyle = L.color; ctx.fillRect(tx, h * 0.42 + 3 * 22 - 9, 12, 12);
-    ctx.fillStyle = 'rgba(245,241,232,0.6)'; ctx.fillText(L.color, tx + 20, h * 0.42 + 3 * 22 + 1);
-    ctx.fillStyle = 'rgba(245,241,232,0.45)'; ctx.font = 'italic 11px ui-monospace,monospace';
-    ctx.fillText(`reason: ${L.reason}`, tx, h * 0.42 + 4 * 22 + 4);
-  });
-  return stop;
+  const row = el('div', 'xp-split xp-stylist');
+  const stageEl = el('div', 'xp-split-3d');
+  const info = el('div', 'xp-stylist-info');
+  row.append(stageEl, info); host.appendChild(row);
+  const twin = makeTwin(stageEl, { accent: '#ffd34d' }); // idles + breathes on its own
+  const propUrl = (s) => (s ? `/props/${s}.glb` : null);
+  function apply() {
+    const L = LOOKS[cur];
+    twin.prop('hat', propUrl(L.hat));
+    twin.prop('face', propUrl(L.face));
+    twin.prop('neck', propUrl(L.neck));
+    twin.tint(L.color);
+    const slot = (k, v) => `<div class="xp-slot"><span>${k}</span><b class="${v ? '' : 'nul'}">${v || 'null'}</b></div>`;
+    info.innerHTML =
+      `<div class="xp-look">"${esc(cur)}"</div>` +
+      slot('hat', L.hat) + slot('face', L.face) + slot('neck', L.neck) +
+      `<div class="xp-slot"><span>color</span><b><i style="background:${L.color}"></i>${L.color}</b></div>` +
+      `<div class="xp-reason">the model only picks from props the renderer actually has — anything off the allow-list becomes <code>null</code></div>`;
+  }
+  apply();
+  return () => twin.stop();
 }
 
 function wLyrics(host) {
