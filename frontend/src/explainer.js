@@ -435,8 +435,19 @@ function wPipeline(host) {
     const bw = Math.min(cellW * 0.86, 150), bh = Math.min(cellH * 0.6, 50);
     const cx = (i) => m + cellW * ((i % cols) + 0.5);
     const cy = (i) => 16 + cellH * (Math.floor(i / cols) + 0.5);
+    // connectors run between box EDGES (not centres) so the line never shows
+    // through the translucent boxes
     ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = 2;
-    for (let i = 0; i < n - 1; i++) { ctx.beginPath(); ctx.moveTo(cx(i), cy(i)); ctx.lineTo(cx(i + 1), cy(i + 1)); ctx.stroke(); }
+    for (let i = 0; i < n - 1; i++) {
+      let dx = cx(i + 1) - cx(i), dy = cy(i + 1) - cy(i);
+      const len = Math.hypot(dx, dy) || 1; dx /= len; dy /= len;
+      const s = Math.min(Math.abs(dx) > 1e-3 ? (bw / 2 + 3) / Math.abs(dx) : 1e9,
+        Math.abs(dy) > 1e-3 ? (bh / 2 + 3) / Math.abs(dy) : 1e9);
+      ctx.beginPath();
+      ctx.moveTo(cx(i) + dx * s, cy(i) + dy * s);
+      ctx.lineTo(cx(i + 1) - dx * s, cy(i + 1) - dy * s);
+      ctx.stroke();
+    }
     spawn += dt; if (spawn > 1.1) { spawn = 0; dots.push({ p: 0 }); }
     const glow = nodes.map(() => 0);
     for (let i = dots.length - 1; i >= 0; i--) {
