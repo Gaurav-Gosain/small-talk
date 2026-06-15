@@ -428,31 +428,39 @@ function wPipeline(host) {
   let spawn = 1;
   const stop = makeCanvas(host, (ctx, w, h, dt) => {
     const n = nodes.length, m = 14;
-    const slot = (w - 2 * m) / n;
-    const bw = Math.min(slot * 0.86, 150), bh = h * 0.32, y = h * 0.46;
-    const xs = nodes.map((_, i) => m + slot * (i + 0.5));
+    // grid layout: 6 across on desktop, folding to 3 then 2 columns as it narrows
+    const cols = w < 460 ? 2 : w < 700 ? 3 : 6;
+    const rows = Math.ceil(n / cols);
+    const cellW = (w - 2 * m) / cols, cellH = (h - 24) / rows;
+    const bw = Math.min(cellW * 0.86, 150), bh = Math.min(cellH * 0.6, 50);
+    const cx = (i) => m + cellW * ((i % cols) + 0.5);
+    const cy = (i) => 16 + cellH * (Math.floor(i / cols) + 0.5);
     ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = 2;
-    for (let i = 0; i < n - 1; i++) { ctx.beginPath(); ctx.moveTo(xs[i] + bw / 2, y); ctx.lineTo(xs[i + 1] - bw / 2, y); ctx.stroke(); }
+    for (let i = 0; i < n - 1; i++) { ctx.beginPath(); ctx.moveTo(cx(i), cy(i)); ctx.lineTo(cx(i + 1), cy(i + 1)); ctx.stroke(); }
     spawn += dt; if (spawn > 1.1) { spawn = 0; dots.push({ p: 0 }); }
     const glow = nodes.map(() => 0);
     for (let i = dots.length - 1; i >= 0; i--) {
-      dots[i].p += dt * 0.32; if (dots[i].p >= 1) { dots.splice(i, 1); continue; }
+      dots[i].p += dt * 0.3; if (dots[i].p >= 1) { dots.splice(i, 1); continue; }
       const seg = dots[i].p * (n - 1), idx = Math.floor(seg);
       glow[idx] = Math.max(glow[idx], 1 - (seg - idx));
       if (idx + 1 < n) glow[idx + 1] = Math.max(glow[idx + 1], seg - idx);
     }
     nodes.forEach(([label, sub], i) => {
-      const x = xs[i];
+      const x = cx(i), y = cy(i);
       ctx.fillStyle = `rgba(255,211,77,${0.05 + 0.16 * glow[i]})`;
       ctx.strokeStyle = `rgba(255,211,77,${0.28 + 0.6 * glow[i]})`; ctx.lineWidth = 1.5;
       rrect(ctx, x - bw / 2, y - bh / 2, bw, bh, 9); ctx.fill(); ctx.stroke();
       ctx.fillStyle = '#f5f1e8'; ctx.font = '600 12px ui-monospace,monospace'; ctx.textAlign = 'center';
       ctx.fillText(label, x, y - 1);
       ctx.fillStyle = 'rgba(245,241,232,0.5)'; ctx.font = '9px ui-monospace,monospace';
-      ctx.fillText(sub, x, y + 14);
+      ctx.fillText(sub, x, y + 13);
     });
     ctx.save(); ctx.shadowColor = '#ffd34d'; ctx.shadowBlur = 12; ctx.fillStyle = '#ffe9a8';
-    for (const d of dots) { const px = xs[0] + d.p * (xs[n - 1] - xs[0]); ctx.beginPath(); ctx.arc(px, y, 4, 0, TAU); ctx.fill(); }
+    for (const d of dots) {
+      const seg = d.p * (n - 1), idx = Math.min(n - 2, Math.floor(seg)), f = seg - idx;
+      const px = cx(idx) + (cx(idx + 1) - cx(idx)) * f, py = cy(idx) + (cy(idx + 1) - cy(idx)) * f;
+      ctx.beginPath(); ctx.arc(px, py, 4, 0, TAU); ctx.fill();
+    }
     ctx.restore();
   });
   return stop;
