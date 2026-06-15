@@ -15,11 +15,42 @@ function el(tag, cls, html) {
   return e;
 }
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+// index of the first `//` line comment, skipping any that sit inside a string
+function _commentAt(line) {
+  let q = null;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (q) { if (c === '\\') i++; else if (c === q) q = null; }
+    else if (c === '"' || c === "'") q = c;
+    else if (c === '/' && line[i + 1] === '/') return i;
+  }
+  return -1;
+}
+// pad trailing comments so they line up in one column. Works on raw source;
+// HTML entities each render one glyph wide so the column counts stay honest.
+function _alignComments(code) {
+  const lines = code.split('\n');
+  const at = lines.map(_commentAt);
+  let col = 0;
+  lines.forEach((l, i) => { if (at[i] > 0) col = Math.max(col, l.slice(0, at[i]).trimEnd().length); });
+  if (!col) return code;
+  return lines.map((l, i) => {
+    if (at[i] <= 0) return l;
+    const codePart = l.slice(0, at[i]).trimEnd();
+    return codePart + ' '.repeat(col - codePart.length + 2) + l.slice(at[i]);
+  }).join('\n');
+}
+const _TOKENS = /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|\b(const|let|var|function|return|if|else|for|while|new|await|async|def|in|not|and|or|None|True|False|import|from|class|max|min|round|floor|sqrt|exp|sin|cos|Math|len|enumerate|range)\b|(\b\d+\.?\d*\b)/g;
+const _tokens = (s) => s.replace(_TOKENS, (m, str, kw, num) =>
+  str ? `<span class="c-str">${str}</span>`
+    : kw ? `<span class="c-kw">${kw}</span>`
+      : `<span class="c-num">${num}</span>`);
 function highlight(code) {
-  return esc(code)
-    .replace(/(\/\/[^\n]*)/g, '<span class="c-com">$1</span>')
-    .replace(/\b(const|let|if|else|return|function|for|while|new|Math|max|min|exp|sin|cos|sqrt|round|floor|clamp)\b/g, '<span class="c-kw">$1</span>')
-    .replace(/\b(\d+\.?\d*)\b/g, '<span class="c-num">$1</span>');
+  return _alignComments(code).split('\n').map((raw) => {
+    const e = esc(raw);
+    const ci = _commentAt(e);
+    return ci < 0 ? _tokens(e) : _tokens(e.slice(0, ci)) + `<span class="c-com">${e.slice(ci)}</span>`;
+  }).join('\n');
 }
 
 // ---- the REAL Reachy, embedded as a live three.js twin --------------------
@@ -60,7 +91,7 @@ function splitStage(host) {
   row.append(left, right); host.appendChild(row);
   return { left, right };
 }
-// a clean, friendly little robot avatar for list/chip use (no rendered eyes —
+// a clean, friendly little robot avatar for list/chip use (no rendered eyes,
 // just a calm visor) so the cast cards read as roster tiles, not faces
 function drawChip(ctx, cx, cy, r, kind) {
   const col = kind === 'guest' ? '#ffd34d' : kind === 'pad' ? '#7bbf6a' : '#c7ccd6';
@@ -160,7 +191,7 @@ function wBeat(host) {
     for (let i = kicks.length - 1; i >= 0; i--) { kicks[i].life -= dt * 0.9; if (kicks[i].life <= 0) kicks.splice(i, 1); }
     const phase = ((clock % 1) + 1) % 1;
     // drive the REAL robot: a beat-locked dance on our PLL clock. The kicks may
-    // scatter or drop, but the clock — and so the groove — stays smooth.
+    // scatter or drop, but the clock (and so the groove) stays smooth.
     twin.dance({ clock, intensity: 0.95 });
 
     // phase dial: the clock hand sweeps smoothly; each kick leaves a fading dot
@@ -502,7 +533,7 @@ function wCascade(host) {
     ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(245,241,232,0.5)';
     ctx.fillText(cascade ? 'synthesize  (runs ahead, buffers)' : 'synthesize  (one at a time)', x0, top - 8);
     ctx.fillText('play', 8, playY - playH * 0.5 - 8);
-    // generation rows — one per line, stacked, each racing ahead of its slot
+    // generation rows: one per line, stacked, each racing ahead of its slot
     for (let i = 0; i < N; i++) {
       const ry = top + i * rowH + rowH / 2;
       ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
@@ -528,7 +559,7 @@ function wCascade(host) {
         ctx.fillText('dead air', (X(g0) + X(g1)) / 2, playY + 3); ctx.font = '10px ui-monospace,monospace';
       }
     }
-    // playback lane — one sequential track draining the buffer
+    // playback lane: one sequential track draining the buffer
     for (let i = 0; i < N; i++) {
       const playing = now >= play[i].s && now < play[i].e;
       ctx.fillStyle = colors[i]; ctx.globalAlpha = playing ? 1 : now >= play[i].e ? 0.45 : 0.32;
@@ -576,7 +607,7 @@ function wStylist(host) {
       `<div class="xp-look">"${esc(cur)}"</div>` +
       slot('hat', L.hat) + slot('face', L.face) + slot('neck', L.neck) +
       `<div class="xp-slot"><span>color</span><b><i style="background:${L.color}"></i>${L.color}</b></div>` +
-      `<div class="xp-reason">the model only picks from props the renderer actually has — anything off the allow-list becomes <code>null</code></div>`;
+      `<div class="xp-reason">the model only picks from props the renderer actually has. anything off the allow-list becomes <code>null</code></div>`;
   }
   apply();
   return () => twin.stop();
@@ -637,13 +668,13 @@ const WIDGETS = { wBeat, wSpring, wTalk, wMoves, wShape, wPipeline, wCast, wCasc
 const SECTIONS = [
   {
     group: 'The show pipeline', id: 'overview', nav: 'The whole pipeline',
-    html: `<p>A show is built from one line of input — a topic — and ends as robots talking on a live
+    html: `<p>A show is built from one line of input, a topic, and ends as robots talking on a live
       WebRTC stream. In between, a language model writes the script in a single call, a text-to-speech
       model gives every character its own voice, and the audio is published into a LiveKit room that the
       browser twins (and any physical Reachy) lip-sync and move to. The dots below trace one show through
       the stages.</p>
-      <p>Two ideas keep it feeling live rather than pre-rendered: the script is <b>one constrained
-      generation</b> (no slow back-and-forth chains), and synthesis <b>cascades</b> — the next voice is
+      <p>Two ideas keep it feeling live rather than pre-rendered. The script is <b>one constrained
+      generation</b> (no slow back-and-forth chains), and synthesis <b>cascades</b>, so the next voice is
       already rendering while the current one speaks. The sections below open up each stage.</p>`,
     widget: 'wPipeline',
   },
@@ -670,17 +701,17 @@ while len(keep) < cast_size:                   // model under-delivered?
   {
     group: 'The show pipeline', id: 'cascade', nav: 'The TTS cascade',
     html: `<p>Each line is synthesized by a TTS model in the cloud, which takes about as long as a short
-      sentence. Doing it the obvious way — render a line, play it, render the next — leaves the robots
+      sentence. Doing it the obvious way (render a line, play it, then render the next) leaves the robots
       frozen and silent for a second between every line. <b>Dead air.</b></p>
       <p>Instead, synthesis runs <b>ahead</b> of the speaker. The next line is kicked off as a background
       task while the current one is still playing, and since rendering a line is quicker than speaking it, the
-      voices stack up into a ready buffer that playback drains back-to-back — no gaps. Playback paces itself
+      voices stack up into a ready buffer that playback drains back-to-back, with no gaps. Playback paces itself
       to wall-clock: capturing audio frames into the LiveKit track applies backpressure, so awaiting it is the
       timing. Toggle the cascade off to watch synthesis and playback fall back into lockstep, with dead air
       between every line.</p>`,
     code: `nxt = create_task(voice(lines[0]))        // start rendering line 1
 for i, line in enumerate(lines):
-    wav = await nxt                          // already done — no wait
+    wav = await nxt                          // already done, no wait
     if i + 1 < len(lines):
         nxt = create_task(voice(lines[i+1])) // render the NEXT while this plays
     await pub.say_file(wav)                   // frame backpressure paces it`,
@@ -692,7 +723,7 @@ for i, line in enumerate(lines):
       outfit by the same language brain acting as a <b>wardrobe stylist</b>. The trick is to never let it
       free-associate: the prompt hands it the exact list of allowed props per slot (hat, face, neck) and
       demands JSON back. Any pick that isn't on the allow-list is coerced to <code>null</code>, and the accent
-      colour must match a strict hex pattern — so a hallucinated "sombrero" can never reach the renderer.</p>
+      colour must match a strict hex pattern, so a hallucinated "sombrero" can never reach the renderer.</p>
       <p>It's constrained generation again: the model brings the taste (matching vibe to props), the code
       guarantees the output is always a valid, renderable outfit. Pick an archetype to see what it dresses.</p>`,
     code: `// the model may ONLY choose from the props we actually have
@@ -708,14 +739,14 @@ outfit["color"] = pick["color"] if re.match("#[0-9a-f]{6}", ...) else None`,
   {
     group: 'The show pipeline', id: 'lyrics', nav: 'Karaoke alignment',
     html: `<p>Reachy FM shows synced karaoke lyrics on the vinyl. The words are known (from the track's
-      caption file), but their <b>timing</b> is coarse — a subtitle cue covers a whole phrase, so highlighting
+      caption file), but their <b>timing</b> is coarse: a subtitle cue covers a whole phrase, so highlighting
       it word-by-word would just guess. Re-transcribing the audio fixes the timing but rewrites the words
       ("glow" became "go", "CUDA chip" became "Q to chip").</p>
       <p>The fix is <b>forced alignment</b>: feed Whisper the <i>correct</i> text and the audio together, and
-      it reports where each known word is actually sung, using its own attention — never changing a word, only
+      it reports where each known word is actually sung, using its own attention, never changing a word, only
       timestamping it. Coarse cues become precise per-word onsets. The playhead below shows the raw cues
       lagging while the aligned words land exactly on the audio onsets.</p>`,
-    code: `// don't re-transcribe (it rewrites words) — ALIGN the known text
+    code: `// don't re-transcribe (it rewrites words), ALIGN the known text instead
 result = stable_whisper.align(audio, known_lyrics, language="en")
 for word in result.all_words():
     word.start, word.end   // real onset, straight from the model's attention`,

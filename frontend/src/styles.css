@@ -1074,14 +1074,23 @@ html, body, #app { height: 100dvh; }
 
 /* ── "how it works" explainer modal ──────────────────────────────── */
 .xp-q {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+  height: 30px; padding: 0 13px 0 9px; border-radius: 999px; white-space: nowrap;
   border: 1px solid var(--border); background: color-mix(in srgb, var(--void) 50%, transparent);
-  color: var(--gold); font-family: var(--font-mono); font-size: 14px; font-weight: 600;
-  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  color: var(--muted); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.03em;
+  transition: border-color 0.15s, background 0.15s, color 0.15s, transform 0.1s;
 }
-.xp-q:hover { border-color: var(--gold); background: var(--gold-glow); }
-.xp-q:active { transform: scale(0.92); }
+.xp-q::before {
+  content: "?"; display: inline-flex; align-items: center; justify-content: center;
+  width: 17px; height: 17px; border-radius: 50%; font-size: 11px; font-weight: 700; flex: 0 0 auto;
+  color: var(--gold); border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+}
+.xp-q:hover { border-color: var(--gold); background: var(--gold-glow); color: var(--text); }
+.xp-q:active { transform: scale(0.96); }
+@media (max-width: 560px) {
+  .xp-q-label { display: none; }
+  .xp-q { padding: 0; width: 30px; justify-content: center; }
+}
 
 .xp-back {
   position: fixed; inset: 0; z-index: 80; display: grid; place-items: center;
@@ -1152,9 +1161,10 @@ html, body, #app { height: 100dvh; }
   font-family: var(--font-mono); font-size: 12.5px; line-height: 1.7; color: var(--paper);
   white-space: pre;
 }
-.xp-code .c-com { color: var(--muted); font-style: italic; }
-.xp-code .c-kw { color: var(--cyan, #7cd3ff); }
+.xp-code .c-com { color: color-mix(in srgb, var(--muted) 85%, transparent); font-style: italic; }
+.xp-code .c-kw { color: var(--cyan, #7cd3ff); font-weight: 600; }
 .xp-code .c-num { color: var(--gold-bright, #ffd34d); }
+.xp-code .c-str { color: #9bd17a; }
 
 .xp-widget {
   margin-top: 16px; padding: 14px; border: 1px solid var(--border); border-radius: var(--r-lg);

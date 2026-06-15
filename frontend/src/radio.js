@@ -20,7 +20,7 @@ export async function openRadio() {
     <div class="rd-head">
       <span class="rd-logo">REACHY <b>FM</b><em>88.8 · the small model station</em></span>
       <span style="display:flex;align-items:center;gap:12px">
-        <button class="xp-q" id="rdHelp" title="How DJ Servo grooves">?</button>
+        <button class="xp-q" id="rdHelp" title="How DJ Servo grooves"><span class="xp-q-label">How it works</span></button>
         <span class="rd-onair" id="rdOnAir"><i></i><span id="rdOnAirText">OFF AIR</span></span>
       </span>
     </div>
