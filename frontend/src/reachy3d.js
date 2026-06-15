@@ -337,6 +337,10 @@ export class ReachyTwin {
       this._bodyFrontFwd = rb.max.z - ho.z;
     }
     if (this._pendingTint) this.setBodyTint(this._pendingTint);
+    if (this._pendingProps) { // props requested before the URDF finished loading
+      const pend = this._pendingProps; this._pendingProps = null;
+      for (const [slot, [url, ov]] of Object.entries(pend)) this.setProp(slot, url, ov);
+    }
     if (this._interactive) this._bindOrbit();
     this._seed = Math.random() * TAU; // per-twin phase so the two robots differ
     this._euler = new THREE.Euler();
@@ -666,7 +670,7 @@ export class ReachyTwin {
    *  anchor by a bbox face (not its centre), short/flat hats sit correctly
    *  without per-prop tuning. `rot` fixes oddly-modelled props (e.g. a halo). */
   async setProp(slot, url, override = {}) {
-    if (!this.head) return;
+    if (!this.head) { (this._pendingProps ??= {})[slot] = [url, override]; return; } // robot still loading
     this._props ??= {};
     const prev = this._props[slot];
     if (prev) { this.head.remove(prev); this._props[slot] = null; }
