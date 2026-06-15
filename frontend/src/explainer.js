@@ -480,45 +480,65 @@ function wCascade(host) {
   const tg = el('button', 'xp-btn on', 'cascade: ON');
   tg.onclick = () => { cascade = !cascade; tg.classList.toggle('on', cascade); tg.textContent = cascade ? 'cascade: ON' : 'cascade: OFF'; };
   ctl.appendChild(tg); host.appendChild(ctl);
-  let t = 0; const SYN = 1.0, PLAY = 2.0, N = 4;
+  const N = 4, SYN = 0.8, PLAY = 1.7;
+  const colors = ['#ffd34d', '#7cd3ff', '#7bbf6a', '#ff8a93'];
+  let t = 0;
   const stop = makeCanvas(host, (ctx, w, h, dt) => {
-    t += dt * 0.55;
-    const L = []; let playEnd = 0;
-    for (let i = 0; i < N; i++) {
-      let synStart;
-      if (cascade) synStart = i === 0 ? 0 : L[i - 1].playStart; // queue the next voice as this one starts playing
-      else synStart = playEnd;                                  // naive: wait for silence, then render
-      const synEnd = synStart + SYN;
-      const playStart = cascade ? Math.max(playEnd, synEnd) : synEnd;
-      L.push({ synStart, synEnd, playStart, playEnd: playStart + PLAY });
-      playEnd = playStart + PLAY;
+    t += dt * 0.5;
+    // schedule. cascade: synthesis races AHEAD (back-to-back), buffering each
+    // line so playback never waits. naive: synth one, play it, synth the next.
+    const gen = [], play = [];
+    if (cascade) {
+      for (let i = 0; i < N; i++) gen[i] = { s: i * SYN, e: i * SYN + SYN };
+      for (let i = 0; i < N; i++) { const s = Math.max(gen[i].e, i ? play[i - 1].e : 0); play[i] = { s, e: s + PLAY }; }
+    } else {
+      let cur = 0;
+      for (let i = 0; i < N; i++) { gen[i] = { s: cur, e: cur + SYN }; play[i] = { s: cur + SYN, e: cur + SYN + PLAY }; cur = cur + SYN + PLAY; }
     }
-    const total = playEnd + 0.4, now = t % total;
-    const m = 16, x0 = m, gw = w - 2 * m, X = (s) => x0 + (s / total) * gw;
-    const lY = [h * 0.34, h * 0.66], lH = h * 0.2;
-    ['TTS synthesize', 'speaker plays'].forEach((lab, li) => {
-      ctx.fillStyle = 'rgba(245,241,232,0.45)'; ctx.font = '10px ui-monospace,monospace'; ctx.textAlign = 'left';
-      ctx.fillText(lab, x0, lY[li] - lH / 2 - 7);
-    });
+    const total = play[N - 1].e + 0.4, now = t % total;
+    const x0 = 64, m = 14, gw = w - x0 - m, X = (s) => x0 + (s / total) * gw;
+    const top = h * 0.14, rowH = (h * 0.46) / N, playY = h * 0.84, playH = h * 0.17;
+    ctx.font = '10px ui-monospace,monospace';
+    ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(245,241,232,0.5)';
+    ctx.fillText(cascade ? 'synthesize  (runs ahead, buffers)' : 'synthesize  (one at a time)', x0, top - 8);
+    ctx.fillText('play', 8, playY - playH * 0.5 - 8);
+    // generation rows — one per line, stacked, each racing ahead of its slot
+    for (let i = 0; i < N; i++) {
+      const ry = top + i * rowH + rowH / 2;
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x0, ry); ctx.lineTo(x0 + gw, ry); ctx.stroke();
+      ctx.fillStyle = 'rgba(245,241,232,0.5)'; ctx.textAlign = 'right'; ctx.fillText('L' + (i + 1), x0 - 8, ry + 3);
+      // buffered: dashed link from "rendered" to "starts playing"
+      if (play[i].s > gen[i].e + 0.02) {
+        ctx.strokeStyle = 'rgba(255,255,255,0.13)'; ctx.setLineDash([3, 3]); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(X(gen[i].e), ry); ctx.lineTo(X(play[i].s), playY - playH / 2); ctx.stroke(); ctx.setLineDash([]);
+      }
+      const st = now < gen[i].s ? 'wait' : now < gen[i].e ? 'gen' : 'ready';
+      ctx.globalAlpha = st === 'wait' ? 0.28 : st === 'gen' ? 1 : 0.62;
+      ctx.fillStyle = colors[i];
+      rrect(ctx, X(gen[i].s), ry - rowH * 0.3, Math.max(3, X(gen[i].e) - X(gen[i].s)), rowH * 0.6, 4); ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    // dead-air shading in the playback lane (naive mode only)
     if (!cascade) for (let i = 0; i < N - 1; i++) {
-      const g0 = L[i].playEnd, g1 = L[i + 1].playStart;
+      const g0 = play[i].e, g1 = play[i + 1].s;
       if (g1 > g0) {
-        ctx.fillStyle = 'rgba(255,95,107,0.22)'; ctx.fillRect(X(g0), lY[1] - lH / 2, X(g1) - X(g0), lH);
-        ctx.fillStyle = 'rgba(255,95,107,0.9)'; ctx.font = '8px ui-monospace,monospace'; ctx.textAlign = 'center';
-        ctx.fillText('dead air', (X(g0) + X(g1)) / 2, lY[1] + 3);
+        ctx.fillStyle = 'rgba(255,95,107,0.2)'; ctx.fillRect(X(g0), playY - playH / 2, X(g1) - X(g0), playH);
+        ctx.fillStyle = 'rgba(255,95,107,0.9)'; ctx.textAlign = 'center'; ctx.font = '8px ui-monospace,monospace';
+        ctx.fillText('dead air', (X(g0) + X(g1)) / 2, playY + 3); ctx.font = '10px ui-monospace,monospace';
       }
     }
-    L.forEach((l, i) => {
-      ctx.fillStyle = 'rgba(124,211,255,0.5)';
-      rrect(ctx, X(l.synStart), lY[0] - lH / 2, Math.max(2, X(l.synEnd) - X(l.synStart)), lH, 4); ctx.fill();
-      const playing = now >= l.playStart && now < l.playEnd;
-      ctx.fillStyle = playing ? '#ffd34d' : 'rgba(255,211,77,0.5)';
-      rrect(ctx, X(l.playStart), lY[1] - lH / 2, Math.max(2, X(l.playEnd) - X(l.playStart)), lH, 4); ctx.fill();
-      ctx.fillStyle = '#15161c'; ctx.font = '700 10px ui-monospace,monospace'; ctx.textAlign = 'center';
-      ctx.fillText('L' + (i + 1), (X(l.playStart) + X(l.playEnd)) / 2, lY[1] + 3);
-    });
+    // playback lane — one sequential track draining the buffer
+    for (let i = 0; i < N; i++) {
+      const playing = now >= play[i].s && now < play[i].e;
+      ctx.fillStyle = colors[i]; ctx.globalAlpha = playing ? 1 : now >= play[i].e ? 0.45 : 0.32;
+      rrect(ctx, X(play[i].s), playY - playH / 2, Math.max(3, X(play[i].e) - X(play[i].s)), playH, 5); ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = '#15161c'; ctx.textAlign = 'center'; ctx.font = '700 10px ui-monospace,monospace';
+      ctx.fillText('L' + (i + 1), (X(play[i].s) + X(play[i].e)) / 2, playY + 3); ctx.font = '10px ui-monospace,monospace';
+    }
     ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.moveTo(X(now), lY[0] - lH / 2 - 9); ctx.lineTo(X(now), lY[1] + lH / 2 + 9); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(X(now), top - 6); ctx.lineTo(X(now), playY + playH / 2 + 8); ctx.stroke();
   });
   return stop;
 }
@@ -652,11 +672,12 @@ while len(keep) < cast_size:                   // model under-delivered?
     html: `<p>Each line is synthesized by a TTS model in the cloud, which takes about as long as a short
       sentence. Doing it the obvious way — render a line, play it, render the next — leaves the robots
       frozen and silent for a second between every line. <b>Dead air.</b></p>
-      <p>Instead, synthesis of line <b>N+1</b> is kicked off as a background task the moment line <b>N</b>
-      starts <b>playing</b>. By the time N finishes, N+1 is already rendered and waiting, so playback is
-      continuous. Playback itself paces to wall-clock automatically: capturing audio frames into the
-      LiveKit track applies backpressure, so awaiting it is the timing. Toggle the cascade off to see the
-      gaps it removes.</p>`,
+      <p>Instead, synthesis runs <b>ahead</b> of the speaker. The next line is kicked off as a background
+      task while the current one is still playing, and since rendering a line is quicker than speaking it, the
+      voices stack up into a ready buffer that playback drains back-to-back — no gaps. Playback paces itself
+      to wall-clock: capturing audio frames into the LiveKit track applies backpressure, so awaiting it is the
+      timing. Toggle the cascade off to watch synthesis and playback fall back into lockstep, with dead air
+      between every line.</p>`,
     code: `nxt = create_task(voice(lines[0]))        // start rendering line 1
 for i, line in enumerate(lines):
     wav = await nxt                          // already done — no wait
