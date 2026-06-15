@@ -524,11 +524,11 @@ function wCascade(host) {
 }
 
 const LOOKS = {
-  'grizzled cowboy': { hat: 'cowboy', face: null, neck: 'bowtie', color: '#b5651d', reason: 'frontier sheriff energy' },
-  'arcane wizard': { hat: 'wizard', face: null, neck: null, color: '#7c5cff', reason: 'mystical and ancient' },
-  'British butler': { hat: null, face: 'monocle', neck: 'bowtie', color: '#d4af37', reason: 'impeccably refined' },
-  'party starter': { hat: 'party', face: 'sunglasses', neck: null, color: '#ff6bcb', reason: 'here to celebrate' },
-  'noir detective': { hat: 'tophat', face: null, neck: 'necktie', color: '#5a6577', reason: 'shadowy and sharp' },
+  'grizzled cowboy': { hat: 'cowboy', face: null, neck: 'bowtie', color: '#ecdcc2', reason: 'frontier sheriff energy' },
+  'arcane wizard': { hat: 'wizard', face: null, neck: null, color: '#ddd6f3', reason: 'mystical and ancient' },
+  'British butler': { hat: null, face: 'monocle', neck: 'bowtie', color: '#f0e6c8', reason: 'impeccably refined' },
+  'party starter': { hat: 'party', face: 'sunglasses', neck: null, color: '#f6d8ea', reason: 'here to celebrate' },
+  'noir detective': { hat: 'tophat', face: null, neck: 'necktie', color: '#dbdfe8', reason: 'shadowy and sharp' },
 };
 function wStylist(host) {
   let cur = 'grizzled cowboy';
